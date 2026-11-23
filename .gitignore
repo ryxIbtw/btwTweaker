@@ -1,0 +1,8 @@
+﻿*.exe
+*.exe.sha256
+*.exe.new
+*.exe.old
+*.exe.prev
+*.report
+*.log
+src/app.ico
