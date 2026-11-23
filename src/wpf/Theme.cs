@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -372,7 +372,7 @@ namespace BtwTweaker
     <Setter Property='Template'>
       <Setter.Value>
         <ControlTemplate TargetType='TextBox'>
-          <Border x:Name='B' Background='%FIELD%' CornerRadius='10' BorderBrush='%LINE%' BorderThickness='1' Padding='{TemplateBinding Padding}'>
+          <Border x:Name='B' Background='%FIELD%' CornerRadius='10' BorderBrush='%LINE%' BorderThickness='1'>
             <ScrollViewer x:Name='PART_ContentHost' VerticalAlignment='Center'/>
           </Border>
           <ControlTemplate.Triggers>

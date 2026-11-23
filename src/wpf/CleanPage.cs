@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,7 +25,7 @@ namespace BtwTweaker
                 if (g.CleanAll)
                 {
                     string title = g.Title;
-                    var all = Ui.Btn("Очистить", Theme.Accent, () => CleanGroup(title, rows));
+                    var all = Ui.Btn(L.T("Очистить"), Theme.Accent, () => CleanGroup(title, rows));
                     all.Padding = new Thickness(12, 4, 12, 4);
                     all.FontSize = 12.5;
                     head.Children.Add(Ui.At(all, 0, 1));
@@ -42,7 +42,7 @@ namespace BtwTweaker
 
         async void CleanGroup(string title, List<CleanRow> rows)
         {
-            if (!Dialog.Ask(owner, "Очистить группу «" + title + "»?", "Будут очищены все пункты группы. Открытые программы, чьи файлы заняты, пропустятся.", "Очистить", "Отмена"))
+            if (!Dialog.Ask(owner, L.T("Очистить группу «") + title + L.T("»?"), L.T("Будут очищены все пункты группы. Открытые программы, чьи файлы заняты, пропустятся."), L.T("Очистить"), L.T("Отмена")))
                 return;
             long freed = 0;
             int failed = 0;
@@ -51,7 +51,7 @@ namespace BtwTweaker
                 var res = await r.Run(false);
                 if (res != null) { freed += res.Freed; failed += res.Failed; }
             }
-            Dialog.Info(owner, "Готово", "Освобождено: " + Fs.Fmt(freed) + (failed > 0 ? "\nПропущено занятых файлов: " + failed : ""));
+            Dialog.Info(owner, L.T("Готово"), L.T("Освобождено: ") + Fs.Fmt(freed) + (failed > 0 ? L.T("\nПропущено занятых файлов: ") + failed : ""));
         }
     }
 
@@ -97,7 +97,7 @@ namespace BtwTweaker
             {
                 var badge = new Border
                 {
-                    Background = Theme.Yellow, CornerRadius = new CornerRadius(3), Width = 16, Height = 16, Margin = new Thickness(8, 0, 0, 0), ToolTip = "Внимание: " + c.Caution,
+                    Background = Theme.Yellow, CornerRadius = new CornerRadius(3), Width = 16, Height = 16, Margin = new Thickness(8, 0, 0, 0), ToolTip = L.T("Внимание: ") + c.Caution,
                     Child = new TextBlock { Text = "!", FontWeight = FontWeights.Bold, FontSize = 11, Foreground = Theme.B("#1A1300"), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center }
                 };
                 head.Children.Add(badge);
@@ -120,7 +120,7 @@ namespace BtwTweaker
             check.FontWeight = FontWeights.Bold;
             check.Margin = new Thickness(0, 1, 6, 0);
             doneRow.Children.Add(check);
-            doneRow.Children.Add(Ui.Txt("Очищено", 12.5, Theme.AccentText, FontWeights.SemiBold));
+            doneRow.Children.Add(Ui.Txt(L.T("Очищено"), 12.5, Theme.AccentText, FontWeights.SemiBold));
             done = new Border
             {
                 Background = Theme.Done, BorderBrush = Theme.DoneBorder, BorderThickness = new Thickness(1),
@@ -128,7 +128,7 @@ namespace BtwTweaker
                 VerticalAlignment = VerticalAlignment.Center, Child = doneRow, Visibility = Visibility.Collapsed
             };
             right.Children.Add(done);
-            btn = Ui.Btn("Очистить", Brushes.Transparent, () => { var t = Run(true); });
+            btn = Ui.Btn(L.T("Очистить"), Brushes.Transparent, () => { var t = Run(true); });
             btn.BorderBrush = Theme.Accent;
             btn.Foreground = Theme.Accent;
             btn.BorderThickness = new Thickness(1.5);
@@ -145,12 +145,12 @@ namespace BtwTweaker
         void UpdateDesc()
         {
             string s = c.Description ?? "";
-            if (c.Caution != null) s += "\n\nВнимание: " + c.Caution;
+            if (c.Caution != null) s += L.T("\n\nВнимание: ") + c.Caution;
             if (last != null && last.Items.Count > 0)
             {
                 int n = Math.Min(last.Items.Count, 15);
                 s += "\n\n" + string.Join("\n", last.Items.GetRange(0, n));
-                if (last.Items.Count > n) s += "\n… и ещё " + (last.Items.Count - n);
+                if (last.Items.Count > n) s += L.T("\n… и ещё ") + (last.Items.Count - n);
             }
             desc.Text = s;
         }
@@ -167,10 +167,10 @@ namespace BtwTweaker
             bool wasDone = done.Visibility == Visibility.Visible;
             done.Visibility = Visibility.Collapsed;
             size.Visibility = Visibility.Visible;
-            size.Text = "Считаю…";
+            size.Text = L.T("Считаю…");
             btn.IsEnabled = false;
             try { last = await Task.Run(() => c.Scan()); }
-            catch (Exception ex) { last = null; size.Text = "Ошибка"; size.ToolTip = ex.Message; return; }
+            catch (Exception ex) { last = null; size.Text = L.T("Ошибка"); size.ToolTip = ex.Message; return; }
 
             // Очищать нечего: 0 Б / ничего не найдено
             bool empty = last.Count >= 0 ? last.Count == 0 : last.Bytes == 0;
@@ -180,12 +180,12 @@ namespace BtwTweaker
                 done.Visibility = Visibility.Visible;
                 if (!wasDone) Ui.FadeIn(done);
                 btn.IsEnabled = false;
-                btn.ToolTip = "Очищать нечего";
+                btn.ToolTip = L.T("Очищать нечего");
             }
             else
             {
                 if (last.Count >= 0)
-                    size.Text = (c is TracesCleaner ? "Можно очистить " : "Найдено: ") + last.Count + (last.Bytes > 0 ? " · " + Fs.Fmt(last.Bytes) : "");
+                    size.Text = (c is TracesCleaner ? L.T("Можно очистить ") : L.T("Найдено: ")) + last.Count + (last.Bytes > 0 ? " · " + Fs.Fmt(last.Bytes) : "");
                 else
                     size.Text = Fs.Fmt(last.Bytes);
                 btn.IsEnabled = !busy;
@@ -201,30 +201,32 @@ namespace BtwTweaker
             string proc = c.RunningProcess();
             if (proc != null)
             {
-                Dialog.Info(owner, "Закройте " + proc, "Чтобы очистить «" + c.Title + "», закройте " + proc + " и нажмите «Очистить» ещё раз.");
+                Dialog.Info(owner, L.T("Закройте ") + proc, L.T("Чтобы очистить «") + c.Title + L.T("», закройте ") + proc + L.T(" и нажмите «Очистить» ещё раз."));
                 return null;
             }
             if (c.Confirm)
             {
                 var scan = last ?? await Task.Run(() => c.Scan());
                 if (scan.Count == 0) { Rescan(); return null; }
-                if (!Dialog.AskList(owner, c.Title + "?", "Будет удалено:", scan.Items, "Очистить", true)) return null;
+                if (!Dialog.AskList(owner, c.Title + "?", L.T("Будет удалено:"), scan.Items, L.T("Очистить"), true)) return null;
             }
-            else if (single && c.Caution != null && !Dialog.Ask(owner, "Очистить «" + c.Title + "»?", c.Caution, "Очистить", "Отмена"))
+            else if (single && c.Caution != null && !Dialog.Ask(owner, L.T("Очистить «") + c.Title + L.T("»?"), c.Caution, L.T("Очистить"), L.T("Отмена")))
                 return null;
 
             busy = true;
             btn.IsEnabled = false;
-            size.Text = "Очищаю…";
+            size.Text = L.T("Очищаю…");
             CleanResult res = null;
             try { res = await Task.Run(() => c.Clean()); }
-            catch (Exception ex) { Dialog.Info(owner, "Не получилось очистить «" + c.Title + "»", ex.Message); }
+            catch (Exception ex) { Dialog.Info(owner, L.T("Не получилось очистить «") + c.Title + L.T("»"), ex.Message); }
+            if (res != null && (res.Freed > 0 || res.Removed > 0))
+                Journal.Info(L.T("Очистка"), c.Title + (res.Freed > 0 ? L.T(" — освобождено ") + Fs.Fmt(res.Freed) : L.T(" — удалено записей: ") + res.Removed), L.T("Удалённые файлы не восстанавливаются."));
             busy = false;
             Rescan();
             if (single && res != null)
             {
-                string msg = res.Freed > 0 ? "Освобождено: " + Fs.Fmt(res.Freed) : "Удалено записей: " + res.Removed;
-                if (res.Failed > 0) msg += "\nПропущено (заняты или нет доступа): " + res.Failed;
+                string msg = res.Freed > 0 ? L.T("Освобождено: ") + Fs.Fmt(res.Freed) : L.T("Удалено записей: ") + res.Removed;
+                if (res.Failed > 0) msg += L.T("\nПропущено (заняты или нет доступа): ") + res.Failed;
                 Dialog.Info(owner, c.Title, msg);
             }
             return res;

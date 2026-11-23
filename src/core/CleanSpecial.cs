@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -16,8 +16,8 @@ namespace BtwTweaker
 
         public TracesCleaner()
         {
-            Title = "Очистка следов активности";
-            Description = "Список недавних файлов, списки переходов на панели задач, история окна «Выполнить» (Win+R) и адресной строки Проводника.";
+            Title = L.T("Очистка следов активности");
+            Description = L.T("Список недавних файлов, списки переходов на панели задач, история окна «Выполнить» (Win+R) и адресной строки Проводника.");
             Icon = "\uE81C";
             Confirm = true;
         }
@@ -48,9 +48,9 @@ namespace BtwTweaker
             int runs = Values(RunMru).Count, typed = Values(Typed).Count;
             r.Count = files.Count + runs + typed;
             foreach (var f in files) try { r.Bytes += new FileInfo(f).Length; } catch { }
-            r.Items.Add("Недавние файлы и списки переходов: " + files.Count);
-            r.Items.Add("История «Выполнить»: " + runs);
-            r.Items.Add("История адресной строки Проводника: " + typed);
+            r.Items.Add(L.T("Недавние файлы и списки переходов: ") + files.Count);
+            r.Items.Add(L.T("История «Выполнить»: ") + runs);
+            r.Items.Add(L.T("История адресной строки Проводника: ") + typed);
             return r;
         }
 
@@ -75,8 +75,8 @@ namespace BtwTweaker
 
         public UwpLeftovers()
         {
-            Title = "Остатки UWP";
-            Description = "Папки с данными приложений Магазина, которые уже удалены. Перед очисткой будет показан список.";
+            Title = L.T("Остатки UWP");
+            Description = L.T("Папки с данными приложений Магазина, которые уже удалены. Перед очисткой будет показан список.");
             Icon = "\uE71D";
             Confirm = true;
         }
@@ -141,8 +141,8 @@ namespace BtwTweaker
     {
         public GhostDevices()
         {
-            Title = "Отключённые устройства";
-            Description = "Записи об устройствах, которые когда-то подключались (флешки, телефоны, старые видеокарты и т.п.), а сейчас отсутствуют. Если устройство подключить снова, Windows установит его заново. Программные устройства и Bluetooth (чтобы не сбить сопряжение) не трогаются.";
+            Title = L.T("Отключённые устройства");
+            Description = L.T("Записи об устройствах, которые когда-то подключались (флешки, телефоны, старые видеокарты и т.п.), а сейчас отсутствуют. Если устройство подключить снова, Windows установит его заново. Программные устройства и Bluetooth (чтобы не сбить сопряжение) не трогаются.");
             Icon = "\uE772";
             Confirm = true;
         }

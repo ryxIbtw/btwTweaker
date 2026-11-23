@@ -1,4 +1,4 @@
-namespace BtwTweaker
+﻿namespace BtwTweaker
 {
     public static partial class Catalog
     {
@@ -9,16 +9,16 @@ namespace BtwTweaker
         {
             return new[]
             {
-                new Group("Визуальные эффекты",
+                new Group(L.T("Визуальные эффекты"),
                     new VisualFx(), Transparency(), WallpaperCompression(), DynamicLighting()),
-                new Group("Поиск и ассистенты",
+                new Group(L.T("Поиск и ассистенты"),
                     WebSearch(), SearchHighlights(), Ceip(), StartTips(), Copilot(), Widgets(), Spotlight(), HideMostUsed()),
-                new Group("Оболочка Windows",
+                new Group(L.T("Оболочка Windows"),
                     new ClassicMenu(), new TrayIcons(), EndTask(), PhotoViewer(), RecentItems(), TrackDocs(),
                     MenuDelay(), TaskViewButton(), LockScreen(), ClockSeconds()),
-                new Group("Ввод и клавиатура",
+                new Group(L.T("Ввод и клавиатура"),
                     StickyKeys(), InkTextCollection(), TypingFeedback()),
-                new Group("Функции Windows",
+                new Group(L.T("Функции Windows"),
                     SettingSync(), MobilityCenter(), StepsRecorder(), ActivityFeed(), LanguageList()),
             };
         }
@@ -30,8 +30,8 @@ namespace BtwTweaker
             const string k = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
             return new RegToggle
             {
-                Title = "Прозрачность Windows",
-                Description = "Полупрозрачные «Пуск», панель задач и окна. Выключение немного разгружает видеокарту.",
+                Title = L.T("Прозрачность Windows"),
+                Description = L.T("Полупрозрачные «Пуск», панель задач и окна. Выключение немного разгружает видеокарту."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, k, "EnableTransparency", 0))
@@ -42,8 +42,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Сжатие фона рабочего стола",
-                Description = "Windows пережимает JPEG-обои до качества 85%, из-за чего они теряют чёткость. После отключения обои ставятся в исходном качестве. Применится, когда обои установят заново.",
+                Title = L.T("Сжатие фона рабочего стола"),
+                Description = L.T("Windows пережимает JPEG-обои до качества 85%, из-за чего они теряют чёткость. После отключения обои ставятся в исходном качестве. Применится, когда обои установят заново."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, @"Control Panel\Desktop", "JPEGImportQuality", 100))
@@ -55,8 +55,8 @@ namespace BtwTweaker
             const string k = @"Software\Microsoft\Lighting";
             return new RegToggle
             {
-                Title = "Динамическое освещение",
-                Description = "Управление RGB-подсветкой клавиатур, мышей и т.д. из Windows. Может конфликтовать с фирменными программами подсветки (iCUE, Armoury Crate, G Hub).",
+                Title = L.T("Динамическое освещение"),
+                Description = L.T("Управление RGB-подсветкой клавиатур, мышей и т.д. из Windows. Может конфликтовать с фирменными программами подсветки (iCUE, Armoury Crate, G Hub)."),
                 Icon = "", IconColor = "#F5C542",
                 Win11Only = true,
                 MinBuild = 22621,
@@ -72,8 +72,8 @@ namespace BtwTweaker
             const string pol = @"Software\Policies\Microsoft\Windows\Explorer";
             return new RegToggle
             {
-                Title = "Результаты из интернета в Поиске",
-                Description = "Поиск в «Пуске» показывает подсказки и результаты Bing. После отключения ищутся только приложения, файлы и настройки на компьютере — быстрее и без отправки запросов в интернет.",
+                Title = L.T("Результаты из интернета в Поиске"),
+                Description = L.T("Поиск в «Пуске» показывает подсказки и результаты Bing. После отключения ищутся только приложения, файлы и настройки на компьютере — быстрее и без отправки запросов в интернет."),
                 Icon = "",
                 Restart = Restart.Explorer,
             }
@@ -94,8 +94,8 @@ namespace BtwTweaker
             const string k = @"Software\Microsoft\Windows\CurrentVersion\SearchSettings";
             return new RegToggle
             {
-                Title = "WebView2 для Поиска",
-                Description = "«Главное в поиске»: картинки дня, новости и праздники в окне поиска. Они загружаются через встроенный браузер WebView2. После отключения окно поиска открывается быстрее и не грузит интернет-контент.",
+                Title = L.T("WebView2 для Поиска"),
+                Description = L.T("«Главное в поиске»: картинки дня, новости и праздники в окне поиска. Они загружаются через встроенный браузер WebView2. После отключения окно поиска открывается быстрее и не грузит интернет-контент."),
                 Icon = "",
                 Restart = Restart.Explorer,
             }
@@ -108,7 +108,7 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "Customer Experience",
-                Description = "Программа улучшения качества (CEIP): Windows собирает статистику использования и отправляет её в Microsoft.",
+                Description = L.T("Программа улучшения качества (CEIP): Windows собирает статистику использования и отправляет её в Microsoft."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, @"SOFTWARE\Policies\Microsoft\SQMClient\Windows", "CEIPEnable", 0),
@@ -122,8 +122,8 @@ namespace BtwTweaker
             const string cdm = @"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
             return new RegToggle
             {
-                Title = "Советы и новые приложения в меню «Пуск»",
-                Description = "Рекомендации, советы и рекламные приложения в «Пуске», а также их тихая автоустановка (Candy Crush и т.п.).",
+                Title = L.T("Советы и новые приложения в меню «Пуск»"),
+                Description = L.T("Рекомендации, советы и рекламные приложения в «Пуске», а также их тихая автоустановка (Candy Crush и т.п.)."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, cdm, "SubscribedContent-338388Enabled", 0),
@@ -144,7 +144,7 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "Windows Copilot",
-                Description = "ИИ-помощник Microsoft: кнопка на панели задач и вызов по Win+C. Если Copilot установлен как отдельное приложение, его можно удалить через «Установленные приложения».",
+                Description = L.T("ИИ-помощник Microsoft: кнопка на панели задач и вызов по Win+C. Если Copilot установлен как отдельное приложение, его можно удалить через «Установленные приложения»."),
                 Icon = "",
                 Win11Only = true,
                 Restart = Restart.Explorer,
@@ -157,8 +157,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Виджеты",
-                Description = "Панель виджетов с новостями и погодой (в Windows 10 — «Новости и интересы» на панели задач). Работает в фоне и грузит контент из интернета.",
+                Title = L.T("Виджеты"),
+                Description = L.T("Панель виджетов с новостями и погодой (в Windows 10 — «Новости и интересы» на панели задач). Работает в фоне и грузит контент из интернета."),
                 Icon = "", IconColor = "#F5C542",
                 Restart = Restart.Explorer,
             }
@@ -174,7 +174,7 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "Spotlight",
-                Description = "«Windows: интересное» — меняющиеся фото на экране блокировки и рабочем столе с подсказками и рекламой.",
+                Description = L.T("«Windows: интересное» — меняющиеся фото на экране блокировки и рабочем столе с подсказками и рекламой."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, cc, "DisableWindowsSpotlightFeatures", 1), Reg.Dw(HKCU, cc, "DisableSpotlightCollectionOnDesktop", 1))
@@ -185,8 +185,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Скрыть наиболее используемые приложения",
-                Description = "Убирает список «Часто используемые» из меню «Пуск» — Windows перестаёт отслеживать запуск программ.",
+                Title = L.T("Скрыть наиболее используемые приложения"),
+                Description = L.T("Убирает список «Часто используемые» из меню «Пуск» — Windows перестаёт отслеживать запуск программ."),
                 Icon = "",
                 CheckOn = true,
                 Restart = Restart.Explorer,
@@ -201,8 +201,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "\"Завершить задачу\" в меню панели задач",
-                Description = "Пункт «Завершить задачу» в меню по правому клику на значке программы — закрывает зависшую программу без Диспетчера задач.",
+                Title = L.T("\"Завершить задачу\" в меню панели задач"),
+                Description = L.T("Пункт «Завершить задачу» в меню по правому клику на значке программы — закрывает зависшую программу без Диспетчера задач."),
                 Icon = "", IconColor = "#E5484D",
                 Win11Only = true,
                 MinBuild = 22631,
@@ -219,8 +219,8 @@ namespace BtwTweaker
             string[] ext = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".ico", ".jfif", ".jpe", ".dib", ".wdp" };
             var t = new RegToggle
             {
-                Title = "Старый смотрельщик фото",
-                Description = "Возвращает классический «Просмотр фотографий Windows» для JPG, PNG, BMP, GIF и др. После включения откройте картинку через «Открыть с помощью» → «Просмотр фотографий Windows» → «Всегда».",
+                Title = L.T("Старый смотрельщик фото"),
+                Description = L.T("Возвращает классический «Просмотр фотографий Windows» для JPG, PNG, BMP, GIF и др. После включения откройте картинку через «Открыть с помощью» → «Просмотр фотографий Windows» → «Всегда»."),
                 Icon = "", IconColor = "#F5C542",
                 CheckOn = true,
             };
@@ -236,8 +236,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Отображение недавних и часто используемых элементов",
-                Description = "Списки «Последние файлы» и «Часто используемые папки» на панели быстрого доступа Проводника.",
+                Title = L.T("Отображение недавних и часто используемых элементов"),
+                Description = L.T("Списки «Последние файлы» и «Часто используемые папки» на панели быстрого доступа Проводника."),
                 Icon = "", IconColor = "#F5C542",
                 Restart = Restart.Explorer,
             }
@@ -249,8 +249,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Отслеживание недавно открытых документов",
-                Description = "Windows запоминает недавно открытые файлы для «Пуска», списков переходов и Проводника.",
+                Title = L.T("Отслеживание недавно открытых документов"),
+                Description = L.T("Windows запоминает недавно открытые файлы для «Пуска», списков переходов и Проводника."),
                 Icon = "",
                 Restart = Restart.Explorer,
             }
@@ -262,8 +262,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Показ Просмотра задач",
-                Description = "Кнопка «Представление задач» (виртуальные рабочие столы) на панели задач. Сама функция по Win+Tab остаётся.",
+                Title = L.T("Показ Просмотра задач"),
+                Description = L.T("Кнопка «Представление задач» (виртуальные рабочие столы) на панели задач. Сама функция по Win+Tab остаётся."),
                 Icon = "", IconColor = "#F5C542",
             }
             .WhenOff(Reg.Dw(HKCU, Adv, "ShowTaskViewButton", 0))
@@ -275,8 +275,8 @@ namespace BtwTweaker
             const string k = @"SOFTWARE\Policies\Microsoft\Windows\Personalization";
             return new RegToggle
             {
-                Title = "Экран блокировки",
-                Description = "Экран с часами и картинкой перед вводом пароля. После отключения сразу показывается окно входа.",
+                Title = L.T("Экран блокировки"),
+                Description = L.T("Экран с часами и картинкой перед вводом пароля. После отключения сразу показывается окно входа."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, k, "NoLockScreen", 1))
@@ -287,8 +287,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Показывать секунды в часах панели задач",
-                Description = "Часы на панели задач показывают секунды.",
+                Title = L.T("Показывать секунды в часах панели задач"),
+                Description = L.T("Часы на панели задач показывают секунды."),
                 Icon = "", IconColor = "#E5484D",
                 CheckOn = true,
                 Restart = Restart.Explorer,
@@ -304,8 +304,8 @@ namespace BtwTweaker
             const string k = @"Control Panel\Accessibility\StickyKeys";
             return new RegToggle
             {
-                Title = "Залипание клавиш",
-                Description = "Окно «Залипание клавиш» после пятикратного нажатия Shift — часто выскакивает в играх. После отключения сочетание перестаёт срабатывать.",
+                Title = L.T("Залипание клавиш"),
+                Description = L.T("Окно «Залипание клавиш» после пятикратного нажатия Shift — часто выскакивает в играх. После отключения сочетание перестаёт срабатывать."),
                 Icon = "",
                 Restart = Restart.SignOut,
             }
@@ -318,8 +318,8 @@ namespace BtwTweaker
             const string ip = @"Software\Microsoft\InputPersonalization";
             return new RegToggle
             {
-                Title = "Сбор текстовых сообщений и рукописного ввода",
-                Description = "Windows собирает набранный текст и рукописный ввод, чтобы «улучшать» распознавание и подсказки.",
+                Title = L.T("Сбор текстовых сообщений и рукописного ввода"),
+                Description = L.T("Windows собирает набранный текст и рукописный ввод, чтобы «улучшать» распознавание и подсказки."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, @"SOFTWARE\Policies\Microsoft\InputPersonalization", "AllowInputPersonalization", 0),
@@ -336,8 +336,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Обратная связь при вводе",
-                Description = "«Улучшение распознавания рукописного ввода и набора»: отправка данных о вводе в Microsoft.",
+                Title = L.T("Обратная связь при вводе"),
+                Description = L.T("«Улучшение распознавания рукописного ввода и набора»: отправка данных о вводе в Microsoft."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, @"Software\Microsoft\Input\TIPC", "Enabled", 0))
@@ -351,8 +351,8 @@ namespace BtwTweaker
             const string k = @"SOFTWARE\Policies\Microsoft\Windows\SettingSync";
             return new RegToggle
             {
-                Title = "Синхронизация настроек аккаунта Microsoft",
-                Description = "Синхронизация темы, паролей, языка и других настроек между устройствами через аккаунт Microsoft.",
+                Title = L.T("Синхронизация настроек аккаунта Microsoft"),
+                Description = L.T("Синхронизация темы, паролей, языка и других настроек между устройствами через аккаунт Microsoft."),
                 Icon = "", IconColor = "#F5A524",
             }
             .WhenOff(Reg.Dw(HKLM, k, "DisableSettingSync", 2), Reg.Dw(HKLM, k, "DisableSettingSyncUserOverride", 1))
@@ -363,8 +363,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Центр мобильности Windows",
-                Description = "Старая панель для ноутбуков (Win+X → Центр мобильности): яркость, громкость, батарея.",
+                Title = L.T("Центр мобильности Windows"),
+                Description = L.T("Старая панель для ноутбуков (Win+X → Центр мобильности): яркость, громкость, батарея."),
                 Icon = "", IconColor = "#F5A524",
             }
             .WhenOff(Reg.Dw(HKCU, @"Software\Microsoft\Windows\CurrentVersion\Policies\MobilityCenter", "NoMobilityCenter", 1),
@@ -377,8 +377,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Запись действий",
-                Description = "«Средство записи действий» (psr.exe) — записывает клики и скриншоты для отчётов об ошибках.",
+                Title = L.T("Запись действий"),
+                Description = L.T("«Средство записи действий» (psr.exe) — записывает клики и скриншоты для отчётов об ошибках."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, @"SOFTWARE\Policies\Microsoft\Windows\AppCompat", "DisableUAR", 1))
@@ -390,8 +390,8 @@ namespace BtwTweaker
             const string k = @"SOFTWARE\Policies\Microsoft\Windows\System";
             return new RegToggle
             {
-                Title = "Лента активности",
-                Description = "Журнал действий: какие программы и файлы вы открывали. Сохраняется на компьютере и может отправляться в Microsoft.",
+                Title = L.T("Лента активности"),
+                Description = L.T("Журнал действий: какие программы и файлы вы открывали. Сохраняется на компьютере и может отправляться в Microsoft."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, k, "EnableActivityFeed", 0), Reg.Dw(HKLM, k, "PublishUserActivities", 0), Reg.Dw(HKLM, k, "UploadUserActivities", 0))
@@ -403,8 +403,8 @@ namespace BtwTweaker
             const string k = @"Control Panel\International\User Profile";
             return new RegToggle
             {
-                Title = "Доступ сайтов к списку языков",
-                Description = "Сайты видят список установленных у вас языков и показывают контент на нём. Это также помогает отслеживать вас.",
+                Title = L.T("Доступ сайтов к списку языков"),
+                Description = L.T("Сайты видят список установленных у вас языков и показывают контент на нём. Это также помогает отслеживать вас."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, k, "HttpAcceptLanguageOptOut", 1))

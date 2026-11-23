@@ -1,0 +1,973 @@
+# btwTweaker English dictionary: russian<TAB>english (C# escapes)
+Своё	Custom
+Реестр	Registry
+Базовые твики	Basic tweaks
+Ввод и интерфейс	Input and interface
+Обновления и доставка	Updates and delivery
+Службы и фоновые процессы	Services and background processes
+Игры и графика	Games and graphics
+Безопасность	Security
+Приватность	Privacy
+Твики	Tweaks
+Кастомизация	Customization
+Панель NVIDIA	NVIDIA Panel
+Электропитание	Power
+Выпиливание	Debloat
+Автозагрузки	Startup
+Очистка	Cleanup
+Акселерация мыши	Mouse acceleration
+«Повышенная точность установки указателя»: курсор проходит разное расстояние в зависимости от скорости движения мыши. Без неё движение предсказуемее — особенно в играх.	"Enhance pointer precision": the cursor travels a different distance depending on how fast you move the mouse. Without it, movement is more predictable — especially in games.
+Уведомления Windows	Windows notifications
+Всплывающие баннеры от приложений и системы в углу экрана. После отключения баннеры перестанут появляться, а важные системные сообщения останутся в Центре уведомлений.	Pop-up banners from apps and the system in the corner of the screen. When disabled, banners stop appearing, while important system messages stay in the Notification Center.
+Автообновление драйверов при запуске системы	Automatic driver updates
+Windows Update сам скачивает и ставит драйверы — иногда старее или хуже тех, что вы поставили вручную (частая проблема с видеокартами). После отключения драйверы обновляются только вами.	Windows Update downloads and installs drivers on its own — sometimes older or worse than the ones you installed manually (a common problem with graphics cards). When disabled, drivers are updated only by you.
+Автообновление карт	Automatic map updates
+Фоновое скачивание офлайн-карт для приложения «Карты». Почти никому не нужно, но тратит трафик и диск.	Background download of offline maps for the Maps app. Almost nobody needs it, but it uses traffic and disk space.
+Автообновление приложений магазина	Automatic Store app updates
+Microsoft Store сам обновляет приложения в фоне. После отключения обновлять их можно вручную: Магазин → Библиотека → «Получить обновления».	Microsoft Store updates apps in the background. When disabled, you can update them manually: Store → Library → "Get updates".
+Оптимизация доставки	Delivery Optimization
+Windows скачивает обновления частями с других компьютеров и раздаёт ваши обновления другим — это тратит трафик и канал. После отключения обновления качаются только с серверов Microsoft.	Windows downloads updates in pieces from other computers and shares your updates with others — this uses traffic and bandwidth. When disabled, updates are downloaded only from Microsoft servers.
+Работа UWP приложений в фоне	UWP apps in the background
+Приложения из Магазина (Почта, Погода, Xbox и др.) работают в фоне, даже когда закрыты. После отключения они не тратят память и процессор, но и не присылают уведомления, пока не открыты.	Store apps (Mail, Weather, Xbox, etc.) run in the background even when closed. When disabled, they don't use memory and CPU, but they also don't send notifications until opened.
+Индексация	Indexing
+Служба Windows Search постоянно сканирует файлы, чтобы поиск был мгновенным. После отключения диск меньше нагружается, но поиск в «Пуске» и Проводнике по содержимому файлов станет медленнее.	The Windows Search service constantly scans files so that search is instant. When disabled, the disk is less loaded, but searching file contents in Start and File Explorer becomes slower.
+Служба заранее загружает в память часто используемые программы. На SSD пользы почти нет, а на слабых ПК она может грузить диск.	The service preloads frequently used programs into memory. It brings almost no benefit on an SSD, and on weak PCs it can load the disk.
+на HDD Windows и программы могут запускаться медленнее.	on an HDD, Windows and programs may start more slowly.
+Службы печати	Print services
+Диспетчер печати и уведомления принтеров. Если принтера нет, службы можно отключить.	Print Spooler and printer notifications. If you have no printer, these services can be disabled.
+перестанут работать принтеры, МФУ и «Печать в PDF».	printers, multifunction devices and "Print to PDF" will stop working.
+Службы диагностики	Diagnostic services
+Телеметрия (DiagTrack), служба политики диагностики и сборщики диагностических данных. Работают в фоне и отправляют данные в Microsoft.	Telemetry (DiagTrack), the Diagnostic Policy Service and diagnostic data collectors. They run in the background and send data to Microsoft.
+перестанет работать «Устранение неполадок» и диагностика сети.	"Troubleshoot" and network diagnostics will stop working.
+Ускорение запуска и фоновая работа Edge	Edge startup boost and background mode
+Edge держит свои процессы в памяти после закрытия и при старте Windows, чтобы открываться быстрее. После отключения Edge не висит в фоне, но первый запуск чуть дольше.	Edge keeps its processes in memory after closing and at Windows startup to open faster. When disabled, Edge doesn't stay in the background, but the first launch is slightly slower.
+Игровая панель Xbox (Win+G) и фоновая запись игр. Отключение убирает лишнюю нагрузку и всплывающие окна при запуске игр.	Xbox Game Bar (Win+G) and background game recording. Disabling removes extra load and pop-ups when games start.
+Игровой режим	Game Mode
+Когда запущена игра, Windows отдаёт ей приоритет и откладывает фоновые задачи (например, установку обновлений). Обычно лучше оставить включённым.	When a game is running, Windows gives it priority and postpones background tasks (such as installing updates). Usually best left on.
+Задержка появления контекстного меню	Context menu delay
+Сколько Windows ждёт, прежде чем раскрыть вложенное меню при наведении. По умолчанию — 400 мс.	How long Windows waits before opening a submenu on hover. The default is 400 ms.
+0 мс	0 ms
+100 мс	100 ms
+200 мс	200 ms
+400 мс (стандарт)	400 ms (default)
+Базовая защита Windows	Basic Windows protection
+Усиление защиты (VBS/UAC)	Hardened protection (VBS/UAC)
+Микрокод и CPU-митигации	Microcode and CPU mitigations
+Сеть, фильтры и DRM	Network, filters and DRM
+Назойливые уведомления защиты	Annoying security notifications
+Напоминания «Безопасности Windows»: включить защиту, настроить учётную запись, аккаунт Microsoft и т.п. Отключает только эти рекламные уведомления, саму защиту не трогает.	"Windows Security" reminders: turn on protection, set up your account, Microsoft account, etc. Disables only these promotional notifications and doesn't touch the protection itself.
+Центр безопасности	Security Center
+Служба «Безопасность Windows» (SecurityHealthService / wscsvc), которая собирает состояние защиты и показывает значок в трее. Без неё пропадает окно «Безопасность Windows».	The "Windows Security" service (SecurityHealthService / wscsvc) that collects protection status and shows the tray icon. Without it, the "Windows Security" window disappears.
+перестанет работать окно «Безопасность Windows» и значок защиты.	the "Windows Security" window and the protection icon will stop working.
+Проверка скачанных файлов и сайтов по базе Microsoft. Предупреждает о подозрительных программах. Отключение убирает проверку и фильтр «неизвестный издатель».	Checks downloaded files and websites against the Microsoft database. Warns about suspicious programs. Disabling removes this check and the "unknown publisher" filter.
+пропадёт предупреждение о запуске подозрительных и неизвестных программ.	the warning before running suspicious and unknown programs will disappear.
+Безопасность на основе виртуализации: изолирует часть памяти ядра аппаратно. Повышает защиту, но может снижать производительность в играх на 5–15%. Многие отключают ради FPS.	Virtualization-based security: isolates part of the kernel memory in hardware. Improves protection but can reduce game performance by 5–15%. Many people disable it for FPS.
+ослабнет аппаратная защита памяти ядра (Memory Integrity).	hardware protection of kernel memory (Memory Integrity) will be weakened.
+ради этого прироста FPS вы снижаете защиту от продвинутых атак.	for this FPS gain you reduce protection against advanced attacks.
+Автошифрование	Automatic encryption
+Автоматическое шифрование диска устройства (Device Encryption / BitLocker) на новых Windows 11. Отключение не даёт Windows зашифровать диск без вашего ведома — так проще восстановить данные при сбое, но диск остаётся незашифрованным.	Automatic device disk encryption (Device Encryption / BitLocker) on new Windows 11 installs. Disabling keeps Windows from encrypting the disk without your knowledge — data is easier to recover after a failure, but the disk stays unencrypted.
+данные на диске не будут зашифрованы при краже или потере устройства.	data on the disk will not be encrypted if the device is stolen or lost.
+Контроль учётных записей — окно «Разрешить этому приложению вносить изменения?». Отключение убирает эти запросы для администратора. Сам механизм UAC остаётся (иначе перестают работать приложения Магазина).	User Account Control — the "Do you want to allow this app to make changes?" window. Disabling removes these prompts for administrators. The UAC mechanism itself stays (otherwise Store apps stop working).
+программы смогут получать права администратора без вашего подтверждения.	programs will be able to get administrator rights without your confirmation.
+Защита процессора от уязвимостей Spectre/Meltdown. Небольшой ценой производительности закрывает атаки через спекулятивное выполнение. Отключать стоит только на свой риск.	CPU protection against Spectre/Meltdown vulnerabilities. Closes speculative execution attacks at a small performance cost. Disable only at your own risk.
+процессор станет уязвим к атакам Spectre/Meltdown (чтение чужой памяти).	the CPU will become vulnerable to Spectre/Meltdown attacks (reading other processes' memory).
+Разрешение локальных имён LLMNR	LLMNR local name resolution
+Протокол разрешения имён в локальной сети без DNS-сервера. Дома почти не нужен и считается небезопасным: через него возможен перехват учётных данных в сети. Отключение повышает безопасность.	A protocol for resolving names on the local network without a DNS server. Rarely needed at home and considered insecure: it allows credentials to be intercepted on the network. Disabling improves security.
+Диагностика и отчёты Windows	Windows diagnostics and reports
+Dev-инструменты и CLI	Dev tools and CLI
+Телеметрия Dot Net	.NET telemetry
+.NET SDK (команда dotnet) отправляет в Microsoft данные об использовании команд.	The .NET SDK (dotnet command) sends command usage data to Microsoft.
+Телеметрия PowerShell	PowerShell telemetry
+PowerShell 7 при запуске отправляет в Microsoft данные о версии и окружении.	PowerShell 7 sends version and environment data to Microsoft on startup.
+Планировщик и фоновые задания	Task Scheduler and background tasks
+Системная приватность	System privacy
+Разрешения приложений	App permissions
+местоположению	location
+информации об учётной записи	account information
+данным о движении	motion data
+телефону	phone
+доверенным устройствам	trusted devices
+синхронизации с устройствами	device sync
+диагностической информации о других приложениях	diagnostic information about other apps
+контактам	contacts
+календарю	calendar
+журналу вызовов	call history
+электронной почте	email
+задачам	tasks
+сообщениям	messages
+радио	radios
+устройствам Bluetooth	Bluetooth devices
+папке \"Документы\"	the \"Documents\" folder
+папке \"Изображения\"	the \"Pictures\" folder
+папке \"Видео\"	the \"Videos\" folder
+другой файловой системе	other file system
+Фоновые ETW-автологгеры	Background ETW autologgers
+Журналы событий, которые Windows пишет с самого запуска системы для телеметрии и диагностики (DiagTrack, SQM, OOBE, Wi-Fi). Пишут на диск постоянно.	Event logs that Windows writes from system startup for telemetry and diagnostics (DiagTrack, SQM, OOBE, Wi-Fi). They write to disk constantly.
+при разборе сбоев не будет части диагностических журналов.	some diagnostic logs will be missing when investigating crashes.
+Службы телеметрии	Telemetry services
+«Функциональные возможности для подключённых пользователей и телеметрия» (DiagTrack) и служба маршрутизации push-сообщений WAP. Собирают и отправляют данные в Microsoft.	"Connected User Experiences and Telemetry" (DiagTrack) and the WAP push message routing service. They collect and send data to Microsoft.
+Программа улучшения качества (CEIP) и сбор статистики SQM в Windows, App-V и Internet Explorer.	Customer Experience Improvement Program (CEIP) and SQM statistics collection in Windows, App-V and Internet Explorer.
+Телеметрия влияния приложения	Application Impact Telemetry
+Application Impact Telemetry: Windows следит, как программы используют системные компоненты, и отправляет отчёты.	Application Impact Telemetry: Windows tracks how programs use system components and sends reports.
+Телеметрия в политике сбора данных	Telemetry in data collection policy
+Уровень диагностических данных Windows. Значение «0 — безопасность» полностью работает только в Enterprise/Education; в Home и Pro Windows понизит его до минимально допустимого («обязательные данные»).	The Windows diagnostic data level. The "0 — Security" value works fully only in Enterprise/Education; in Home and Pro, Windows lowers it to the minimum allowed ("required data").
+Телеметрия лицензии	License telemetry
+Отправка в Microsoft данных об активации при проверке лицензии (KMS Client Online AVS Validation). На саму активацию Windows не влияет.	Sending activation data to Microsoft during license checks (KMS Client Online AVS Validation). Does not affect Windows activation itself.
+Отчёт об ошибках Windows (WER)	Windows Error Reporting (WER)
+После сбоя программы Windows собирает отчёт и отправляет его в Microsoft. После отключения отчёты не создаются и не отправляются.	After a program crashes, Windows collects a report and sends it to Microsoft. When disabled, reports are neither created nor sent.
+Сборщик инвентаризации: составляет список установленных программ, драйверов и устройств и отправляет его в Microsoft.	Inventory Collector: compiles a list of installed programs, drivers and devices and sends it to Microsoft.
+ Отключается переменной среды 	 Disabled with the environment variable 
+=1 — программы, запущенные после изменения, увидят её сразу.	=1 — programs started after the change will see it immediately.
+Телеметрия Visual Studio	Visual Studio telemetry
+Программа улучшения качества Visual Studio (SQM) и окно обратной связи со скриншотами и почтой.	Visual Studio Customer Experience Improvement Program (SQM) and the feedback window with screenshots and email.
+Телеметрия веб-камеры	Webcam telemetry
+Задания DeviceCensus.exe — сканер подключённых устройств, включая веб-камеры, который отправляет сведения о них в Microsoft. Стримерам полезно выключить, чтобы камерой управлял только OBS; на ноутбуках камера реже «просыпается» во сне (S0ix).	DeviceCensus.exe tasks — a scanner of connected devices, including webcams, that sends information about them to Microsoft. Streamers may want to turn it off so that only OBS controls the camera; on laptops the camera "wakes up" less often during sleep (S0ix).
+Задача оценки совместимости Microsoft Compatibility Appraiser	Microsoft Compatibility Appraiser task
+Задания, которые регулярно сканируют программы и файлы на совместимость с новыми версиями Windows и отправляют результаты в Microsoft. Сильно нагружают диск и процессор во время работы.	Tasks that regularly scan programs and files for compatibility with new Windows versions and send the results to Microsoft. They load the disk and CPU heavily while running.
+Напоминание о приложениях для улучшения производительности	Performance-improvement app reminder
+Задание StartupAppTask проверяет программы в автозагрузке и показывает уведомление, что они замедляют запуск Windows.	The StartupAppTask task checks startup programs and shows a notification that they slow down Windows startup.
+Задачи CEIP	CEIP tasks
+Задания программы улучшения качества: сбор и отправка данных об использовании Windows и USB-устройств.	Customer Experience Improvement Program tasks: collect and send data about Windows and USB device usage.
+Обратная связь Windows и диагностика	Windows feedback and diagnostics
+Запросы «Оцените Windows» и задания, которые скачивают и запускают сценарии сбора отзывов.	"Rate Windows" prompts and tasks that download and run feedback collection scenarios.
+Поставщик местоположения Windows	Windows location provider
+Определение местоположения компьютера по Wi-Fi и IP для Windows и приложений (карты, погода, «Найти устройство»).	Determining the computer's location via Wi-Fi and IP for Windows and apps (maps, weather, "Find my device").
+Целевая реклама и маркетинг	Targeted ads and marketing
+Рекламный идентификатор, по которому приложения показывают персональную рекламу, и «персонализированные возможности» на основе диагностических данных.	The advertising ID that apps use to show personalized ads, and "tailored experiences" based on diagnostic data.
+переключатель «Рекламный идентификатор» в «Параметрах» станет недоступен — им будет управлять политика.	the "Advertising ID" switch in Settings will become unavailable — it will be controlled by policy.
+Синхронизация в облаке	Cloud sync
+Отправка в облако Microsoft отдельных групп данных: паролей, настроек приложений, темы, макета «Пуска», браузера и Windows, а также синхронизация через лимитные сети.	Sending individual groups of data to the Microsoft cloud: passwords, app settings, theme, Start layout, browser and Windows settings, as well as syncing over metered networks.
+Отказ от согласия на конфиденциальность Windows	Opt out of Windows privacy consent
+Сбрасывает флаг «Приняты политики конфиденциальности» (AcceptedPrivacyPolicy = 0) — баннер с предложением согласиться больше не появится. Позже можно снова изменить решение.	Resets the "Privacy policies accepted" flag (AcceptedPrivacyPolicy = 0) — the banner asking you to agree won't appear again. You can change your decision later.
+Датчики	Sensors
+Доступ Windows и приложений к датчикам: освещённости, ориентации, движения и т.д. На ноутбуках с автояркостью и поворотом экрана лучше не отключать.	Access of Windows and apps to sensors: light, orientation, motion, etc. Better not to disable on laptops with auto-brightness and screen rotation.
+Доступ приложений к 	App access to 
+Могут ли приложения из Магазина получать доступ к 	Whether Store apps can access 
+. После отключения запрет действует для всех приложений и пользователей, а переключатель в «Параметрах» становится недоступен.	. When disabled, the restriction applies to all apps and users, and the switch in Settings becomes unavailable.
+. Запрет ставится для всего компьютера.	. The restriction is set for the whole computer.
+Телеметрия Visual Studio Code	Visual Studio Code telemetry
+VS Code отправляет в Microsoft данные об использовании и ошибках. Отключается политикой и настройкой telemetry.telemetryLevel = off в settings.json (перед изменением файла сохраняется его копия).	VS Code sends usage and error data to Microsoft. Disabled by policy and by the telemetry.telemetryLevel = off setting in settings.json (a copy of the file is saved before changing it).
+Файл	File
+Вкл	On
+Откл	Off
+ (файла нет)	 (no file)
+Системные политики и интеграции	System policies and integrations
+Планировщик и память	Scheduler and memory
+Ввод	Input
+Диск и файловая система	Disk and file system
+Обслуживание и диагностика	Maintenance and diagnostics
+User Choice Protection Driver — драйвер, который не даёт программам менять браузер и приложения по умолчанию и некоторые настройки панели задач (например, скрытие виджетов через реестр). После отключения такие изменения снова можно делать программами и скриптами.	User Choice Protection Driver — a driver that prevents programs from changing the default browser and apps and some taskbar settings (for example, hiding widgets via the registry). When disabled, such changes can again be made by programs and scripts.
+Как Windows делит процессорное время между активным окном и фоном.\n	How Windows splits CPU time between the active window and the background.\n
+По умолчанию (2) — стандарт Windows.\n	Default (2) — the Windows standard.\n
+Отзывчивость (0x26) — короткие кванты и максимальный приоритет активной программы: подходит для игр и работы.\n	Responsiveness (0x26) — short quanta and maximum priority for the active program: good for games and work.\n
+Короткие фиксированные (0x28) — равные короткие кванты без бонуса активному окну.\n	Short fixed (0x28) — equal short quanta with no boost for the active window.\n
+Фоновые службы (0x18) — длинные кванты, как на серверах: фон работает ровнее, интерфейс медленнее.	Background services (0x18) — long quanta, like on servers: the background runs more evenly, the interface is slower.
+По умолчанию	Default
+Отзывчивость	Responsiveness
+Короткие фиксированные	Short fixed
+Фоновые службы	Background services
+Разделение служб (svchost.exe)	Service splitting (svchost.exe)
+Если памяти больше 3,5 ГБ, Windows запускает почти каждую службу в отдельном процессе svchost.exe — так надёжнее: сбой одной службы не роняет другие. После отключения службы объединяются в общие процессы: процессов становится заметно меньше, памяти тратится чуть меньше.	With more than 3.5 GB of memory, Windows runs almost every service in a separate svchost.exe process — this is more reliable: one service crashing doesn't bring down others. When disabled, services are grouped into shared processes: there are noticeably fewer processes and slightly less memory is used.
+если одна служба в общем процессе упадёт, вместе с ней перезапустятся соседние.	if one service in a shared process crashes, its neighbors restart with it.
+Уменьшить частоту фоновых событий Raw Input	Reduce background Raw Input event rate
+Windows 11 24H2+: фоновые окна получают события мыши с высокой частотой опроса (1000+ Гц) реже. Снижает нагрузку на процессор, когда в фоне открыто много программ, и не влияет на активную игру.	Windows 11 24H2+: background windows receive mouse events from high polling rates (1000+ Hz) less often. Reduces CPU load when many programs are open in the background and doesn't affect the active game.
+Конвенция имён файлов 8.3	8.3 file name convention
+Для каждого файла NTFS создаёт дополнительное короткое имя в стиле DOS (PROGRA~1). Нужно только очень старым программам; без этого создание файлов в больших папках идёт быстрее. Уже существующие короткие имена не удаляются.	For each file, NTFS creates an additional short DOS-style name (PROGRA~1). Only very old programs need it; without it, creating files in large folders is faster. Existing short names are not removed.
+очень старые 16-битные программы и некоторые старые установщики могут не найти файлы.	very old 16-bit programs and some old installers may not find files.
+Совместимость приложений	Application compatibility
+Помощник по совместимости программ (PCA) и механизм исправлений совместимости: следят за запуском старых программ и предлагают «запустить с другими параметрами».	Program Compatibility Assistant (PCA) and the compatibility fix engine: they watch old programs start and offer to "run with different settings".
+старые программы, которым нужны исправления совместимости (шимы), могут перестать запускаться.	old programs that need compatibility fixes (shims) may stop starting.
+Автоматическое обслуживание	Automatic maintenance
+Ежедневное обслуживание в простое: оптимизация дисков, проверка системы, установка обновлений Магазина и т.п. Может внезапно нагружать ПК. Если отключить, иногда запускайте «Оптимизацию дисков» вручную (для SSD это TRIM).	Daily idle maintenance: disk optimization, system checks, Store update installs, etc. It can suddenly load the PC. If you disable it, run "Optimize Drives" manually from time to time (for SSDs this is TRIM).
+Запланированная диагностика	Scheduled diagnostics
+Регулярная автоматическая проверка системы на неполадки (средства устранения неполадок по расписанию).	Regular automatic system check for problems (scheduled troubleshooters).
+«Продолжить на этом ПК»: уведомления с предложением продолжить на компьютере работу, начатую на телефоне (через OneDrive и «Связь с телефоном»). Применяется к текущему пользователю.	"Continue on this PC": notifications offering to continue on the computer work started on the phone (via OneDrive and Phone Link). Applies to the current user.
+если функцию раньше отключали через скрытые A/B-функции Windows (например, ViVeTool), такое переопределение может продолжать её запрещать.	if the feature was previously disabled through hidden Windows A/B features (for example, ViVeTool), that override may keep blocking it.
+Политика MDM	MDM policy
+current\\<ваш SID>\\Connectivity	current\\<your SID>\\Connectivity
+0 — запрет снимается	0 — restriction removed
+не меняется	unchanged
+Диагностические события	Diagnostic events
+Подробные журналы SleepStudy и энергопотребления (Modern Standby, питание процессора). Если вы не разбираетесь с режимом сна, их можно выключить: журнал событий станет меньше и чище.	Detailed SleepStudy and power consumption logs (Modern Standby, CPU power). If you're not troubleshooting sleep, they can be turned off: the event log becomes smaller and cleaner.
+Журнал	Log
+Включён	Enabled
+Выключен	Disabled
+нет в этой Windows	not in this Windows
+3 670 016 КБ (3,5 ГБ)	3,670,016 KB (3.5 GB)
+0xFFFFFFFF (максимум)	0xFFFFFFFF (maximum)
+Обновление последнего доступа NTFS	NTFS last access update
+При каждом чтении файла NTFS записывает время последнего доступа — лишние операции записи на диск. После отключения время доступа не обновляется (на SSD и больших дисках Windows обычно и так его выключает).	Every time a file is read, NTFS records the last access time — extra disk writes. When disabled, the access time is not updated (on SSDs and large disks Windows usually turns it off anyway).
+Хранилище обновлений	Reserved storage
+Windows держит несколько гигабайт диска (обычно ~7 ГБ) свободными для установки обновлений. После отключения это место освобождается. Отключить нельзя, пока устанавливается обновление.	Windows keeps several gigabytes of disk space (usually ~7 GB) free for installing updates. When disabled, this space is freed. Can't be disabled while an update is being installed.
+DISM не смог изменить хранилище (код 	DISM couldn't change reserved storage (code 
+). Часто это значит, что сейчас устанавливается обновление — попробуйте после перезагрузки.\n\n	). Often this means an update is being installed right now — try again after a restart.\n\n
+Команда	Command
+официальный способ Windows	official Windows method
+Визуальные эффекты	Visual effects
+Поиск и ассистенты	Search and assistants
+Оболочка Windows	Windows shell
+Ввод и клавиатура	Input and keyboard
+Функции Windows	Windows features
+Прозрачность Windows	Windows transparency
+Полупрозрачные «Пуск», панель задач и окна. Выключение немного разгружает видеокарту.	Translucent Start, taskbar and windows. Turning it off slightly unloads the graphics card.
+Сжатие фона рабочего стола	Desktop wallpaper compression
+Windows пережимает JPEG-обои до качества 85%, из-за чего они теряют чёткость. После отключения обои ставятся в исходном качестве. Применится, когда обои установят заново.	Windows recompresses JPEG wallpapers to 85% quality, so they lose sharpness. When disabled, wallpapers are set in original quality. Takes effect when the wallpaper is set again.
+Динамическое освещение	Dynamic Lighting
+Управление RGB-подсветкой клавиатур, мышей и т.д. из Windows. Может конфликтовать с фирменными программами подсветки (iCUE, Armoury Crate, G Hub).	Controlling RGB lighting of keyboards, mice, etc. from Windows. May conflict with vendor lighting software (iCUE, Armoury Crate, G Hub).
+Результаты из интернета в Поиске	Web results in Search
+Поиск в «Пуске» показывает подсказки и результаты Bing. После отключения ищутся только приложения, файлы и настройки на компьютере — быстрее и без отправки запросов в интернет.	Start search shows Bing suggestions and results. When disabled, only apps, files and settings on the computer are searched — faster and without sending queries to the internet.
+WebView2 для Поиска	WebView2 for Search
+«Главное в поиске»: картинки дня, новости и праздники в окне поиска. Они загружаются через встроенный браузер WebView2. После отключения окно поиска открывается быстрее и не грузит интернет-контент.	"Search highlights": pictures of the day, news and holidays in the search window. They load through the built-in WebView2 browser. When disabled, the search window opens faster and doesn't load web content.
+Программа улучшения качества (CEIP): Windows собирает статистику использования и отправляет её в Microsoft.	Customer Experience Improvement Program (CEIP): Windows collects usage statistics and sends them to Microsoft.
+Советы и новые приложения в меню «Пуск»	Tips and new apps in Start
+Рекомендации, советы и рекламные приложения в «Пуске», а также их тихая автоустановка (Candy Crush и т.п.).	Recommendations, tips and promoted apps in Start, as well as their silent auto-install (Candy Crush, etc.).
+ИИ-помощник Microsoft: кнопка на панели задач и вызов по Win+C. Если Copilot установлен как отдельное приложение, его можно удалить через «Установленные приложения».	Microsoft's AI assistant: the taskbar button and Win+C. If Copilot is installed as a separate app, it can be removed via "Installed apps".
+Виджеты	Widgets
+Панель виджетов с новостями и погодой (в Windows 10 — «Новости и интересы» на панели задач). Работает в фоне и грузит контент из интернета.	The widgets panel with news and weather (in Windows 10 — "News and interests" on the taskbar). Runs in the background and loads content from the internet.
+«Windows: интересное» — меняющиеся фото на экране блокировки и рабочем столе с подсказками и рекламой.	"Windows Spotlight" — changing photos on the lock screen and desktop with tips and ads.
+Скрыть наиболее используемые приложения	Hide most used apps
+Убирает список «Часто используемые» из меню «Пуск» — Windows перестаёт отслеживать запуск программ.	Removes the "Most used" list from Start — Windows stops tracking program launches.
+\"Завершить задачу\" в меню панели задач	\"End task\" in the taskbar menu
+Пункт «Завершить задачу» в меню по правому клику на значке программы — закрывает зависшую программу без Диспетчера задач.	The "End task" item in the right-click menu of a program's taskbar icon — closes a frozen program without Task Manager.
+Старый смотрельщик фото	Classic photo viewer
+Возвращает классический «Просмотр фотографий Windows» для JPG, PNG, BMP, GIF и др. После включения откройте картинку через «Открыть с помощью» → «Просмотр фотографий Windows» → «Всегда».	Brings back the classic "Windows Photo Viewer" for JPG, PNG, BMP, GIF, etc. After enabling, open a picture via "Open with" → "Windows Photo Viewer" → "Always".
+Отображение недавних и часто используемых элементов	Show recent and frequent items
+Списки «Последние файлы» и «Часто используемые папки» на панели быстрого доступа Проводника.	The "Recent files" and "Frequent folders" lists in File Explorer's Quick access.
+Отслеживание недавно открытых документов	Track recently opened documents
+Windows запоминает недавно открытые файлы для «Пуска», списков переходов и Проводника.	Windows remembers recently opened files for Start, jump lists and File Explorer.
+Показ Просмотра задач	Show Task View
+Кнопка «Представление задач» (виртуальные рабочие столы) на панели задач. Сама функция по Win+Tab остаётся.	The "Task View" button (virtual desktops) on the taskbar. The Win+Tab feature itself stays.
+Экран блокировки	Lock screen
+Экран с часами и картинкой перед вводом пароля. После отключения сразу показывается окно входа.	The screen with a clock and picture before entering the password. When disabled, the sign-in screen appears right away.
+Показывать секунды в часах панели задач	Show seconds in the taskbar clock
+Часы на панели задач показывают секунды.	The taskbar clock shows seconds.
+Залипание клавиш	Sticky Keys
+Окно «Залипание клавиш» после пятикратного нажатия Shift — часто выскакивает в играх. После отключения сочетание перестаёт срабатывать.	The "Sticky Keys" window after pressing Shift five times — often pops up in games. When disabled, the shortcut stops working.
+Сбор текстовых сообщений и рукописного ввода	Text and handwriting collection
+Windows собирает набранный текст и рукописный ввод, чтобы «улучшать» распознавание и подсказки.	Windows collects typed text and handwriting to "improve" recognition and suggestions.
+Обратная связь при вводе	Input feedback
+«Улучшение распознавания рукописного ввода и набора»: отправка данных о вводе в Microsoft.	"Improve inking and typing": sending input data to Microsoft.
+Синхронизация настроек аккаунта Microsoft	Microsoft account settings sync
+Синхронизация темы, паролей, языка и других настроек между устройствами через аккаунт Microsoft.	Syncing theme, passwords, language and other settings between devices via a Microsoft account.
+Центр мобильности Windows	Windows Mobility Center
+Старая панель для ноутбуков (Win+X → Центр мобильности): яркость, громкость, батарея.	An old panel for laptops (Win+X → Mobility Center): brightness, volume, battery.
+Запись действий	Steps Recorder
+«Средство записи действий» (psr.exe) — записывает клики и скриншоты для отчётов об ошибках.	"Steps Recorder" (psr.exe) — records clicks and screenshots for error reports.
+Лента активности	Activity history
+Журнал действий: какие программы и файлы вы открывали. Сохраняется на компьютере и может отправляться в Microsoft.	A history of which programs and files you opened. Stored on the computer and may be sent to Microsoft.
+Доступ сайтов к списку языков	Website access to language list
+Сайты видят список установленных у вас языков и показывают контент на нём. Это также помогает отслеживать вас.	Websites see the list of languages you have installed and show content in them. This also helps track you.
+Внешний вид	Appearance
+Лучший вид	Best appearance
+Оптимальное	Optimal
+Производительность	Performance
+Визуальные эффекты Windows: анимации окон, тени, сглаживание и т.д.\n	Windows visual effects: window animations, shadows, smoothing, etc.\n
+Оптимальное — без анимаций и теней, но со сглаживанием шрифтов, эскизами и содержимым окон при перетаскивании. Хороший баланс для слабых ПК и игр.\n	Optimal — no animations or shadows, but with font smoothing, thumbnails and window contents while dragging. A good balance for weak PCs and games.\n
+Производительность — все эффекты выключены (шрифты остаются сглаженными).	Performance — all effects off (fonts stay smoothed).
+изменения полностью применятся после выхода из системы.	changes fully take effect after signing out.
+стандартная	standard
+быстродействие	performance
+IconsOnly (эскизы)	IconsOnly (thumbnails)
+Контекстное меню как в Windows 10	Windows 10 context menu
+Сразу открывать полное контекстное меню, без пункта «Показать дополнительные параметры».	Open the full context menu right away, without the "Show more options" item.
+(по умолчанию)	(default)
+пустое значение	empty value
+ключа нет	no key
+Всегда отображать все иконки на панели задач	Always show all taskbar icons
+Значки программ в трее (возле часов) не прячутся под стрелку «^». В Windows 11 настройка ставится для уже известных значков — если появится новая программа, переключите ещё раз.	Program icons in the tray (near the clock) are not hidden under the "^" arrow. In Windows 11 the setting is applied to already known icons — if a new program appears, toggle it again.
+IsPromoted — для каждого значка (	IsPromoted — for each icon (
+Обновление Windows	Windows Update
+Включено	Enabled
+Пауза	Paused
+Отключено	Disabled
+Включено — как в Windows по умолчанию.\n	Enabled — as in Windows by default.\n
+Пауза — обновления приостановлены до отмены (в «Параметрах» будет видна дата). Windows продолжает работать как обычно, снять паузу можно здесь или кнопкой «Возобновить» в Параметрах.\n	Paused — updates are paused until you cancel (Settings will show a date). Windows keeps working as usual; you can unpause here or with the "Resume" button in Settings.\n
+Отключено — автообновление выключено политикой, служба Windows Update отключена. Магазин и обновление баз Defender тоже перестанут работать.	Disabled — automatic updates are turned off by policy and the Windows Update service is disabled. The Store and Defender definition updates will also stop working.
+Политика	Policy
+нет значения	no value
+Служба	Service
+Тип запуска	Startup type
+Вручную	Manual
+Отключена	Disabled
+PauseUpdates… (6 дат) и FlightSettingsMaxPauseDays	PauseUpdates… (6 dates) and FlightSettingsMaxPauseDays
+нет значений	no values
+сегодня → +	today → +
+ дней	 days
+Без обновлений не приходят исправления уязвимостей. Также перестанут обновляться приложения Магазина и базы Windows Defender.\n\nWindows может сама включить службу обратно через какое-то время.	Without updates you don't get vulnerability fixes. Store apps and Windows Defender definitions will also stop updating.\n\nWindows may turn the service back on by itself after a while.
+Аппаратное ускорение планирования GPU: видеокарта сама управляет своей памятью. Может снизить задержку ввода и нужно для генерации кадров DLSS 3. Требует поддержки видеокартой (NVIDIA GTX 10xx и новее, AMD RX 5000 и новее).	Hardware-accelerated GPU scheduling: the graphics card manages its own memory. Can reduce input lag and is required for DLSS 3 frame generation. Requires graphics card support (NVIDIA GTX 10xx and newer, AMD RX 5000 and newer).
+Защита видеосигнала от копирования (для видеокарт NVIDIA). Иногда мешает захвату и записи экрана. После отключения часть защищённого видео (например, стриминг в 4K) может не воспроизводиться.	Copy protection of the video signal (for NVIDIA graphics cards). Sometimes interferes with screen capture and recording. When disabled, some protected video (for example, 4K streaming) may not play.
+Включена «Защита от подделки» — Microsoft специально не даёт программам менять настройки антивируса.\n\n	"Tamper Protection" is on — Microsoft deliberately prevents programs from changing antivirus settings.\n\n
+Выключите её вручную: «Безопасность Windows» → «Защита от вирусов и угроз» → «Управление настройками» → «Защита от подделки» → Выкл. Потом вернитесь сюда.\n\n	Turn it off manually: "Windows Security" → "Virus & threat protection" → "Manage settings" → "Tamper Protection" → Off. Then come back here.\n\n
+btwTweaker не меняет эту настройку сам — это сделано в целях безопасности.	btwTweaker doesn't change this setting itself — this is done for security reasons.
+Windows Defender (Антивирус)	Windows Defender (Antivirus)
+Встроенный антивирус Windows. Отключать стоит только если установлен другой антивирус — иначе компьютер остаётся без защиты от вирусов.	The built-in Windows antivirus. Disable it only if another antivirus is installed — otherwise the computer is left without virus protection.
+компьютер останется без антивирусной защиты.	the computer will be left without antivirus protection.
+Antimalware Scan Interface — интерфейс, через который антивирус проверяет скрипты (PowerShell, макросы) в момент запуска. Отключение снимает регистрацию провайдера Defender, и скрипты перестают проверяться.	Antimalware Scan Interface — the interface the antivirus uses to scan scripts (PowerShell, macros) as they start. Disabling unregisters the Defender provider, and scripts are no longer scanned.
+скрипты (PowerShell, макросы) перестанут проверяться антивирусом при запуске.	scripts (PowerShell, macros) will no longer be scanned by the antivirus at startup.
+регистрация провайдера Defender	Defender provider registration
+ключ есть	key present
+ключ удалён	key removed
+Брандмауэр Windows	Windows Firewall
+Сетевой экран Windows: блокирует нежелательные входящие и исходящие подключения. Отключать стоит, только если его заменяет другой файрвол.	The Windows firewall: blocks unwanted incoming and outgoing connections. Disable it only if another firewall replaces it.
+компьютер перестанет блокировать нежелательные сетевые подключения.	the computer will stop blocking unwanted network connections.
+применяет сразу, без перезагрузки	applies immediately, no restart
+Загрузка	Boot
+Система	System
+Автоматически	Automatic
+Задание	Task
+Ключ 	Key 
+Задание 	Task 
+Драйвер NVIDIA 0x	NVIDIA driver 0x
+Файл 	File 
+задания не было	task did not exist
+задание было (копия сохранена)	task existed (copy saved)
+ключ был	key existed
+ключа не было	key did not exist
+копия файла сохранена	file copy saved
+ (значение NVIDIA)	 (NVIDIA value)
+не задано (по умолчанию)	not set (default)
+Выполнено с ошибкой: 	Completed with an error: 
+Откачено с ошибками: 	Rolled back with errors: 
+Откатить всё	Roll back all
+Резервная копия	Backup
+Восстановлено значений: 	Values restored: 
+Файл повреждён или это не профиль btwTweaker. 	The file is damaged or is not a btwTweaker profile. 
+Это не профиль btwTweaker.	This is not a btwTweaker profile.
+Профиль сохранён более новой версией btwTweaker (	The profile was saved by a newer version of btwTweaker (
+). Обновите программу.	). Please update the program.
+только Windows 11	Windows 11 only
+не поддерживается на этом ПК	not supported on this PC
+не удалось прочитать: 	could not read: 
+ (сборка 	 (build 
+Компьютер	Computer
+Windows разрешает создавать точку восстановления не чаще раза в сутки — сегодня она уже есть.	Windows allows creating a restore point no more than once a day — there is already one today.
+Защита системы выключена. Включите её: Пуск → «Создание точки восстановления» → Настроить → Включить защиту системы.	System Protection is turned off. Turn it on: Start → "Create a restore point" → Configure → Turn on system protection.
+Не удалось создать точку восстановления.\n\n	Could not create a restore point.\n\n
+Точка восстановления «btwTweaker» создана.	Restore point "btwTweaker" created.
+Максимальная производительность	Ultimate Performance
+Высокая производительность	High performance
+Сбалансированная	Balanced
+Экономия энергии	Power saver
+ Б	 B
+ КБ	 KB
+ МБ	 MB
+ ГБ	 GB
+Конфиденциальность	Privacy
+Графика	Graphics
+Браузеры	Browsers
+Кэш Google Chrome	Google Chrome cache
+Кэш Microsoft Edge	Microsoft Edge cache
+Кэш Brave	Brave cache
+Разработка	Development
+Приложения	Apps
+Устройства	Devices
+Временные файлы	Temporary files
+Временные файлы программ и Windows (%TEMP% и C:\\Windows\\Temp). Файлы, которые сейчас используются, пропускаются.	Temporary files of programs and Windows (%TEMP% and C:\\Windows\\Temp). Files that are currently in use are skipped.
+Кэш эскизов	Thumbnail cache
+Миниатюры картинок и видео в Проводнике. Пересоздаются при следующем открытии папок. Часть файлов занята Проводником — они пропустятся.	Picture and video thumbnails in File Explorer. They are recreated the next time folders are opened. Some files are locked by File Explorer — they will be skipped.
+Кэш Windows Update	Windows Update cache
+Уже установленные файлы обновлений (SoftwareDistribution\\Download). Перед очисткой службы обновления ненадолго останавливаются.	Already installed update files (SoftwareDistribution\\Download). Update services are briefly stopped before cleaning.
+Файлы журнала установок	Setup log files
+Журналы установки Windows и обновлений (Logs\\CBS, DISM, Panther, setupapi). Нужны только для разбора ошибок установки.	Windows and update installation logs (Logs\\CBS, DISM, Panther, setupapi). Only needed to investigate installation errors.
+Журналы Microsoft Defender	Microsoft Defender logs
+Журналы поддержки и диагностики антивируса. История угроз и карантин не затрагиваются.	Antivirus support and diagnostic logs. Threat history and quarantine are not affected.
+Отчёты об ошибках и дампы	Error reports and dumps
+Отчёты о сбоях программ (WER), дампы памяти после «синих экранов» и падений программ.	Program crash reports (WER), memory dumps after blue screens and program crashes.
+Файлы базы данных программы просмотра диагностических данных	Diagnostic Data Viewer database files
+Локальная копия телеметрии, которую можно смотреть в «Просмотре диагностических данных».	A local copy of telemetry that can be viewed in the Diagnostic Data Viewer.
+Старые файлы ChkDsk	Old ChkDsk files
+Папки FOUND.000 и файлы *.chk в корне дисков — обрывки файлов, которые ChkDsk нашёл при проверке диска.	FOUND.000 folders and *.chk files in drive roots — file fragments that ChkDsk found while checking the disk.
+Скомпилированные шейдеры игр (DirectX, AMD). Windows пересоздаст их сама.	Compiled game shaders (DirectX, AMD). Windows will recreate them by itself.
+первый запуск игр после очистки может быть дольше и с подтормаживаниями, пока шейдеры не соберутся заново.	the first launch of games after cleaning may take longer and stutter until shaders are rebuilt.
+Кэш, загрузки и журналы NVIDIA	NVIDIA cache, downloads and logs
+Кэш шейдеров драйвера NVIDIA, скачанные установщики драйверов и журналы.	NVIDIA driver shader cache, downloaded driver installers and logs.
+ Удаляется только кэш — пароли, куки, история и вкладки остаются.	 Only the cache is removed — passwords, cookies, history and tabs stay.
+Сохранённые копии страниц, картинок и скриптов.	Saved copies of pages, images and scripts.
+Кэш Vivaldi и Opera	Vivaldi and Opera cache
+Кэш Vivaldi, Opera и Opera GX.	Vivaldi, Opera and Opera GX cache.
+Кэш Mozilla Firefox	Mozilla Firefox cache
+Кэш страниц, запуска и миниатюр Firefox.	Firefox page, startup and thumbnail cache.
+Кэш Visual Studio	Visual Studio cache
+Кэш компонентов (ComponentModelCache) и телеметрии Visual Studio. Закройте Visual Studio перед очисткой.	Visual Studio component cache (ComponentModelCache) and telemetry. Close Visual Studio before cleaning.
+Временный кэш NuGet	NuGet temporary cache
+HTTP-кэш и временные файлы NuGet. Скачанные пакеты (global-packages) не трогаются.	NuGet HTTP cache and temporary files. Downloaded packages (global-packages) are not touched.
+Кэш npm, Yarn и pnpm	npm, Yarn and pnpm cache
+Скачанные пакеты Node.js в кэше менеджеров пакетов. Проекты не затрагиваются — пакеты скачаются заново при необходимости.	Node.js packages downloaded into package manager caches. Projects are not affected — packages will be downloaded again when needed.
+Диагностические файлы .NET	.NET diagnostic files
+Телеметрия и временные файлы .NET SDK.	.NET SDK telemetry and temporary files.
+Очистка следов активности	Activity traces cleanup
+Список недавних файлов, списки переходов на панели задач, история окна «Выполнить» (Win+R) и адресной строки Проводника.	The recent files list, taskbar jump lists, Run (Win+R) history and File Explorer address bar history.
+Недавние файлы и списки переходов: 	Recent files and jump lists: 
+История «Выполнить»: 	Run history: 
+История адресной строки Проводника: 	File Explorer address bar history: 
+Остатки UWP	UWP leftovers
+Папки с данными приложений Магазина, которые уже удалены. Перед очисткой будет показан список.	Data folders of Store apps that have already been removed. A list is shown before cleaning.
+Отключённые устройства	Disconnected devices
+Записи об устройствах, которые когда-то подключались (флешки, телефоны, старые видеокарты и т.п.), а сейчас отсутствуют. Если устройство подключить снова, Windows установит его заново. Программные устройства и Bluetooth (чтобы не сбить сопряжение) не трогаются.	Records of devices that were once connected (flash drives, phones, old graphics cards, etc.) but are now absent. If the device is connected again, Windows will install it again. Software devices and Bluetooth (to keep pairings) are not touched.
+Драйвер NVIDIA не поддерживает функцию 0x	The NVIDIA driver does not support function 0x
+инициализация	initialization
+Драйвер NVIDIA: ошибка 	NVIDIA driver: error 
+Драйвер NVIDIA не найден.	NVIDIA driver not found.
+сессия	session
+загрузка настроек	loading settings
+глобальный профиль	global profile
+сохранение	saving
+чтение 0x	reading 0x
+запись 0x	writing 0x
+перечисление	enumeration
+список настроек	settings list
+восстановление 0x	restoring 0x
+Сглаживание и резкость	Antialiasing and sharpening
+Сглаживание — FXAA	Antialiasing — FXAA
+Быстрое сглаживание лесенок постобработкой во всех играх. Почти не нагружает видеокарту, но слегка размывает картинку и текст. Лучше включать сглаживание в самой игре.	Fast post-processing antialiasing in all games. Barely loads the graphics card, but slightly blurs the image and text. It's better to enable antialiasing in the game itself.
+Сглаживание — гамма-коррекция	Antialiasing — gamma correction
+Учитывает гамму при сглаживании (MSAA): края выглядят ровнее. Влияет только на игры с MSAA.	Takes gamma into account when antialiasing (MSAA): edges look smoother. Only affects games with MSAA.
+Сглаживание — MFAA	Antialiasing — MFAA
+Multi-Frame Sampled AA: чередует шаблоны сэмплов между кадрами, чтобы получить качество 4x MSAA по цене 2x. Работает только вместе с MSAA в игре.	Multi-Frame Sampled AA: alternates sample patterns between frames to get 4x MSAA quality at the cost of 2x. Only works together with in-game MSAA.
+Сглаживание прозрачных текстур	Antialiasing — transparency
+Сглаживание листвы, решёток и других прозрачных текстур. Суперсэмплинг заметно нагружает видеокарту.	Antialiasing of foliage, fences and other transparent textures. Supersampling noticeably loads the graphics card.
+Выключено / мультисэмплинг	Off / multisampling
+Суперсэмплинг 2x	2x supersampling
+Суперсэмплинг 4x	4x supersampling
+Суперсэмплинг 8x	8x supersampling
+Сглаживание (MSAA) — режим	Antialiasing (MSAA) — mode
+Кто управляет MSAA: игра или драйвер. «Переопределить» навязывает сглаживание драйвера, «Улучшить» дополняет сглаживание игры.	Who controls MSAA: the game or the driver. "Override" forces the driver's antialiasing, "Enhance" adds to the game's antialiasing.
+Управляется приложением	Application-controlled
+Переопределить	Override
+Улучшить	Enhance
+Синхронизация и частота кадров	Sync and frame rate
+Ограничение FPS для фоновых приложений	Background application max frame rate
+Максимум кадров в секунду для игр и программ, когда их окно не активно (например, свернули игру). 0 — без ограничения.	Maximum frames per second for games and programs when their window is not active (for example, a minimized game). 0 — no limit.
+Тройная буферизация	Triple buffering
+Третий буфер кадров для OpenGL при включённой вертикальной синхронизации: меньше просадок FPS, но больше задержка ввода.	A third frame buffer for OpenGL with vertical sync on: fewer FPS drops, but more input lag.
+Предпочтительная частота обновления	Preferred refresh rate
+Какую частоту монитора использовать в полноэкранных играх. «Наивысшая доступная» не даёт игре выбрать 60 Гц на мониторе 144/240 Гц.	Which monitor refresh rate to use in fullscreen games. "Highest available" keeps a game from choosing 60 Hz on a 144/240 Hz monitor.
+Наивысшая доступная	Highest available
+Ограничение FPS	Max frame rate
+Максимум кадров в секунду во всех играх. Ставьте на 2–3 кадра ниже частоты монитора, если используете G-SYNC. 0 — без ограничения.	Maximum frames per second in all games. Set it 2–3 frames below the monitor refresh rate if you use G-SYNC. 0 — no limit.
+Вертикальная синхронизация	Vertical sync
+Синхронизирует кадры с частотой монитора: нет разрывов, но выше задержка. «Быстрая» убирает разрывы почти без задержки, если FPS сильно выше частоты монитора.	Synchronizes frames with the monitor refresh rate: no tearing, but higher latency. "Fast" removes tearing with almost no latency when FPS is much higher than the refresh rate.
+Как в приложении	Use the 3D application setting
+Быстрая	Fast
+Режим низкой задержки	Low latency mode
+Сколько кадров процессор готовит заранее. «Вкл» — один кадр, «Ультра» — кадр отдаётся видеокарте точно к моменту отрисовки. Снижает задержку ввода, когда видеокарта загружена на 100%.	How many frames the CPU prepares in advance. "On" — one frame, "Ultra" — the frame is submitted to the GPU just in time for rendering. Reduces input lag when the GPU is 100% loaded.
+Ультра	Ultra
+Система, память и вычисления	System, memory and compute
+CUDA — принудительное состояние P2	CUDA — Force P2 State
+В CUDA-нагрузках (рендер, нейросети, некоторые игры и программы) драйвер снижает частоту памяти до состояния P2. После отключения память работает на полной частоте.	In CUDA workloads (rendering, neural networks, some games and programs), the driver lowers the memory clock to the P2 state. When disabled, memory runs at full clock.
+Управление питанием — режим	Power management mode
+«Максимальная производительность» не даёт видеокарте сбрасывать частоты между кадрами — меньше микрофризов, но выше энергопотребление в простое.	"Prefer maximum performance" keeps the graphics card from dropping clocks between frames — fewer micro-stutters, but higher idle power draw.
+Оптимальное энергопотребление	Optimal power
+Адаптивный	Adaptive
+Многопоточная оптимизация	Threaded optimization
+Распределяет работу драйвера OpenGL по нескольким ядрам процессора. «Авто» — драйвер решает сам.	Spreads the OpenGL driver's work across several CPU cores. "Auto" — the driver decides by itself.
+Авто	Auto
+Текстурная фильтрация	Texture filtering
+Анизотропная фильтрация	Anisotropic filtering
+Чёткость текстур под углом (дорога, пол вдаль). Почти не влияет на FPS на современных видеокартах. «Управляется приложением» — уровень задаёт игра.	Texture sharpness at an angle (a road, a floor in the distance). Barely affects FPS on modern graphics cards. "Application-controlled" — the game sets the level.
+Фильтрация текстур — качество	Texture filtering — quality
+Баланс качества и скорости фильтрации текстур. «Производительность» включает оптимизации драйвера — прирост FPS небольшой, картинка почти не меняется.	Balance of texture filtering quality and speed. "Performance" enables driver optimizations — a small FPS gain, the image barely changes.
+Высокое качество	High quality
+Качество	Quality
+Фильтрация текстур — трилинейная оптимизация	Texture filtering — trilinear optimization
+Упрощённая трилинейная фильтрация там, где разница незаметна. Игнорируется при «Высоком качестве».	Simplified trilinear filtering where the difference is not noticeable. Ignored with "High quality".
+Анизотропная фильтрация — оптимизация выборки	Anisotropic filtering — sample optimization
+Меньше выборок при анизотропной фильтрации там, где это не видно. Немного быстрее.	Fewer samples with anisotropic filtering where it isn't visible. Slightly faster.
+Функции рендеринга	Rendering features
+Затенение фонового освещения (AO)	Ambient occlusion (AO)
+Драйвер добавляет мягкие тени в углах и щелях в поддерживаемых играх. Заметно снижает FPS; большинство современных игр делает это сами.	The driver adds soft shadows in corners and gaps in supported games. Noticeably reduces FPS; most modern games do this themselves.
+Не удалось получить список приложений.\n\n	Could not get the list of apps.\n\n
+Windows не дал удалить «	Windows did not allow removing "
+Удалитель OneDrive не справился — попробуйте удалить его через «Установленные приложения».	The OneDrive uninstaller failed — try removing it via "Installed apps".
+Не найден установщик Edge (Application\\<версия>\\Installer\\setup.exe).	Edge installer not found (Application\\<version>\\Installer\\setup.exe).
+Windows не разрешил удалить Edge в вашем регионе. Edge остался на месте, система не пострадала.	Windows did not allow removing Edge in your region. Edge stayed in place, the system was not harmed.
+Автозагрузка пользователя	User startup
+Общая автозагрузка	Common startup
+Планировщик: 	Task Scheduler: 
+Служба: 	Service: 
+Высокое	High
+Среднее	Medium
+Низкое	Low
+btwTweaker: отложенный запуск «	btwTweaker: delayed start "
+Тип;Название;Состояние;Влияние;Издатель;Команда;Откуда	Type;Name;State;Impact;Publisher;Command;Location
+Задача	Task
+Отложено	Delayed
+Приложение Магазина (StartupTask)	Store app (StartupTask)
+Службы не удаляются — их можно только отключить.	Services are not deleted — they can only be disabled.
+GitHub вернул непонятный ответ.	GitHub returned an unexpected response.
+В последнем релизе нет файла 	The latest release has no file 
+Файл контрольной суммы в релизе повреждён — обновление отменено.	The checksum file in the release is damaged — update cancelled.
+Контрольная сумма скачанного файла не совпала — обновление отменено.	The checksum of the downloaded file did not match — update cancelled.
+Скачанный файл не похож на программу — обновление отменено.	The downloaded file doesn't look like the program — update cancelled.
+Прошлая версия не сохранена.	The previous version was not saved.
+Что-то пошло не так: 	Something went wrong: 
+\n\nПодробности сохранены в файл:\n	\n\nDetails were saved to the file:\n
+btwTweaker — ошибка	btwTweaker — error
+нет	no
+<неизвестно драйверу>	<unknown to the driver>
+Да	Yes
+Отмена	Cancel
+Понятно	OK
+Все	All
+Ничего	None
+Выбрано: 	Selected: 
+ из 	 of 
+Главная	Home
+Мои твики	My tweaks
+Параметры	Settings
+Поиск по всем твикам	Search all tweaks
+Что нового	What's new
+Обновить	Refresh
+Позже	Later
+Вернуть…	Restore…
+Не следить	Stop tracking
+Больше не напоминать про эти твики — оставить как сейчас	Don't remind about these tweaks anymore — keep them as they are
+твик	tweak
+твика	tweaks
+твиков	tweaks
+Поиск	Search
+Найдено: 	Found: 
+Ничего не найдено	Nothing found
+Попробуйте другое слово.	Try another word.
+Привет, 	Hi, 
+ в избранном	 in favorites
+Избранные твики из всех разделов	Favorite tweaks from all sections
+Пока пусто	Nothing here yet
+Нажмите на звёздочку у любого твика, чтобы добавить его сюда.	Click the star on any tweak to add it here.
+Что и когда менял btwTweaker — с откатом по одному действию	What btwTweaker changed and when — with per-action rollback
+Внешний вид, резервная копия и сведения о программе	Appearance, backup and about
+Схемы электропитания Windows	Windows power plans
+Программы, задания и службы, которые запускаются вместе с Windows	Programs, tasks and services that start with Windows
+Встроенные программы Windows, OneDrive и Edge	Built-in Windows apps, OneDrive and Edge
+Настройки драйвера видеокарты	Graphics driver settings
+Временные файлы, кэши и следы активности	Temporary files, caches and activity traces
+ · групп: 	 · groups: 
+Чтобы изменения применились, нужно перезапустить Проводник.	Restart File Explorer to apply the changes.
+Перезапустить Проводник	Restart File Explorer
+Часть изменений применится после выхода из системы или перезагрузки.	Some changes will apply after signing out or restarting.
+Перезагрузить	Restart
+Часть изменений применится только после перезагрузки компьютера.	Some changes will apply only after restarting the computer.
+Перезагрузить компьютер сейчас?	Restart the computer now?
+Сохраните открытые файлы в других программах — компьютер перезагрузится сразу.	Save open files in other programs — the computer will restart immediately.
+Создать точку восстановления?	Create a restore point?
+Windows запомнит текущее состояние системы. Если что-то пойдёт не так, к нему можно вернуться через «Восстановление системы». Это займёт до минуты.	Windows will remember the current state of the system. If something goes wrong, you can return to it via System Restore. This takes up to a minute.
+Создать	Create
+Готово	Done
+Точка восстановления	Restore point
+Нечего откатывать	Nothing to roll back
+btwTweaker ещё ничего не менял на этом компьютере.	btwTweaker hasn't changed anything on this computer yet.
+Откатить все изменения?	Roll back all changes?
+Все настройки, которые менял btwTweaker (	All settings btwTweaker changed (
+ знач.), вернутся к исходным значениям — как было до первого изменения.	 values) will return to their original values — as before the first change.
+Откатить	Roll back
+Откат выполнен	Rollback complete
+\n\nОшибки:\n	\n\nErrors:\n
+\n\nДля полного применения перезагрузите компьютер.	\n\nRestart the computer for the changes to fully apply.
+Сохранить профиль btwTweaker	Save btwTweaker profile
+Профиль btwTweaker (*	btwTweaker profile (*
+Профиль сохранён	Profile saved
+Записано 	Saved 
+ с текущим состоянием.\n\n	 with their current state.\n\n
+\n\nПеренесите файл на другой компьютер и откройте его в btwTweaker: Параметры → «Применить профиль».	\n\nCopy the file to another computer and open it in btwTweaker: Settings → "Apply profile".
+Не получилось сохранить профиль	Could not save the profile
+Открыть профиль btwTweaker	Open btwTweaker profile
+|Все файлы (*.*)|*.*	|All files (*.*)|*.*
+Не получилось открыть профиль	Could not open the profile
+Профиль «	Profile "
+ от 	 from 
+, компьютер 	, computer 
+\n\nВ этой версии программы нет твиков: 	\n\nTweaks missing in this version of the program: 
+ — они пропущены.	 — they were skipped.
+Всё уже как в профиле	Everything already matches the profile
+\n\nНа этом компьютере все твики из профиля уже стоят так же.	\n\nAll tweaks from the profile are already set the same way on this computer.
+ Отличается от этого компьютера: 	 Differs from this computer: 
+, недоступно здесь: 	, unavailable here: 
+\nОтметьте, что применить. Пункты, которые снижают защиту или требуют внимания, не отмечены — включите их сами, если нужно.	\nCheck what to apply. Items that reduce protection or need attention are not checked — turn them on yourself if needed.
+\nКаждое изменение попадёт в «Журнал», его можно откатить.	\nEvery change goes to the "Log" and can be rolled back.
+Применить профиль	Apply profile
+Применить	Apply
+Пропуск: 	Skipped: 
+Снижает защиту: 	Reduces protection: 
+Внимание: 	Caution: 
+Возврат после сброса: 	Restore after reset: 
+Готово, но не всё	Done, but not everything
+Изменено: 	Changed: 
+\n\nНе получилось:\n	\n\nFailed:\n
+\n\nОткатить можно в «Журнале» — по одному или всё сразу.	\n\nYou can roll back in the "Log" — one at a time or all at once.
+Проверка сброса	Reset check
+настройку	setting
+настройки	settings
+настроек	settings
+После обновления Windows (сборка 	After a Windows update (build 
+) вернулось назад 	) reverted 
+Windows или другая программа вернула назад 	Windows or another program reverted 
+, которые вы меняли в btwTweaker.	 you changed in btwTweaker.
+Вернуть настройки	Restore settings
+Эти твики сейчас стоят не так, как вы выбирали в btwTweaker. Отметьте, что вернуть. Каждое изменение попадёт в «Журнал».	These tweaks are currently not set the way you chose in btwTweaker. Check what to restore. Every change goes to the "Log".
+Вернуть	Restore
+Не следить за этими твиками?	Stop tracking these tweaks?
+btwTweaker перестанет напоминать о них и оставит как сейчас. Если снова измените твик в программе, слежение включится заново.	btwTweaker will stop reminding you about them and leave them as they are. If you change the tweak in the program again, tracking resumes.
+Добро пожаловать в btwTweaker	Welcome to btwTweaker
+Перед изменениями рекомендуем создать точку восстановления — так любую настройку можно будет вернуть даже без программы.\n\nКроме того, btwTweaker сам запоминает исходные значения: кнопка «Откатить всё» вернёт всё как было.	Before making changes, we recommend creating a restore point — then any setting can be reverted even without the program.\n\nBesides, btwTweaker remembers the original values itself: the "Roll back all" button returns everything as it was.
+Создать точку	Create point
+Пропустить	Skip
+Проверка обновлений	Update check
+Не удалось проверить обновления	Could not check for updates
+GitHub недоступен или не отвечает.\n\n	GitHub is unavailable or not responding.\n\n
+Обновлений нет	No updates
+У вас последняя версия btwTweaker 	You have the latest version of btwTweaker 
+Доступна новая версия btwTweaker 	A new version of btwTweaker is available: 
+ (у вас 	 (you have 
+Описание этой версии не указано.	No description for this version.
+Что нового в btwTweaker 	What's new in btwTweaker 
+Обновить btwTweaker до 	Update btwTweaker to 
+Сейчас установлена версия 	Installed version: 
+. Программа скачает новую версию с GitHub, проверит контрольную сумму и перезапустится.\n\nРезервная копия и настройки сохранятся, прошлую версию можно будет вернуть в «Параметрах».	. The program will download the new version from GitHub, verify the checksum and restart.\n\nYour backup and settings are kept; the previous version can be restored in Settings.
+Скачиваю btwTweaker 	Downloading btwTweaker 
+Обновление	Update
+Не удалось обновить	Could not update
+Обновление установлено	Update installed
+Новая версия уже на месте, но перезапустить программу не получилось — откройте её заново.\n\n	The new version is in place, but the program could not be restarted — open it again.\n\n
+Вернуть версию 	Restore version 
+Программа заменит себя прошлой версией и перезапустится. Текущую версию потом тоже можно будет вернуть.	The program will replace itself with the previous version and restart. The current version can be restored later too.
+Не получилось	Failed
+Ваш компьютер	Your computer
+Процессор	Processor
+Видеокарта	Graphics card
+Работает без перезагрузки	Uptime
+Разделы	Sections
+Настройте Windows под себя	Make Windows your own
+Быстрее, тише и без лишней телеметрии. Каждое изменение запоминается — его можно откатить одной кнопкой.	Faster, quieter and without unnecessary telemetry. Every change is remembered — it can be rolled back with one button.
+Начать с базовых твиков	Start with basic tweaks
+Изменено настроек	Settings changed
+btwTweaker ещё ничего не менял. Исходные значения запоминаются перед первым изменением.	btwTweaker hasn't changed anything yet. Original values are remembered before the first change.
+Исходные значения сохранены — всё можно вернуть как было.	Original values are saved — everything can be returned as it was.
+Оперативная память	Memory
+ ГБ · занято 	 GB · used 
+свободно 	free 
+Системный диск 	System drive 
+Системный диск	System drive
+Схемы питания	Power plans
+Освободить место	Free up space
+Настройки драйвера	Driver settings
+Удаление встроенного	Remove built-in apps
+Что запускается с Windows	What starts with Windows
+ д 	 d 
+ ч	 h
+ ч 	 h 
+ мин	 min
+Нужна перезагрузка	Restart required
+Убрать из «Моих твиков»	Remove from "My tweaks"
+Добавить в «Мои твики»	Add to "My tweaks"
+После выхода из системы	After signing out
+Перезапуск Проводника	File Explorer restart
+Применяется сразу	Applies immediately
+Windows сборки 	Windows build 
+Вариантов: 	Options: 
+Снижает защиту	Reduces protection
+Учтите	Keep in mind
+Принудительно включить	Force enable
+Записать все значения «Вкл», даже если функция уже включена	Write all "On" values, even if the feature is already enabled
+Принудительно отключить	Force disable
+Записать все значения «Откл», даже если функция уже отключена	Write all "Off" values, even if the feature is already disabled
+Что меняется	What changes
+Открыть в редакторе реестра	Open in Registry Editor
+Не удалось открыть редактор реестра	Could not open Registry Editor
+сейчас	now
+Не поддерживается	Not supported
+Ошибка чтения	Read error
+Сейчас нельзя изменить «	Can't change "
+Защита: 	Protection: 
+\nВернуть можно этим же переключателем или кнопкой «Откатить всё».	\nYou can revert it with the same switch or the "Roll back all" button.
+Отключить «	Disable "
+Отключить	Disable
+Продолжить	Continue
+Применяю…	Applying…
+Не получилось изменить «	Could not change "
+Тема	Theme
+Светлое или тёмное оформление программы.	Light or dark program appearance.
+Тёмная	Dark
+Светлая	Light
+Как в Windows	Like Windows
+Фон окна	Window background
+Градиент с мягким свечением акцента, однотонный или полупрозрачный Mica — сквозь окно слегка видны обои.	A gradient with a soft accent glow, solid, or translucent Mica — the wallpaper shows slightly through the window.
+Градиент	Gradient
+Однотонный	Solid
+Mica доступна в Windows 11 22H2 и новее	Mica is available in Windows 11 22H2 and newer
+Анимации	Animations
+Плавные переключатели, появление страниц, выезд меню и подсветка карточек.	Smooth switches, page transitions, sliding menu and card highlights.
+Боковое меню	Sidebar
+Раскрывать при наведении, держать раскрытым или показывать только значки.	Expand on hover, keep expanded, or show only icons.
+При наведении	On hover
+Всегда раскрыто	Always expanded
+Только значки	Icons only
+Сбросить	Reset
+Оформление по умолчанию	Default appearance
+Вернуть тёмную тему, синий акцент, градиентный фон и меню при наведении.	Return the dark theme, blue accent, gradient background and hover menu.
+Обновления	Updates
+Проверить сейчас	Check now
+Версия 	Version 
+Новые версии выходят на GitHub. Программа скачивает их сама и проверяет контрольную сумму.	New versions are released on GitHub. The program downloads them itself and verifies the checksum.
+Проверять при запуске	Check at startup
+При каждом запуске узнавать, не вышла ли новая версия.	Check for a new version every time the program starts.
+Устанавливать автоматически	Install automatically
+Найденное обновление скачивается и ставится без вопроса, затем программа перезапускается.	A found update is downloaded and installed without asking, then the program restarts.
+Прошлая версия 	Previous version 
+Если с новой версией что-то не так, можно вернуться к прошлой.	If something is wrong with the new version, you can go back to the previous one.
+Открыть	Open
+btwTweaker на GitHub	btwTweaker on GitHub
+Профили	Profiles
+Сохранить	Save
+Сохранить профиль	Save profile
+Записать состояние всех твиков в файл 	Write the state of all tweaks to a 
+ — чтобы повторить настройку на другом компьютере или после переустановки Windows.	 file — to repeat the setup on another computer or after reinstalling Windows.
+Открыть файл профиля, посмотреть, что отличается на этом компьютере, и выбрать, что применить.	Open a profile file, see what differs on this computer and choose what to apply.
+Проверять сброс при запуске	Check for resets at startup
+Крупные обновления Windows иногда возвращают настройки назад. При запуске btwTweaker сверит твики, которые вы меняли (сейчас отслеживается: 	Major Windows updates sometimes revert settings. At startup, btwTweaker will check the tweaks you changed (tracked now: 
+), и предложит вернуть.	) and offer to restore them.
+Резервная копия и восстановление	Backup and restore
+Точка восстановления Windows	Windows restore point
+Снимок системы, к которому можно вернуться через «Восстановление системы» даже без btwTweaker.	A system snapshot you can return to via System Restore even without btwTweaker.
+Откатить все изменения	Roll back all changes
+Вернуть исходные значения всех настроек, которые менял btwTweaker (изменено: 	Return the original values of all settings btwTweaker changed (changed: 
+Папка резервной копии	Backup folder
+О программе	About
+Бесплатный твикер для Windows 10 и 11. Все изменения запоминаются и откатываются.	A free tweaker for Windows 10 and 11. All changes are remembered and can be rolled back.
+Неверный цвет	Invalid color
+Введите цвет в формате #RRGGBB, например #4F6BFF.	Enter a color in #RRGGBB format, for example #4F6BFF.
+свой цвет	custom color
+Цвет акцента	Accent color
+Цвет кнопок, переключателей и подсветки. Можно взять цвет из Windows.	Color of buttons, switches and highlights. You can use the Windows color.
+Очистить	Clean
+Очистить группу «	Clean group "
+Будут очищены все пункты группы. Открытые программы, чьи файлы заняты, пропустятся.	All items in the group will be cleaned. Open programs whose files are in use will be skipped.
+Освобождено: 	Freed: 
+\nПропущено занятых файлов: 	\nLocked files skipped: 
+Очищено	Cleaned
+\n\nВнимание: 	\n\nCaution: 
+\n… и ещё 	\n… and 
+Считаю…	Calculating…
+Ошибка	Error
+Очищать нечего	Nothing to clean
+Можно очистить 	Can be cleaned: 
+Закройте 	Close 
+Чтобы очистить «	To clean "
+», закройте 	", close 
+ и нажмите «Очистить» ещё раз.	 and click "Clean" again.
+Будет удалено:	Will be deleted:
+Очистить «	Clean "
+Очищаю…	Cleaning…
+Не получилось очистить «	Could not clean "
+ — освобождено 	 — freed 
+ — удалено записей: 	 — records deleted: 
+Удалённые файлы не восстанавливаются.	Deleted files cannot be recovered.
+Удалено записей: 	Records deleted: 
+\nПропущено (заняты или нет доступа): 	\nSkipped (in use or no access): 
+Ваши схемы	Your plans
+Добавить схему	Add plan
+Для игр и настольного ПК — «Максимальная» или «Высокая производительность». Для ноутбука от батареи — «Сбалансированная».	For games and desktop PCs — "Ultimate" or "High performance". For a laptop on battery — "Balanced".
+Не удалось прочитать схемы электропитания: 	Could not read power plans: 
+Активная схема	Active plan
+Выбрать	Select
+Удалить	Delete
+Удалить схему «	Delete plan "
+Схема и её настройки будут удалены. Кнопка «Откатить всё» её не вернёт, но стандартные схемы можно добавить заново через «Добавить схему».	The plan and its settings will be deleted. "Roll back all" won't bring it back, but standard plans can be added again via "Add plan".
+Удалена схема «	Deleted plan "
+Стандартную схему можно добавить заново кнопкой «Добавить схему».	A standard plan can be added again with the "Add plan" button.
+Активную схему удалить нельзя — сначала выберите другую.	The active plan can't be deleted — select another one first.
+Такая схема уже есть	This plan already exists
+Схема «	Plan "
+» уже в списке. Добавить ещё одну копию?	" is already in the list. Add another copy?
+Добавить	Add
+» добавлена. Нажмите «Выбрать», чтобы включить её.	" added. Click "Select" to activate it.
+Видеокарта NVIDIA не найдена	NVIDIA graphics card not found
+Этот раздел работает только с драйвером NVIDIA. 	This section works only with the NVIDIA driver. 
+Читаю настройки драйвера…	Reading driver settings…
+Глобальный профиль драйвера	Driver global profile
+Настройки действуют во всех играх, у которых нет своего профиля. Изменения применяются сразу — игру нужно перезапустить.	Settings apply to all games that don't have their own profile. Changes apply immediately — restart the game.
+Набор значений для игр: низкая задержка, максимальная производительность. Перед применением покажу список изменений.	A set of values for games: low latency, maximum performance. I'll show the list of changes before applying.
+Не удалось прочитать настройки драйвера: 	Could not read driver settings: 
+Драйвер	Driver
+Изменено	Changed
+Своё значение	Custom value
+   · оптимально	   · optimal
+Введите число и нажмите Enter. 0 — без ограничения.	Enter a number and press Enter. 0 — no limit.
+Неверное значение	Invalid value
+Введите число от 0 до 1000. 0 — без ограничения.	Enter a number from 0 to 1000. 0 — no limit.
+без ограничения	no limit
+Не получилось изменить настройку драйвера	Could not change the driver setting
+Уже оптимально	Already optimal
+Все настройки из набора «Оптимальное» уже стоят.	All settings from the "Optimal" set are already in place.
+Применить «Оптимальное»?	Apply "Optimal"?
+Будет изменено настроек: 	Settings to change: 
+. Прежние значения запомнятся — их вернёт «Откатить всё».	. Previous values are remembered — "Roll back all" will restore them.
+Оптимальное: изменено настроек — 	Optimal: settings changed — 
+Программы UWP	UWP apps
+Автоустановка MS Teams	MS Teams auto-install
+В новых сборках Windows 11 личный Teams («Чат») не встроен в систему, а докачивается из Магазина после первой настройки. ConfigureChatAutoInstall = 0 запрещает это скачивание — способ описан в документации Microsoft Intune и Autopilot. Корпоративный Teams (работа или учёба) продолжит работать, если установлен вручную.	In newer Windows 11 builds, personal Teams ("Chat") is not built into the system but is downloaded from the Store after initial setup. ConfigureChatAutoInstall = 0 blocks this download — the method is described in the Microsoft Intune and Autopilot documentation. Teams for work or school will keep working if installed manually.
+Скрипты и настройки	Scripts and settings
+Удаляет клиент OneDrive штатным OneDriveSetup /uninstall, затем его кэш, задачи обновления, автозапуск и значок в Проводнике. Папка OneDrive с вашими файлами остаётся на месте.	Removes the OneDrive client with the standard OneDriveSetup /uninstall, then its cache, update tasks, autostart and File Explorer icon. The OneDrive folder with your files stays in place.
+файлы перестанут синхронизироваться с облаком. Вернуть OneDrive можно, скачав его с сайта Microsoft.	files will stop syncing with the cloud. You can get OneDrive back by downloading it from the Microsoft website.
+Удаляет браузер Edge собственным установщиком Edge. WebView2 (на нём работают виджеты, поиск и многие программы) не трогается. В некоторых регионах Windows может не разрешить удаление — тогда Edge останется, а система не пострадает.	Removes the Edge browser with Edge's own installer. WebView2 (used by widgets, search and many programs) is not touched. In some regions Windows may not allow removal — then Edge stays and the system is not harmed.
+ссылки из программ будут открываться в браузере по умолчанию. После крупных обновлений Windows Edge может вернуться.	links from programs will open in the default browser. Edge may come back after major Windows updates.
+Удаление встроенных программ	Removing built-in apps
+Удалённое не возвращается кнопкой «Откатить всё» — только переустановкой из Microsoft Store или с сайта. Перед каждым удалением программа спросит подтверждение.	Removed apps can't be restored with "Roll back all" — only by reinstalling from Microsoft Store or the website. The program asks for confirmation before each removal.
+Удалить известные ненужные приложения (Clipchamp, Новости, Погода, Советы…). Сначала покажу список.	Remove known unnecessary apps (Clipchamp, News, Weather, Tips…). I'll show the list first.
+Удалять данные удалённых приложений	Delete data of removed apps
+После удаления очищать папку приложения в %LOCALAPPDATA%\\Packages (настройки, кэш, вход в аккаунт).	After removal, clean the app's folder in %LOCALAPPDATA%\\Packages (settings, cache, account sign-in).
+Удалено	Removed
+Удалить 	Remove 
+\n\nУчтите: 	\n\nKeep in mind: 
+\n\nЭто нельзя отменить кнопкой «Откатить всё».	\n\nThis can't be undone with "Roll back all".
+Удаляю 	Removing 
+Удалено: 	Removed: 
+Не откатывается — вернуть можно только установкой заново.	Can't be rolled back — it can only be restored by reinstalling.
+Не удалось удалить 	Could not remove 
+Читаю список приложений…	Reading the list of apps…
+Программы UWP · 	UWP apps · 
+можно удалить	can be removed
+Входит в набор «Оптимальное»	Part of the "Optimal" set
+Удалить «	Remove "
+Приложение будет удалено для вашей учётной записи	The app will be removed for your account
+ вместе с его данными (настройки, кэш, вход в аккаунт)	 together with its data (settings, cache, account sign-in)
+.\n\nЭто нельзя отменить кнопкой «Откатить всё» — вернуть можно только из Microsoft Store.	.\n\nThis can't be undone with "Roll back all" — it can only be restored from Microsoft Store.
+Удаляю «	Removing "
+Удалено приложение: 	App removed: 
+Не откатывается — вернуть можно из Microsoft Store.	Can't be rolled back — can be restored from Microsoft Store.
+Не удалось удалить	Could not remove
+Уже чисто	Already clean
+Ни одного приложения из набора «Оптимальное» не установлено.	None of the apps from the "Optimal" set are installed.
+ прил.?	 apps?
+Будут удалены для вашей учётной записи	They will be removed for your account
+ вместе с данными	 together with their data
+. Вернуть можно только из Microsoft Store.	. They can only be restored from Microsoft Store.
+\n\nНе удалось: 	\n\nFailed: 
+Ключи реестра	Registry keys
+Файлы	Files
+Задачи	Tasks
+Службы	Services
+Что запускается вместе с Windows	What starts with Windows
+Отключение и удаление ключей и заданий возвращает «Откатить всё», удалённые файлы попадают в Корзину. Службы можно только отключить — не удалить.	Disabling and deleting keys and tasks can be undone with "Roll back all"; deleted files go to the Recycle Bin. Services can only be disabled — not deleted.
+Отключить ненужное	Disable unneeded
+Отключить апдейтеры, сборщики сбоев и телеметрию сторонних программ. Сначала покажу список.	Disable updaters, crash reporters and telemetry of third-party programs. I'll show the list first.
+Экспорт	Export
+Сохранить список автозагрузки в файл CSV (открывается в Excel)	Save the startup list to a CSV file (opens in Excel)
+Поиск по названию, команде или издателю	Search by name, command or publisher
+Записей, которые ссылаются на удалённую программу: 	Entries that point to a removed program: 
+. Они ничего не запускают и только засоряют автозагрузку.	. They don't start anything and only clutter startup.
+Убрать битые	Remove broken
+Читаю автозагрузку…	Reading startup items…
+Автозагрузка пуста.	Startup is empty.
+Ничего не найдено.	Nothing found.
+файл не найден	file not found
+влияние: 	impact: 
+можно отключить	can be disabled
+Издатель не указан	Publisher not specified
+Откуда	Location
+Влияние	Impact
+ (замер Windows при последних запусках)	 (measured by Windows during recent startups)
+нет данных — Windows ещё не замеряла или пункт не запускался	no data — Windows hasn't measured it yet or the item hasn't started
+запускается заданием 	started by task 
+Отложить запуск	Delay start
+Запускать программу через некоторое время после входа — рабочий стол появится быстрее	Start the program some time after sign-in — the desktop appears faster
+Не откладывать	Don't delay
+Открыть папку	Open folder
+Найти в интернете	Search the web
+через 30 секунд	after 30 seconds
+через 1 минуту	after 1 minute
+через 2 минуты	after 2 minutes
+через 5 минут	after 5 minutes
+ → отложен на 	 → delayed by 
+ с	 s
+Не получилось отложить запуск	Could not delay startup
+ → не откладывать	 → don't delay
+ автозагрузка что это	 startup what is it
+Сохранить список автозагрузки	Save startup list
+Автозагрузка 	Startup 
+Не удалось сохранить	Could not save
+Сохранено	Saved
+Список автозагрузки (	Startup list (
+ шт.) сохранён:\n	 items) saved:\n
+Убрать 	Remove 
+ битых записей?	 broken entries?
+Программы, на которые они ссылаются, уже удалены. Записи реестра и задания вернёт «Откатить всё», файлы уйдут в Корзину.	The programs they point to have already been removed. Registry entries and tasks can be restored with "Roll back all"; files go to the Recycle Bin.
+Убрать	Remove
+Убираю битые записи…	Removing broken entries…
+Удалено из автозагрузки: 	Removed from startup: 
+Файл перемещён в Корзину — восстановить можно оттуда.	The file was moved to the Recycle Bin — it can be restored from there.
+Отключить службу «	Disable service "
+Служба не будет запускаться ни вместе с Windows, ни по запросу программы. Программа, которой она нужна (например, обновления или античит), может перестать работать.\n\nВернуть можно этим же переключателем — восстановится прежний тип запуска — или кнопкой «Откатить всё».	The service won't start with Windows or when a program requests it. A program that needs it (for example, updates or anti-cheat) may stop working.\n\nYou can revert it with the same switch — the previous startup type is restored — or with the "Roll back all" button.
+Запись будет удалена из реестра — вернуть её можно кнопкой «Откатить всё».	The entry will be deleted from the registry — it can be restored with the "Roll back all" button.
+Ярлык или файл будет перемещён в Корзину — оттуда его можно восстановить.	The shortcut or file will be moved to the Recycle Bin — it can be restored from there.
+Задание будет удалено из планировщика. Его копия сохранится — вернуть можно кнопкой «Откатить всё».	The task will be deleted from Task Scheduler. A copy is saved — it can be restored with the "Roll back all" button.
+» из автозагрузки?	" from startup?
+\n\nСама программа не удаляется.	\n\nThe program itself is not removed.
+Апдейтеры и подобные задачи и службы уже отключены.	Updaters and similar tasks and services are already disabled.
+Задача: 	Task: 
+Отключить 	Disable 
+ шт.?	 items?
+Задания и службы будут отключены. Всё вернёт «Откатить всё».	Tasks and services will be disabled. "Roll back all" restores everything.
+Отключаю 	Disabling 
+ → Отключено	 → Disabled
+Отключено: 	Disabled: 
+Программа для автозагрузки	Program for startup
+Программы (*.exe)|*.exe	Programs (*.exe)|*.exe
+Добавлено: 	Added: 
+Не получилось добавить	Could not add
+Журнал изменений	Change log
+Каждое действие btwTweaker и состояние перед ним. «Откатить» возвращает то, что было перед этим действием, — остальные изменения не трогаются.	Every btwTweaker action and the state before it. "Roll back" returns what was before this action — other changes are not touched.
+Очистить журнал	Clear log
+Журнал пуст	The log is empty
+Здесь появятся изменения, которые вы сделаете в btwTweaker.	Changes you make in btwTweaker will appear here.
+Сегодня	Today
+Вчера	Yesterday
+откачено	rolled back
+не откатывается	can't be rolled back
+ · значений: 	 · values: 
+Было до этого действия:	Before this action:
+Откатить «	Roll back "
+Вернётся состояние, которое было перед этим действием (	The state before this action will return (
+). Если после него вы меняли те же настройки, они тоже вернутся к тому моменту. Остальные изменения не трогаются.	). If you changed the same settings after it, they will also return to that moment. Other changes are not touched.
+Не получилось откатить	Could not roll back
+\n\nНекоторым настройкам нужен перезапуск Проводника или перезагрузка, чтобы изменения стали видны.	\n\nSome settings need a File Explorer restart or a reboot for the changes to become visible.
+Очистить журнал?	Clear the log?
+Записи журнала будут удалены, и откатывать по одному станет нельзя. Резервная копия и кнопка «Откатить всё» продолжат работать.	Log entries will be deleted, and rolling back one at a time will no longer be possible. The backup and the "Roll back all" button will keep working.
+»	"
+»?	"?
+»…	"…
+»: 	": 
+: «	: "
+».\n\n	".\n\n
+# full titles of composed tweaks (for stable tweak keys)
+Доступ приложений к местоположению	App access to location
+Доступ приложений к информации об учётной записи	App access to account information
+Доступ приложений к данным о движении	App access to motion data
+Доступ приложений к телефону	App access to phone
+Доступ приложений к доверенным устройствам	App access to trusted devices
+Доступ приложений к синхронизации с устройствами	App access to device sync
+Доступ приложений к диагностической информации о других приложениях	App access to diagnostic information about other apps
+Доступ приложений к контактам	App access to contacts
+Доступ приложений к календарю	App access to calendar
+Доступ приложений к журналу вызовов	App access to call history
+Доступ приложений к электронной почте	App access to email
+Доступ приложений к задачам	App access to tasks
+Доступ приложений к сообщениям	App access to messages
+Доступ приложений к радио	App access to radios
+Доступ приложений к устройствам Bluetooth	App access to Bluetooth devices
+Доступ приложений к папке \"Документы\"	App access to the \"Documents\" folder
+Доступ приложений к папке \"Изображения\"	App access to the \"Pictures\" folder
+Доступ приложений к папке \"Видео\"	App access to the \"Videos\" folder
+Доступ приложений к другой файловой системе	App access to other file system
+# case variants and late additions
+включено	enabled
+отключено	disabled
+Откачено	Rolled back
+своё	custom
+отложено	delayed
+Только Windows 11	Windows 11 only
+Перезапустить	Restart
+Русский	Русский
+Язык / Language	Язык / Language
+Перезапустить btwTweaker? / Restart btwTweaker?	Перезапустить btwTweaker? / Restart btwTweaker?
+Язык изменится после перезапуска программы.\n\nThe language changes after the program restarts.	Язык изменится после перезапуска программы.\n\nThe language changes after the program restarts.
+Язык интерфейса и описаний твиков. «Как в Windows» — русский, если Windows на русском, иначе английский.	Language of the interface and tweak descriptions. "Like Windows" — Russian if Windows is in Russian, otherwise English.

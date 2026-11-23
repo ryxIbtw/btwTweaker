@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -22,7 +22,7 @@ namespace BtwTweaker
         public static readonly Guid Ultimate = new Guid("e9a42b02-d5df-448d-aa00-03f14749eb61");
 
         // Шаблоны для «Добавить схему»
-        public static readonly string[] TemplateNames = { "Максимальная производительность", "Высокая производительность", "Сбалансированная", "Экономия энергии" };
+        public static readonly string[] TemplateNames = { L.T("Максимальная производительность"), L.T("Высокая производительность"), L.T("Сбалансированная"), L.T("Экономия энергии") };
         public static readonly Guid[] Templates = { Ultimate, High, Balanced, Saver };
 
         const uint ACCESS_SCHEME = 16;

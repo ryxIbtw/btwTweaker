@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,23 +7,23 @@ namespace BtwTweaker
 {
     public static class CleanCatalog
     {
-        static List<string> L(params string[] p) { return p.Select(Fs.E).ToList(); }
+        static List<string> Lst(params string[] p) { return p.Select(Fs.E).ToList(); }
 
         public static List<CleanGroup> Build()
         {
             return new List<CleanGroup>
             {
-                new CleanGroup("Конфиденциальность", new TracesCleaner()) { CleanAll = false },
+                new CleanGroup(L.T("Конфиденциальность"), new TracesCleaner()) { CleanAll = false },
                 new CleanGroup("Windows", Temp(), Thumbs(), UpdateCache(), SetupLogs(), DefenderLogs(), ErrorReports(), DiagData(), ChkDsk()),
-                new CleanGroup("Графика", ShaderCache(), Nvidia()),
-                new CleanGroup("Браузеры",
-                    Chromium("Кэш Google Chrome", @"%LOCALAPPDATA%\Google\Chrome\User Data", "\uE774", new[] { "chrome" }, "Google Chrome"),
-                    Chromium("Кэш Microsoft Edge", @"%LOCALAPPDATA%\Microsoft\Edge\User Data", "\uE774", new[] { "msedge" }, "Microsoft Edge"),
-                    Chromium("Кэш Brave", @"%LOCALAPPDATA%\BraveSoftware\Brave-Browser\User Data", "\uE774", new[] { "brave" }, "Brave"),
+                new CleanGroup(L.T("Графика"), ShaderCache(), Nvidia()),
+                new CleanGroup(L.T("Браузеры"),
+                    Chromium(L.T("Кэш Google Chrome"), @"%LOCALAPPDATA%\Google\Chrome\User Data", "\uE774", new[] { "chrome" }, "Google Chrome"),
+                    Chromium(L.T("Кэш Microsoft Edge"), @"%LOCALAPPDATA%\Microsoft\Edge\User Data", "\uE774", new[] { "msedge" }, "Microsoft Edge"),
+                    Chromium(L.T("Кэш Brave"), @"%LOCALAPPDATA%\BraveSoftware\Brave-Browser\User Data", "\uE774", new[] { "brave" }, "Brave"),
                     VivaldiOpera(), Firefox()),
-                new CleanGroup("Разработка", VisualStudio(), NuGet(), NodeCaches(), DotNet()),
-                new CleanGroup("Приложения", new UwpLeftovers()) { CleanAll = false },
-                new CleanGroup("Устройства", new GhostDevices()) { CleanAll = false },
+                new CleanGroup(L.T("Разработка"), VisualStudio(), NuGet(), NodeCaches(), DotNet()),
+                new CleanGroup(L.T("Приложения"), new UwpLeftovers()) { CleanAll = false },
+                new CleanGroup(L.T("Устройства"), new GhostDevices()) { CleanAll = false },
             };
         }
 
@@ -33,10 +33,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Временные файлы",
-                Description = "Временные файлы программ и Windows (%TEMP% и C:\\Windows\\Temp). Файлы, которые сейчас используются, пропускаются.",
+                Title = L.T("Временные файлы"),
+                Description = L.T("Временные файлы программ и Windows (%TEMP% и C:\\Windows\\Temp). Файлы, которые сейчас используются, пропускаются."),
                 Icon = "\uE81C",
-                Dirs = () => L(@"%TEMP%", @"%WINDIR%\Temp"),
+                Dirs = () => Lst(@"%TEMP%", @"%WINDIR%\Temp"),
             };
         }
 
@@ -45,8 +45,8 @@ namespace BtwTweaker
             const string exp = @"%LOCALAPPDATA%\Microsoft\Windows\Explorer";
             return new PathCleaner
             {
-                Title = "Кэш эскизов",
-                Description = "Миниатюры картинок и видео в Проводнике. Пересоздаются при следующем открытии папок. Часть файлов занята Проводником — они пропустятся.",
+                Title = L.T("Кэш эскизов"),
+                Description = L.T("Миниатюры картинок и видео в Проводнике. Пересоздаются при следующем открытии папок. Часть файлов занята Проводником — они пропустятся."),
                 Icon = "\uE8B7",
                 Files = () => { var l = Fs.Glob(Fs.E(exp), "thumbcache_*.db"); l.AddRange(Fs.Glob(Fs.E(exp), "iconcache_*.db")); return l; },
             };
@@ -57,10 +57,10 @@ namespace BtwTweaker
             var restart = new List<string>();
             return new PathCleaner
             {
-                Title = "Кэш Windows Update",
-                Description = "Уже установленные файлы обновлений (SoftwareDistribution\\Download). Перед очисткой службы обновления ненадолго останавливаются.",
+                Title = L.T("Кэш Windows Update"),
+                Description = L.T("Уже установленные файлы обновлений (SoftwareDistribution\\Download). Перед очисткой службы обновления ненадолго останавливаются."),
                 Icon = "\uE895",
-                Dirs = () => L(@"%WINDIR%\SoftwareDistribution\Download"),
+                Dirs = () => Lst(@"%WINDIR%\SoftwareDistribution\Download"),
                 Before = () =>
                 {
                     restart.Clear();
@@ -75,10 +75,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Файлы журнала установок",
-                Description = "Журналы установки Windows и обновлений (Logs\\CBS, DISM, Panther, setupapi). Нужны только для разбора ошибок установки.",
+                Title = L.T("Файлы журнала установок"),
+                Description = L.T("Журналы установки Windows и обновлений (Logs\\CBS, DISM, Panther, setupapi). Нужны только для разбора ошибок установки."),
                 Icon = "\uE7C3",
-                Dirs = () => L(@"%WINDIR%\Logs\CBS", @"%WINDIR%\Logs\DISM", @"%WINDIR%\Logs\MoSetup", @"%WINDIR%\Panther"),
+                Dirs = () => Lst(@"%WINDIR%\Logs\CBS", @"%WINDIR%\Logs\DISM", @"%WINDIR%\Logs\MoSetup", @"%WINDIR%\Panther"),
                 Files = () => Fs.Glob(Fs.E(@"%WINDIR%\inf"), "setupapi.*.log"),
             };
         }
@@ -87,10 +87,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Журналы Microsoft Defender",
-                Description = "Журналы поддержки и диагностики антивируса. История угроз и карантин не затрагиваются.",
+                Title = L.T("Журналы Microsoft Defender"),
+                Description = L.T("Журналы поддержки и диагностики антивируса. История угроз и карантин не затрагиваются."),
                 Icon = "\uE83D",
-                Dirs = () => L(@"%PROGRAMDATA%\Microsoft\Windows Defender\Support", @"%PROGRAMDATA%\Microsoft\Windows Defender\Network Inspection System\Support"),
+                Dirs = () => Lst(@"%PROGRAMDATA%\Microsoft\Windows Defender\Support", @"%PROGRAMDATA%\Microsoft\Windows Defender\Network Inspection System\Support"),
             };
         }
 
@@ -98,12 +98,12 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Отчёты об ошибках и дампы",
-                Description = "Отчёты о сбоях программ (WER), дампы памяти после «синих экранов» и падений программ.",
+                Title = L.T("Отчёты об ошибках и дампы"),
+                Description = L.T("Отчёты о сбоях программ (WER), дампы памяти после «синих экранов» и падений программ."),
                 Icon = "\uE7BA",
-                Dirs = () => L(@"%PROGRAMDATA%\Microsoft\Windows\WER\ReportArchive", @"%PROGRAMDATA%\Microsoft\Windows\WER\ReportQueue",
+                Dirs = () => Lst(@"%PROGRAMDATA%\Microsoft\Windows\WER\ReportArchive", @"%PROGRAMDATA%\Microsoft\Windows\WER\ReportQueue",
                                @"%LOCALAPPDATA%\Microsoft\Windows\WER", @"%LOCALAPPDATA%\CrashDumps", @"%WINDIR%\Minidump"),
-                Files = () => { var l = L(@"%WINDIR%\MEMORY.DMP"); l.AddRange(Fs.Glob(Fs.E(@"%WINDIR%\LiveKernelReports"), "*.dmp")); return l; },
+                Files = () => { var l = Lst(@"%WINDIR%\MEMORY.DMP"); l.AddRange(Fs.Glob(Fs.E(@"%WINDIR%\LiveKernelReports"), "*.dmp")); return l; },
             };
         }
 
@@ -111,10 +111,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Файлы базы данных программы просмотра диагностических данных",
-                Description = "Локальная копия телеметрии, которую можно смотреть в «Просмотре диагностических данных».",
+                Title = L.T("Файлы базы данных программы просмотра диагностических данных"),
+                Description = L.T("Локальная копия телеметрии, которую можно смотреть в «Просмотре диагностических данных»."),
                 Icon = "\uE9D9",
-                Dirs = () => L(@"%PROGRAMDATA%\Microsoft\Diagnosis\EventTranscript"),
+                Dirs = () => Lst(@"%PROGRAMDATA%\Microsoft\Diagnosis\EventTranscript"),
             };
         }
 
@@ -122,8 +122,8 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Старые файлы ChkDsk",
-                Description = "Папки FOUND.000 и файлы *.chk в корне дисков — обрывки файлов, которые ChkDsk нашёл при проверке диска.",
+                Title = L.T("Старые файлы ChkDsk"),
+                Description = L.T("Папки FOUND.000 и файлы *.chk в корне дисков — обрывки файлов, которые ChkDsk нашёл при проверке диска."),
                 Icon = "\uE8B7",
                 RemoveRoots = true,
                 Dirs = () =>
@@ -150,10 +150,10 @@ namespace BtwTweaker
             return new PathCleaner
             {
                 Title = "DirectX Shader Cache",
-                Description = "Скомпилированные шейдеры игр (DirectX, AMD). Windows пересоздаст их сама.",
+                Description = L.T("Скомпилированные шейдеры игр (DirectX, AMD). Windows пересоздаст их сама."),
                 Icon = "\uE950",
-                Caution = "первый запуск игр после очистки может быть дольше и с подтормаживаниями, пока шейдеры не соберутся заново.",
-                Dirs = () => L(@"%LOCALAPPDATA%\D3DSCache", @"%LOCALAPPDATA%\AMD\DxCache", @"%LOCALAPPDATA%\AMD\DxcCache", @"%LOCALAPPDATA%\AMD\VkCache"),
+                Caution = L.T("первый запуск игр после очистки может быть дольше и с подтормаживаниями, пока шейдеры не соберутся заново."),
+                Dirs = () => Lst(@"%LOCALAPPDATA%\D3DSCache", @"%LOCALAPPDATA%\AMD\DxCache", @"%LOCALAPPDATA%\AMD\DxcCache", @"%LOCALAPPDATA%\AMD\VkCache"),
             };
         }
 
@@ -161,10 +161,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Кэш, загрузки и журналы NVIDIA",
-                Description = "Кэш шейдеров драйвера NVIDIA, скачанные установщики драйверов и журналы.",
+                Title = L.T("Кэш, загрузки и журналы NVIDIA"),
+                Description = L.T("Кэш шейдеров драйвера NVIDIA, скачанные установщики драйверов и журналы."),
                 Icon = "\uE7F4",
-                Dirs = () => L(@"%LOCALAPPDATA%\NVIDIA\DXCache", @"%LOCALAPPDATA%\NVIDIA\GLCache", @"%LOCALAPPDATA%\NVIDIA Corporation\NV_Cache",
+                Dirs = () => Lst(@"%LOCALAPPDATA%\NVIDIA\DXCache", @"%LOCALAPPDATA%\NVIDIA\GLCache", @"%LOCALAPPDATA%\NVIDIA Corporation\NV_Cache",
                                @"%PROGRAMDATA%\NVIDIA Corporation\Downloader"),
                 Files = () => Fs.Glob(Fs.E(@"%PROGRAMDATA%\NVIDIA"), "*.log"),
             };
@@ -190,14 +190,14 @@ namespace BtwTweaker
             return l;
         }
 
-        const string BrowserNote = " Удаляется только кэш — пароли, куки, история и вкладки остаются.";
+        static readonly string BrowserNote = L.T(" Удаляется только кэш — пароли, куки, история и вкладки остаются.");
 
         static Cleaner Chromium(string title, string userData, string icon, string[] procs, string name)
         {
             return new PathCleaner
             {
                 Title = title,
-                Description = "Сохранённые копии страниц, картинок и скриптов." + BrowserNote,
+                Description = L.T("Сохранённые копии страниц, картинок и скриптов.") + BrowserNote,
                 Icon = icon,
                 Processes = procs, ProcessTitle = name,
                 Dirs = () => ChromiumDirs(userData),
@@ -208,8 +208,8 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Кэш Vivaldi и Opera",
-                Description = "Кэш Vivaldi, Opera и Opera GX." + BrowserNote,
+                Title = L.T("Кэш Vivaldi и Opera"),
+                Description = L.T("Кэш Vivaldi, Opera и Opera GX.") + BrowserNote,
                 Icon = "\uE774",
                 Processes = new[] { "vivaldi", "opera" }, ProcessTitle = "Vivaldi / Opera",
                 Dirs = () =>
@@ -230,8 +230,8 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Кэш Mozilla Firefox",
-                Description = "Кэш страниц, запуска и миниатюр Firefox." + BrowserNote,
+                Title = L.T("Кэш Mozilla Firefox"),
+                Description = L.T("Кэш страниц, запуска и миниатюр Firefox.") + BrowserNote,
                 Icon = "\uE774",
                 Processes = new[] { "firefox" }, ProcessTitle = "Firefox",
                 Dirs = () =>
@@ -251,8 +251,8 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Кэш Visual Studio",
-                Description = "Кэш компонентов (ComponentModelCache) и телеметрии Visual Studio. Закройте Visual Studio перед очисткой.",
+                Title = L.T("Кэш Visual Studio"),
+                Description = L.T("Кэш компонентов (ComponentModelCache) и телеметрии Visual Studio. Закройте Visual Studio перед очисткой."),
                 Icon = "\uE943",
                 Processes = new[] { "devenv" }, ProcessTitle = "Visual Studio",
                 Dirs = () =>
@@ -270,10 +270,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Временный кэш NuGet",
-                Description = "HTTP-кэш и временные файлы NuGet. Скачанные пакеты (global-packages) не трогаются.",
+                Title = L.T("Временный кэш NuGet"),
+                Description = L.T("HTTP-кэш и временные файлы NuGet. Скачанные пакеты (global-packages) не трогаются."),
                 Icon = "\uE7B8",
-                Dirs = () => L(@"%LOCALAPPDATA%\NuGet\v3-cache", @"%LOCALAPPDATA%\NuGet\plugins-cache", @"%TEMP%\NuGetScratch"),
+                Dirs = () => Lst(@"%LOCALAPPDATA%\NuGet\v3-cache", @"%LOCALAPPDATA%\NuGet\plugins-cache", @"%TEMP%\NuGetScratch"),
             };
         }
 
@@ -281,10 +281,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Кэш npm, Yarn и pnpm",
-                Description = "Скачанные пакеты Node.js в кэше менеджеров пакетов. Проекты не затрагиваются — пакеты скачаются заново при необходимости.",
+                Title = L.T("Кэш npm, Yarn и pnpm"),
+                Description = L.T("Скачанные пакеты Node.js в кэше менеджеров пакетов. Проекты не затрагиваются — пакеты скачаются заново при необходимости."),
                 Icon = "\uE943",
-                Dirs = () => L(@"%LOCALAPPDATA%\npm-cache", @"%APPDATA%\npm-cache", @"%LOCALAPPDATA%\Yarn\Cache", @"%LOCALAPPDATA%\pnpm-cache"),
+                Dirs = () => Lst(@"%LOCALAPPDATA%\npm-cache", @"%APPDATA%\npm-cache", @"%LOCALAPPDATA%\Yarn\Cache", @"%LOCALAPPDATA%\pnpm-cache"),
             };
         }
 
@@ -292,10 +292,10 @@ namespace BtwTweaker
         {
             return new PathCleaner
             {
-                Title = "Диагностические файлы .NET",
-                Description = "Телеметрия и временные файлы .NET SDK.",
+                Title = L.T("Диагностические файлы .NET"),
+                Description = L.T("Телеметрия и временные файлы .NET SDK."),
                 Icon = "\uE943",
-                Dirs = () => L(@"%USERPROFILE%\.dotnet\TelemetryStorageService"),
+                Dirs = () => Lst(@"%USERPROFILE%\.dotnet\TelemetryStorageService"),
             };
         }
     }

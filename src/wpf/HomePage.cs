@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -25,24 +25,24 @@ namespace BtwTweaker
             Children.Add(top);
 
             // ── Ваш компьютер ──
-            Children.Add(Header("Ваш компьютер"));
+            Children.Add(Header(L.T("Ваш компьютер")));
             var info = Ui.Cols("*", "12", "*", "12", "*");
             info.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             info.RowDefinitions.Add(new RowDefinition { Height = new GridLength(12) });
             info.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             info.Children.Add(Ui.At(Tile("", "Windows", WindowsName(), null), 0, 0));
-            info.Children.Add(Ui.At(Tile("", "Процессор", Cpu(), null), 0, 2));
+            info.Children.Add(Ui.At(Tile("", L.T("Процессор"), Cpu(), null), 0, 2));
             TextBlock gpuText;
-            var gpu = Tile("", "Видеокарта", "…", null, out gpuText);
+            var gpu = Tile("", L.T("Видеокарта"), "…", null, out gpuText);
             info.Children.Add(Ui.At(gpu, 0, 4));
             info.Children.Add(Ui.At(MemoryTile(), 2, 0));
             info.Children.Add(Ui.At(DiskTile(), 2, 2));
-            info.Children.Add(Ui.At(Tile("", "Работает без перезагрузки", Uptime(), null), 2, 4));
+            info.Children.Add(Ui.At(Tile("", L.T("Работает без перезагрузки"), Uptime(), null), 2, 4));
             Children.Add(info);
             LoadGpu(gpuText);
 
             // ── Разделы ──
-            Children.Add(Header("Разделы"));
+            Children.Add(Header(L.T("Разделы")));
             var grid = new UniformGrid4();
             foreach (var s in owner.Sections) grid.Add(SectionTile(s));
             Children.Add(grid.Panel);
@@ -68,20 +68,20 @@ namespace BtwTweaker
             g.Children.Add(deco);
 
             var sp = new StackPanel();
-            sp.Children.Add(new TextBlock { Text = "Настройте Windows под себя", FontFamily = Theme.Display, FontSize = 24, FontWeight = FontWeights.Bold, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap });
+            sp.Children.Add(new TextBlock { Text = L.T("Настройте Windows под себя"), FontFamily = Theme.Display, FontSize = 24, FontWeight = FontWeights.Bold, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap });
             sp.Children.Add(new TextBlock
             {
-                Text = "Быстрее, тише и без лишней телеметрии. Каждое изменение запоминается — его можно откатить одной кнопкой.",
+                Text = L.T("Быстрее, тише и без лишней телеметрии. Каждое изменение запоминается — его можно откатить одной кнопкой."),
                 FontSize = 13.5, Foreground = new SolidColorBrush(Color.FromArgb(0xD9, 255, 255, 255)), TextWrapping = TextWrapping.Wrap,
                 Margin = new Thickness(0, 8, 90, 18), LineHeight = 20
             });
             var btns = new StackPanel { Orientation = Orientation.Horizontal };
-            var go = Ui.Btn("Начать с базовых твиков", Brushes.White, () => owner.NavigateSection(owner.Sections[0]));
+            var go = Ui.Btn(L.T("Начать с базовых твиков"), Brushes.White, () => owner.NavigateSection(owner.Sections[0]));
             go.Foreground = Theme.Accent;
             go.FontWeight = FontWeights.SemiBold;
             go.Padding = new Thickness(16, 9, 16, 9);
             btns.Children.Add(go);
-            var rp = Ui.IconBtn("", "Точка восстановления", new SolidColorBrush(Color.FromArgb(0x33, 255, 255, 255)), Brushes.White, () => owner.CreateRestorePoint(false));
+            var rp = Ui.IconBtn("", L.T("Точка восстановления"), new SolidColorBrush(Color.FromArgb(0x33, 255, 255, 255)), Brushes.White, () => owner.CreateRestorePoint(false));
             rp.Padding = new Thickness(14, 9, 16, 9);
             rp.Margin = new Thickness(10, 0, 0, 0);
             btns.Children.Add(rp);
@@ -95,17 +95,22 @@ namespace BtwTweaker
         {
             int n = Backup.Count;
             var sp = new StackPanel();
-            sp.Children.Add(Ui.Txt("Изменено настроек", 13, Theme.Sub));
+            sp.Children.Add(Ui.Txt(L.T("Изменено настроек"), 13, Theme.Sub));
             sp.Children.Add(new TextBlock { Text = n.ToString(), FontFamily = Theme.Display, FontSize = 44, FontWeight = FontWeights.Bold, Foreground = Theme.Accent, Margin = new Thickness(0, 2, 0, 0) });
             sp.Children.Add(new TextBlock
             {
-                Text = n == 0 ? "btwTweaker ещё ничего не менял. Исходные значения запоминаются перед первым изменением." : "Исходные значения сохранены — всё можно вернуть как было.",
+                Text = n == 0 ? L.T("btwTweaker ещё ничего не менял. Исходные значения запоминаются перед первым изменением.") : L.T("Исходные значения сохранены — всё можно вернуть как было."),
                 FontSize = 12.5, Foreground = Theme.Sub, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 2, 0, 14), LineHeight = 18
             });
-            var rb = Ui.IconBtn("", "Откатить всё", Theme.Second, Theme.Danger, owner.RollbackAll);
+            var btns = new WrapPanel();
+            var jb = Ui.IconBtn("", L.T("Журнал"), Theme.Second, Theme.Text, () => owner.NavigateKey("journal"));
+            jb.Margin = new Thickness(0, 0, 8, 6);
+            btns.Children.Add(jb);
+            var rb = Ui.IconBtn("", L.T("Откатить всё"), Theme.Second, Theme.Danger, owner.RollbackAll);
             rb.IsEnabled = n > 0;
-            rb.HorizontalAlignment = HorizontalAlignment.Left;
-            sp.Children.Add(rb);
+            rb.Margin = new Thickness(0, 0, 0, 6);
+            btns.Children.Add(rb);
+            sp.Children.Add(btns);
             return Ui.Card(sp, new Thickness(22, 20, 22, 20), false);
         }
 
@@ -144,10 +149,10 @@ namespace BtwTweaker
         {
             var m = new MEMORYSTATUSEX();
             m.dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
-            if (!GlobalMemoryStatusEx(ref m)) return Tile("", "Оперативная память", "—", null);
+            if (!GlobalMemoryStatusEx(ref m)) return Tile("", L.T("Оперативная память"), "—", null);
             double total = m.ullTotalPhys / 1073741824.0;
-            string v = Math.Round(total) + " ГБ · занято " + m.dwMemoryLoad + "%";
-            return Tile("", "Оперативная память", v, Bar(m.dwMemoryLoad / 100.0));
+            string v = Math.Round(total) + L.T(" ГБ · занято ") + m.dwMemoryLoad + "%";
+            return Tile("", L.T("Оперативная память"), v, Bar(m.dwMemoryLoad / 100.0));
         }
 
         Border DiskTile()
@@ -156,17 +161,17 @@ namespace BtwTweaker
             {
                 var d = new DriveInfo(Path.GetPathRoot(Environment.SystemDirectory));
                 double used = 1 - (double)d.TotalFreeSpace / d.TotalSize;
-                string v = "свободно " + Fs.Fmt(d.TotalFreeSpace) + " из " + Fs.Fmt(d.TotalSize);
-                return Tile("", "Системный диск " + d.Name.TrimEnd('\\'), v, Bar(used));
+                string v = L.T("свободно ") + Fs.Fmt(d.TotalFreeSpace) + L.T(" из ") + Fs.Fmt(d.TotalSize);
+                return Tile("", L.T("Системный диск ") + d.Name.TrimEnd('\\'), v, Bar(used));
             }
-            catch { return Tile("", "Системный диск", "—", null); }
+            catch { return Tile("", L.T("Системный диск"), "—", null); }
         }
 
         Border SectionTile(Section s)
         {
             int n = 0;
             foreach (var g in s.Groups) n += g.Tweaks.Count;
-            string sub = s.Page == "power" ? "Схемы питания" : s.Page == "clean" ? "Освободить место" : MainWindow.Tweaks(n);
+            string sub = s.Page == "power" ? L.T("Схемы питания") : s.Page == "clean" ? L.T("Освободить место") : s.Page == "nvidia" ? L.T("Настройки драйвера") : s.Page == "debloat" ? L.T("Удаление встроенного") : s.Page == "startup" ? L.T("Что запускается с Windows") : MainWindow.Tweaks(n);
             var sp = new StackPanel();
             var circle = new Border { Width = 40, Height = 40, CornerRadius = new CornerRadius(12), Background = Theme.AccentSoft, HorizontalAlignment = HorizontalAlignment.Left, Child = Ui.Icon(s.Icon, 17, Theme.Accent) };
             sp.Children.Add(circle);
@@ -228,9 +233,9 @@ namespace BtwTweaker
         static string Uptime()
         {
             var t = TimeSpan.FromMilliseconds(GetTickCount64());
-            if (t.TotalDays >= 1) return (int)t.TotalDays + " д " + t.Hours + " ч";
-            if (t.TotalHours >= 1) return (int)t.TotalHours + " ч " + t.Minutes + " мин";
-            return t.Minutes + " мин";
+            if (t.TotalDays >= 1) return (int)t.TotalDays + L.T(" д ") + t.Hours + L.T(" ч");
+            if (t.TotalHours >= 1) return (int)t.TotalHours + L.T(" ч ") + t.Minutes + L.T(" мин");
+            return t.Minutes + L.T(" мин");
         }
 
         [DllImport("kernel32.dll")] static extern ulong GetTickCount64();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Win32;
 
@@ -14,7 +14,7 @@ namespace BtwTweaker
         public HdcpTweak()
         {
             Title = "HDCP";
-            Description = "Защита видеосигнала от копирования (для видеокарт NVIDIA). Иногда мешает захвату и записи экрана. После отключения часть защищённого видео (например, стриминг в 4K) может не воспроизводиться.";
+            Description = L.T("Защита видеосигнала от копирования (для видеокарт NVIDIA). Иногда мешает захвату и записи экрана. После отключения часть защищённого видео (например, стриминг в 4K) может не воспроизводиться.");
             Icon = "";
             Restart = Restart.Reboot;
         }

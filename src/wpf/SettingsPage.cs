@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -17,76 +17,105 @@ namespace BtwTweaker
         {
             owner = w;
 
-            Children.Add(Header("Внешний вид", true));
+            Children.Add(Header(L.T("Внешний вид"), true));
+
+            // Язык: подписи вариантов не переводятся — каждый узнает свой
+            string[] langs = { "system", "ru", "en" };
+            Children.Add(Row("", "Язык / Language", L.Pick("Язык интерфейса и описаний твиков. «Как в Windows» — русский, если Windows на русском, иначе английский.",
+                    "Language of the interface and tweak descriptions. \"Like Windows\" — Russian if Windows is in Russian, otherwise English."),
+                Ui.Segmented(new[] { L.T("Как в Windows"), "Русский", "English" }, Math.Max(0, Array.IndexOf(langs, L.Choice)), i =>
+                {
+                    if (langs[i] == L.Choice) return;
+                    Sys.SetPref("Lang", langs[i]);
+                    L.Choice = langs[i];
+                    if (Dialog.Ask(owner, "Перезапустить btwTweaker? / Restart btwTweaker?",
+                        "Язык изменится после перезапуска программы.\n\nThe language changes after the program restarts.",
+                        L.Pick("Перезапустить", "Restart"), L.Pick("Позже", "Later")))
+                    {
+                        try { Updater.StartNew(); Application.Current.Shutdown(); }
+                        catch (Exception ex) { Dialog.Info(owner, L.T("Не получилось"), ex.Message); }
+                    }
+                })));
 
             string[] modes = { "dark", "light", "system" };
-            Children.Add(Row("", "Тема", "Светлое или тёмное оформление программы.",
-                Ui.Segmented(new[] { "Тёмная", "Светлая", "Как в Windows" }, Array.IndexOf(modes, Cfg.Mode), i => Set(() => Cfg.Mode = modes[i]))));
+            Children.Add(Row("", L.T("Тема"), L.T("Светлое или тёмное оформление программы."),
+                Ui.Segmented(new[] { L.T("Тёмная"), L.T("Светлая"), L.T("Как в Windows") }, Array.IndexOf(modes, Cfg.Mode), i => Set(() => Cfg.Mode = modes[i]))));
 
             Children.Add(AccentRow());
 
             string[] backs = { "gradient", "solid", "mica" };
             bool mica = Theme.MicaSupported;
-            Children.Add(Row("", "Фон окна", "Градиент с мягким свечением акцента, однотонный или полупрозрачный Mica — сквозь окно слегка видны обои.",
-                Ui.Segmented(new[] { "Градиент", "Однотонный", "Mica" }, Array.IndexOf(backs, Cfg.Backdrop), i => Set(() => Cfg.Backdrop = backs[i]),
-                    new[] { false, false, !mica }, new[] { null, null, mica ? null : "Mica доступна в Windows 11 22H2 и новее" })));
+            Children.Add(Row("", L.T("Фон окна"), L.T("Градиент с мягким свечением акцента, однотонный или полупрозрачный Mica — сквозь окно слегка видны обои."),
+                Ui.Segmented(new[] { L.T("Градиент"), L.T("Однотонный"), "Mica" }, Array.IndexOf(backs, Cfg.Backdrop), i => Set(() => Cfg.Backdrop = backs[i]),
+                    new[] { false, false, !mica }, new[] { null, null, mica ? null : L.T("Mica доступна в Windows 11 22H2 и новее") })));
 
             var anim = new ToggleButton { Style = Theme.S("Switch"), IsChecked = Cfg.Animations };
             anim.Click += (s, e) => Set(() => Cfg.Animations = anim.IsChecked == true);
-            Children.Add(Row("", "Анимации", "Плавные переключатели, появление страниц, выезд меню и подсветка карточек.", anim));
+            Children.Add(Row("", L.T("Анимации"), L.T("Плавные переключатели, появление страниц, выезд меню и подсветка карточек."), anim));
 
             string[] menus = { "hover", "expanded", "icons" };
-            Children.Add(Row("", "Боковое меню", "Раскрывать при наведении, держать раскрытым или показывать только значки.",
-                Ui.Segmented(new[] { "При наведении", "Всегда раскрыто", "Только значки" }, Array.IndexOf(menus, Cfg.Menu), i => Set(() => Cfg.Menu = menus[i]))));
+            Children.Add(Row("", L.T("Боковое меню"), L.T("Раскрывать при наведении, держать раскрытым или показывать только значки."),
+                Ui.Segmented(new[] { L.T("При наведении"), L.T("Всегда раскрыто"), L.T("Только значки") }, Array.IndexOf(menus, Cfg.Menu), i => Set(() => Cfg.Menu = menus[i]))));
 
-            var reset = Ui.Btn("Сбросить", Theme.Second, () => Set(() =>
+            var reset = Ui.Btn(L.T("Сбросить"), Theme.Second, () => Set(() =>
             {
                 var d = new Appearance();
                 Cfg.Mode = d.Mode; Cfg.Accent = d.Accent; Cfg.Backdrop = d.Backdrop; Cfg.Animations = d.Animations; Cfg.Menu = d.Menu;
             }));
-            Children.Add(Row("", "Оформление по умолчанию", "Вернуть тёмную тему, синий акцент, градиентный фон и меню при наведении.", reset));
+            Children.Add(Row("", L.T("Оформление по умолчанию"), L.T("Вернуть тёмную тему, синий акцент, градиентный фон и меню при наведении."), reset));
 
             // ── Обновления ──
-            Children.Add(Header("Обновления", false));
-            var check = Ui.IconBtn("", "Проверить сейчас", Theme.Accent, Theme.OnAccent, () => owner.CheckForUpdates(true));
-            Children.Add(Row("", "Версия " + Updater.Current.ToString(3), "Новые версии выходят на GitHub. Программа скачивает их сама и проверяет контрольную сумму.", check));
+            Children.Add(Header(L.T("Обновления"), false));
+            var check = Ui.IconBtn("", L.T("Проверить сейчас"), Theme.Accent, Theme.OnAccent, () => owner.CheckForUpdates(true));
+            Children.Add(Row("", L.T("Версия ") + Updater.Current.ToString(3), L.T("Новые версии выходят на GitHub. Программа скачивает их сама и проверяет контрольную сумму."), check));
 
             var auto = new ToggleButton { Style = Theme.S("Switch"), IsChecked = Sys.Pref("UpdateCheck") != "0" };
             auto.Click += (s, e) => Sys.SetPref("UpdateCheck", auto.IsChecked == true ? "1" : "0");
-            Children.Add(Row("", "Проверять при запуске", "При каждом запуске узнавать, не вышла ли новая версия.", auto));
+            Children.Add(Row("", L.T("Проверять при запуске"), L.T("При каждом запуске узнавать, не вышла ли новая версия."), auto));
 
             var silent = new ToggleButton { Style = Theme.S("Switch"), IsChecked = Sys.Pref("UpdateAuto") == "1" };
             silent.Click += (s, e) => Sys.SetPref("UpdateAuto", silent.IsChecked == true ? "1" : "0");
-            Children.Add(Row("", "Устанавливать автоматически", "Найденное обновление скачивается и ставится без вопроса, затем программа перезапускается.", silent));
+            Children.Add(Row("", L.T("Устанавливать автоматически"), L.T("Найденное обновление скачивается и ставится без вопроса, затем программа перезапускается."), silent));
 
             string prev = Updater.PrevVersion();
             if (prev != null)
-                Children.Add(Row("", "Прошлая версия " + prev, "Если с новой версией что-то не так, можно вернуться к прошлой.", Ui.Btn("Вернуть", Theme.Second, owner.RollbackVersion)));
+                Children.Add(Row("", L.T("Прошлая версия ") + prev, L.T("Если с новой версией что-то не так, можно вернуться к прошлой."), Ui.Btn(L.T("Вернуть"), Theme.Second, owner.RollbackVersion)));
 
-            var gh = Ui.IconBtn("", "Открыть", Theme.Second, Theme.Text, () =>
+            var gh = Ui.IconBtn("", L.T("Открыть"), Theme.Second, Theme.Text, () =>
             {
                 try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(Updater.RepoUrl) { UseShellExecute = true }); } catch { }
             });
-            Children.Add(Row("", "btwTweaker на GitHub", Updater.RepoUrl, gh));
+            Children.Add(Row("", L.T("btwTweaker на GitHub"), Updater.RepoUrl, gh));
+
+            // ── Профили ──
+            Children.Add(Header(L.T("Профили"), false));
+            var ps = Ui.IconBtn("", L.T("Сохранить"), Theme.Accent, Theme.OnAccent, owner.SaveProfile);
+            Children.Add(Row("", L.T("Сохранить профиль"), L.T("Записать состояние всех твиков в файл ") + Profiles.Ext + L.T(" — чтобы повторить настройку на другом компьютере или после переустановки Windows."), ps));
+            var pa = Ui.IconBtn("", L.T("Открыть"), Theme.Second, Theme.Text, owner.ApplyProfile);
+            Children.Add(Row("", L.T("Применить профиль"), L.T("Открыть файл профиля, посмотреть, что отличается на этом компьютере, и выбрать, что применить."), pa));
+
+            var rc = new ToggleButton { Style = Theme.S("Switch"), IsChecked = Sys.Pref("ResetCheck") != "0" };
+            rc.Click += (s, e) => Sys.SetPref("ResetCheck", rc.IsChecked == true ? "1" : "0");
+            Children.Add(Row("", L.T("Проверять сброс при запуске"), L.T("Крупные обновления Windows иногда возвращают настройки назад. При запуске btwTweaker сверит твики, которые вы меняли (сейчас отслеживается: ") + Watch.Count + L.T("), и предложит вернуть."), rc));
 
             // ── Резервная копия ──
-            Children.Add(Header("Резервная копия и восстановление", false));
-            var b1 = Ui.IconBtn("", "Создать", Theme.Accent, Theme.OnAccent, () => owner.CreateRestorePoint(false));
-            Children.Add(Row("", "Точка восстановления Windows", "Снимок системы, к которому можно вернуться через «Восстановление системы» даже без btwTweaker.", b1));
-            var b2 = Ui.IconBtn("", "Откатить всё", Theme.Second, Theme.Danger, owner.RollbackAll);
-            Children.Add(Row("", "Откатить все изменения", "Вернуть исходные значения всех настроек, которые менял btwTweaker (изменено: " + Backup.Count + ").", b2));
-            var b3 = Ui.IconBtn("", "Открыть", Theme.Second, Theme.Text, owner.OpenBackupFolder);
-            Children.Add(Row("", "Папка резервной копии", Backup.Dir, b3));
+            Children.Add(Header(L.T("Резервная копия и восстановление"), false));
+            var b1 = Ui.IconBtn("", L.T("Создать"), Theme.Accent, Theme.OnAccent, () => owner.CreateRestorePoint(false));
+            Children.Add(Row("", L.T("Точка восстановления Windows"), L.T("Снимок системы, к которому можно вернуться через «Восстановление системы» даже без btwTweaker."), b1));
+            var b2 = Ui.IconBtn("", L.T("Откатить всё"), Theme.Second, Theme.Danger, owner.RollbackAll);
+            Children.Add(Row("", L.T("Откатить все изменения"), L.T("Вернуть исходные значения всех настроек, которые менял btwTweaker (изменено: ") + Backup.Count + ").", b2));
+            var b3 = Ui.IconBtn("", L.T("Открыть"), Theme.Second, Theme.Text, owner.OpenBackupFolder);
+            Children.Add(Row("", L.T("Папка резервной копии"), Backup.Dir, b3));
 
             // ── О программе ──
-            Children.Add(Header("О программе", false));
+            Children.Add(Header(L.T("О программе"), false));
             var about = new StackPanel();
             var name = new TextBlock { FontFamily = Theme.Display, FontSize = 20 };
             name.Inlines.Add(new System.Windows.Documents.Run("btw") { FontWeight = FontWeights.Bold, Foreground = Theme.Text });
             name.Inlines.Add(new System.Windows.Documents.Run("Tweaker") { Foreground = Theme.Sub });
             about.Children.Add(name);
-            about.Children.Add(Ui.Txt("Версия " + AppMain.Version + " · " + Sys.OsName, 13, Theme.Sub));
-            about.Children.Add(new TextBlock { Text = "Бесплатный твикер для Windows 10 и 11. Все изменения запоминаются и откатываются.", FontSize = 13, Foreground = Theme.Sub, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) });
+            about.Children.Add(Ui.Txt(L.T("Версия ") + AppMain.Version + " · " + Sys.OsName, 13, Theme.Sub));
+            about.Children.Add(new TextBlock { Text = L.T("Бесплатный твикер для Windows 10 и 11. Все изменения запоминаются и откатываются."), FontSize = 13, Foreground = Theme.Sub, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) });
             Children.Add(Ui.Card(about, new Thickness(20, 16, 20, 16), false));
         }
 
@@ -132,24 +161,24 @@ namespace BtwTweaker
             var custom = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 10, 0, 0) };
             var box = new TextBox { Style = Theme.S("Search"), Width = 120, Height = 32, Padding = new Thickness(10, 4, 10, 4), Text = Cfg.Accent == "system" ? Theme.Hex(Theme.SystemAccent()) : Cfg.Accent, MaxLength = 7 };
             custom.Children.Add(box);
-            var apply = Ui.Btn("Применить", Theme.Second, () =>
+            var apply = Ui.Btn(L.T("Применить"), Theme.Second, () =>
             {
                 string t = box.Text.Trim();
                 if (!t.StartsWith("#")) t = "#" + t;
                 try { Theme.C(t); }
-                catch { Dialog.Info(owner, "Неверный цвет", "Введите цвет в формате #RRGGBB, например #4F6BFF."); return; }
-                if (t.Length != 7) { Dialog.Info(owner, "Неверный цвет", "Введите цвет в формате #RRGGBB, например #4F6BFF."); return; }
+                catch { Dialog.Info(owner, L.T("Неверный цвет"), L.T("Введите цвет в формате #RRGGBB, например #4F6BFF.")); return; }
+                if (t.Length != 7) { Dialog.Info(owner, L.T("Неверный цвет"), L.T("Введите цвет в формате #RRGGBB, например #4F6BFF.")); return; }
                 Set(() => Cfg.Accent = t.ToUpperInvariant());
             });
             apply.Margin = new Thickness(8, 0, 0, 0);
             box.KeyDown += (s, e) => { if (e.Key == Key.Enter) apply.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent)); };
             custom.Children.Add(apply);
-            custom.Children.Add(new TextBlock { Text = "свой цвет", FontSize = 12.5, Foreground = Theme.Sub, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(10, 0, 0, 0) });
+            custom.Children.Add(new TextBlock { Text = L.T("свой цвет"), FontSize = 12.5, Foreground = Theme.Sub, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(10, 0, 0, 0) });
 
             var sp = new StackPanel();
             sp.Children.Add(wrap);
             sp.Children.Add(custom);
-            return Row("", "Цвет акцента", "Цвет кнопок, переключателей и подсветки. Можно взять цвет из Windows.", sp, true);
+            return Row("", L.T("Цвет акцента"), L.T("Цвет кнопок, переключателей и подсветки. Можно взять цвет из Windows."), sp, true);
         }
 
         FrameworkElement Swatch(string value, Color color, string glyph)
@@ -163,7 +192,7 @@ namespace BtwTweaker
                 Width = 34, Height = 34, CornerRadius = new CornerRadius(17), Margin = new Thickness(0, 0, 8, 0),
                 BorderThickness = new Thickness(2), BorderBrush = on ? new SolidColorBrush(color) : Brushes.Transparent,
                 Child = inner, Cursor = Cursors.Hand, Background = Brushes.Transparent,
-                ToolTip = value == "system" ? "Как в Windows" : value
+                ToolTip = value == "system" ? L.T("Как в Windows") : value
             };
             if (!on)
             {

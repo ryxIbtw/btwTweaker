@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BtwTweaker
@@ -10,17 +10,20 @@ namespace BtwTweaker
         {
             return new List<Section>
             {
-                new Section("Базовые твики", "",
-                    new Group("Ввод и интерфейс", MouseAccel(), Notifications()),
-                    new Group("Обновления и доставка", DriverUpdates(), MapsUpdates(), StoreUpdates(), new WinUpdate(), DeliveryOpt()),
-                    new Group("Службы и фоновые процессы", UwpBackground(), Indexing(), SysMain(), Printing(), Diagnostics(), EdgeBoost()),
-                    new Group("Игры и графика", GameBar(), GameMode(), new HagsTweak())),
-                new Section("Безопасность", "", SecurityGroups()),
-                new Section("Приватность", "", PrivacyGroups()),
-                new Section("Твики", "", TweaksGroups()),
-                new Section("Кастомизация", "", CustomGroups()),
-                new Section("Электропитание", "") { Page = "power" },
-                new Section("Очистка", "") { Page = "clean" },
+                new Section(L.T("Базовые твики"), "",
+                    new Group(L.T("Ввод и интерфейс"), MouseAccel(), Notifications()),
+                    new Group(L.T("Обновления и доставка"), DriverUpdates(), MapsUpdates(), StoreUpdates(), new WinUpdate(), DeliveryOpt()),
+                    new Group(L.T("Службы и фоновые процессы"), UwpBackground(), Indexing(), SysMain(), Printing(), Diagnostics(), EdgeBoost()),
+                    new Group(L.T("Игры и графика"), GameBar(), GameMode(), new HagsTweak())),
+                new Section(L.T("Безопасность"), "", SecurityGroups()),
+                new Section(L.T("Приватность"), "", PrivacyGroups()),
+                new Section(L.T("Твики"), "", TweaksGroups()),
+                new Section(L.T("Кастомизация"), "", CustomGroups()),
+                new Section(L.T("Панель NVIDIA"), "") { Page = "nvidia" },
+                new Section(L.T("Электропитание"), "") { Page = "power" },
+                new Section(L.T("Выпиливание"), "") { Page = "debloat" },
+                new Section(L.T("Автозагрузки"), "") { Page = "startup" },
+                new Section(L.T("Очистка"), "") { Page = "clean" },
             };
         }
 
@@ -34,8 +37,8 @@ namespace BtwTweaker
         {
             var t = new RegToggle
             {
-                Title = "Акселерация мыши",
-                Description = "«Повышенная точность установки указателя»: курсор проходит разное расстояние в зависимости от скорости движения мыши. Без неё движение предсказуемее — особенно в играх.",
+                Title = L.T("Акселерация мыши"),
+                Description = L.T("«Повышенная точность установки указателя»: курсор проходит разное расстояние в зависимости от скорости движения мыши. Без неё движение предсказуемее — особенно в играх."),
                 Icon = "",
             }
             .WhenOff(Reg.Sz(HKCU, Mouse, "MouseSpeed", "0"), Reg.Sz(HKCU, Mouse, "MouseThreshold1", "0"), Reg.Sz(HKCU, Mouse, "MouseThreshold2", "0"))
@@ -50,8 +53,8 @@ namespace BtwTweaker
             const string push = @"Software\Microsoft\Windows\CurrentVersion\PushNotifications";
             return new RegToggle
             {
-                Title = "Уведомления Windows",
-                Description = "Всплывающие баннеры от приложений и системы в углу экрана. После отключения баннеры перестанут появляться, а важные системные сообщения останутся в Центре уведомлений.",
+                Title = L.T("Уведомления Windows"),
+                Description = L.T("Всплывающие баннеры от приложений и системы в углу экрана. После отключения баннеры перестанут появляться, а важные системные сообщения останутся в Центре уведомлений."),
                 Icon = "", IconColor = "#F5C542",
                 Restart = Restart.Explorer,
             }
@@ -65,8 +68,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Автообновление драйверов при запуске системы",
-                Description = "Windows Update сам скачивает и ставит драйверы — иногда старее или хуже тех, что вы поставили вручную (частая проблема с видеокартами). После отключения драйверы обновляются только вами.",
+                Title = L.T("Автообновление драйверов при запуске системы"),
+                Description = L.T("Windows Update сам скачивает и ставит драйверы — иногда старее или хуже тех, что вы поставили вручную (частая проблема с видеокартами). После отключения драйверы обновляются только вами."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", "ExcludeWUDriversInQualityUpdate", 1),
@@ -81,8 +84,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Автообновление карт",
-                Description = "Фоновое скачивание офлайн-карт для приложения «Карты». Почти никому не нужно, но тратит трафик и диск.",
+                Title = L.T("Автообновление карт"),
+                Description = L.T("Фоновое скачивание офлайн-карт для приложения «Карты». Почти никому не нужно, но тратит трафик и диск."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, @"SYSTEM\Maps", "AutoUpdateEnabled", 0),
@@ -96,8 +99,8 @@ namespace BtwTweaker
             const string store = @"SOFTWARE\Policies\Microsoft\WindowsStore";
             return new RegToggle
             {
-                Title = "Автообновление приложений магазина",
-                Description = "Microsoft Store сам обновляет приложения в фоне. После отключения обновлять их можно вручную: Магазин → Библиотека → «Получить обновления».",
+                Title = L.T("Автообновление приложений магазина"),
+                Description = L.T("Microsoft Store сам обновляет приложения в фоне. После отключения обновлять их можно вручную: Магазин → Библиотека → «Получить обновления»."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, store, "AutoDownload", 2))
@@ -109,8 +112,8 @@ namespace BtwTweaker
             const string doKey = @"SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization";
             return new RegToggle
             {
-                Title = "Оптимизация доставки",
-                Description = "Windows скачивает обновления частями с других компьютеров и раздаёт ваши обновления другим — это тратит трафик и канал. После отключения обновления качаются только с серверов Microsoft.",
+                Title = L.T("Оптимизация доставки"),
+                Description = L.T("Windows скачивает обновления частями с других компьютеров и раздаёт ваши обновления другим — это тратит трафик и канал. После отключения обновления качаются только с серверов Microsoft."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKLM, doKey, "DODownloadMode", 0))
@@ -125,8 +128,8 @@ namespace BtwTweaker
             const string pol = @"SOFTWARE\Policies\Microsoft\Windows\AppPrivacy";
             return new RegToggle
             {
-                Title = "Работа UWP приложений в фоне",
-                Description = "Приложения из Магазина (Почта, Погода, Xbox и др.) работают в фоне, даже когда закрыты. После отключения они не тратят память и процессор, но и не присылают уведомления, пока не открыты.",
+                Title = L.T("Работа UWP приложений в фоне"),
+                Description = L.T("Приложения из Магазина (Почта, Погода, Xbox и др.) работают в фоне, даже когда закрыты. После отключения они не тратят память и процессор, но и не присылают уведомления, пока не открыты."),
                 Icon = "",
                 Restart = Restart.SignOut,
             }
@@ -138,8 +141,8 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Индексация",
-                Description = "Служба Windows Search постоянно сканирует файлы, чтобы поиск был мгновенным. После отключения диск меньше нагружается, но поиск в «Пуске» и Проводнике по содержимому файлов станет медленнее.",
+                Title = L.T("Индексация"),
+                Description = L.T("Служба Windows Search постоянно сканирует файлы, чтобы поиск был мгновенным. После отключения диск меньше нагружается, но поиск в «Пуске» и Проводнике по содержимому файлов станет медленнее."),
                 Icon = "",
                 StopServices = new[] { "WSearch" },
                 StartServices = new[] { "WSearch" },
@@ -153,9 +156,9 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "SysMain (Prefetch, Superfetch…)",
-                Description = "Служба заранее загружает в память часто используемые программы. На SSD пользы почти нет, а на слабых ПК она может грузить диск.",
+                Description = L.T("Служба заранее загружает в память часто используемые программы. На SSD пользы почти нет, а на слабых ПК она может грузить диск."),
                 Icon = "",
-                Caution = "на HDD Windows и программы могут запускаться медленнее.",
+                Caution = L.T("на HDD Windows и программы могут запускаться медленнее."),
                 StopServices = new[] { "SysMain" },
                 StartServices = new[] { "SysMain" },
             }
@@ -167,10 +170,10 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Службы печати",
-                Description = "Диспетчер печати и уведомления принтеров. Если принтера нет, службы можно отключить.",
+                Title = L.T("Службы печати"),
+                Description = L.T("Диспетчер печати и уведомления принтеров. Если принтера нет, службы можно отключить."),
                 Icon = "", IconColor = "#F5C542",
-                Caution = "перестанут работать принтеры, МФУ и «Печать в PDF».",
+                Caution = L.T("перестанут работать принтеры, МФУ и «Печать в PDF»."),
                 StopServices = new[] { "PrintNotify", "Spooler" },
                 StartServices = new[] { "Spooler" },
             }
@@ -182,10 +185,10 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Службы диагностики",
-                Description = "Телеметрия (DiagTrack), служба политики диагностики и сборщики диагностических данных. Работают в фоне и отправляют данные в Microsoft.",
+                Title = L.T("Службы диагностики"),
+                Description = L.T("Телеметрия (DiagTrack), служба политики диагностики и сборщики диагностических данных. Работают в фоне и отправляют данные в Microsoft."),
                 Icon = "",
-                Caution = "перестанет работать «Устранение неполадок» и диагностика сети.",
+                Caution = L.T("перестанет работать «Устранение неполадок» и диагностика сети."),
                 StopServices = new[] { "DiagTrack", "dmwappushservice", "diagnosticshub.standardcollector.service", "WdiServiceHost", "WdiSystemHost", "DPS" },
                 StartServices = new[] { "DiagTrack", "DPS" },
             }
@@ -200,8 +203,8 @@ namespace BtwTweaker
             const string edge = @"SOFTWARE\Policies\Microsoft\Edge";
             return new RegToggle
             {
-                Title = "Ускорение запуска и фоновая работа Edge",
-                Description = "Edge держит свои процессы в памяти после закрытия и при старте Windows, чтобы открываться быстрее. После отключения Edge не висит в фоне, но первый запуск чуть дольше.",
+                Title = L.T("Ускорение запуска и фоновая работа Edge"),
+                Description = L.T("Edge держит свои процессы в памяти после закрытия и при старте Windows, чтобы открываться быстрее. После отключения Edge не висит в фоне, но первый запуск чуть дольше."),
                 Icon = "", IconColor = "#3FA9F5",
             }
             .WhenOff(Reg.Dw(HKLM, edge, "StartupBoostEnabled", 0), Reg.Dw(HKLM, edge, "BackgroundModeEnabled", 0))
@@ -215,7 +218,7 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "Game Bar",
-                Description = "Игровая панель Xbox (Win+G) и фоновая запись игр. Отключение убирает лишнюю нагрузку и всплывающие окна при запуске игр.",
+                Description = L.T("Игровая панель Xbox (Win+G) и фоновая запись игр. Отключение убирает лишнюю нагрузку и всплывающие окна при запуске игр."),
                 Icon = "", IconColor = "#E5484D",
             }
             .WhenOff(Reg.Dw(HKCU, @"System\GameConfigStore", "GameDVR_Enabled", 0),
@@ -233,8 +236,8 @@ namespace BtwTweaker
             const string gb = @"Software\Microsoft\GameBar";
             return new RegToggle
             {
-                Title = "Игровой режим",
-                Description = "Когда запущена игра, Windows отдаёт ей приоритет и откладывает фоновые задачи (например, установку обновлений). Обычно лучше оставить включённым.",
+                Title = L.T("Игровой режим"),
+                Description = L.T("Когда запущена игра, Windows отдаёт ей приоритет и откладывает фоновые задачи (например, установку обновлений). Обычно лучше оставить включённым."),
                 Icon = "",
             }
             .WhenOff(Reg.Dw(HKCU, gb, "AutoGameModeEnabled", 0), Reg.Dw(HKCU, gb, "AllowAutoGameMode", 0))
@@ -251,10 +254,10 @@ namespace BtwTweaker
             for (int i = 0; i < ms.Length; i++) vals[i] = Reg.Sz(HKCU, desk, "MenuShowDelay", ms[i].ToString());
             return new RegChoice
             {
-                Title = "Задержка появления контекстного меню",
-                Description = "Сколько Windows ждёт, прежде чем раскрыть вложенное меню при наведении. По умолчанию — 400 мс.",
+                Title = L.T("Задержка появления контекстного меню"),
+                Description = L.T("Сколько Windows ждёт, прежде чем раскрыть вложенное меню при наведении. По умолчанию — 400 мс."),
                 Icon = "",
-                Options = new[] { "0 мс", "100 мс", "200 мс", "400 мс (стандарт)" },
+                Options = new[] { L.T("0 мс"), L.T("100 мс"), L.T("200 мс"), L.T("400 мс (стандарт)") },
                 Values = vals,
                 // Применяем сразу: SPI_SETMENUSHOWDELAY
                 After = i => Sys.SystemParametersInfo(0x006B, (uint)ms[i], IntPtr.Zero, Sys.SPIF_UPDATE),

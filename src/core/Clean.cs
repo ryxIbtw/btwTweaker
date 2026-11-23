@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -176,10 +176,10 @@ namespace BtwTweaker
 
         public static string Fmt(long b)
         {
-            if (b < 1024) return b + " Б";
-            if (b < 1024L * 1024) return (b / 1024.0).ToString("0.00", Ru) + " КБ";
-            if (b < 1024L * 1024 * 1024) return (b / 1048576.0).ToString("0.00", Ru) + " МБ";
-            return (b / 1073741824.0).ToString("0.00", Ru) + " ГБ";
+            if (b < 1024) return b + L.T(" Б");
+            if (b < 1024L * 1024) return (b / 1024.0).ToString("0.00", Ru) + L.T(" КБ");
+            if (b < 1024L * 1024 * 1024) return (b / 1048576.0).ToString("0.00", Ru) + L.T(" МБ");
+            return (b / 1073741824.0).ToString("0.00", Ru) + L.T(" ГБ");
         }
     }
 }

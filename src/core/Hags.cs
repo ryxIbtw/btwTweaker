@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace BtwTweaker
@@ -14,7 +14,7 @@ namespace BtwTweaker
         public HagsTweak()
         {
             Title = "HAGS";
-            Description = "Аппаратное ускорение планирования GPU: видеокарта сама управляет своей памятью. Может снизить задержку ввода и нужно для генерации кадров DLSS 3. Требует поддержки видеокартой (NVIDIA GTX 10xx и новее, AMD RX 5000 и новее).";
+            Description = L.T("Аппаратное ускорение планирования GPU: видеокарта сама управляет своей памятью. Может снизить задержку ввода и нужно для генерации кадров DLSS 3. Требует поддержки видеокартой (NVIDIA GTX 10xx и новее, AMD RX 5000 и новее).");
             Icon = "";
             Restart = Restart.Reboot;
             MinBuild = 19041;
@@ -41,6 +41,11 @@ namespace BtwTweaker
         public override void SetEnabled(bool on)
         {
             Reg.Apply(Reg.Dw(Reg.HKLM, GD, "HwSchMode", on ? 2 : 1));
+        }
+
+        public override System.Collections.Generic.List<ChangeInfo> Changes()
+        {
+            return new System.Collections.Generic.List<ChangeInfo> { ChangeText.FromReg(Reg.Dw(Reg.HKLM, GD, "HwSchMode", 2), Reg.Dw(Reg.HKLM, GD, "HwSchMode", 1)) };
         }
 
         // ── D3DKMT: опрос видеоадаптеров ──

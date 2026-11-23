@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BtwTweaker
@@ -17,10 +17,18 @@ namespace BtwTweaker
         public Restart Restart = Restart.None;
         public bool Win11Only;
         public int MinBuild;                    // минимальная сборка Windows (0 = любая)
+        // Постоянный ключ твика для избранного, профилей и слежения — русское название,
+        // даже когда интерфейс на английском (файлы профилей не зависят от языка).
+        string key;
+        public string Id { get { if (key == null) key = L.Ru(Title); return key; } }
         // Поддерживает ли этот ПК функцию (например, видеокарта для HAGS)
         public virtual bool IsSupported() { return true; }
+        // Можно ли пользоваться твиком на этом ПК (версия Windows и поддержка)
+        public bool Usable() { return !(Win11Only && !Sys.IsWin11) && Sys.Build >= MinBuild && IsSupported(); }
         // Если изменение сейчас невозможно — текст для пользователя (например, включена защита от подделки)
         public virtual string Blocker(bool wantEnable) { return null; }
+        // Что именно меняет твик (для блока «Что меняется»); null — не показываем
+        public virtual List<ChangeInfo> Changes() { return null; }
     }
 
     // Переключатель: «Включено» / «Отключено» — состояние самой функции Windows
@@ -37,7 +45,7 @@ namespace BtwTweaker
         // -1 = текущее значение не совпадает ни с одним вариантом
         public abstract int ReadIndex();
         public abstract void SetIndex(int i);
-        public virtual string UnknownText() { return "Своё"; }
+        public virtual string UnknownText() { return L.T("Своё"); }
         // Текст подтверждения перед выбором варианта (null — без вопроса)
         public virtual string Confirm(int i) { return null; }
     }
@@ -96,6 +104,13 @@ namespace BtwTweaker
             if (After != null) After(on);
         }
 
+        public override List<ChangeInfo> Changes()
+        {
+            var l = ChangeText.FromLists(OnVals, OffVals);
+            if (TaskPaths != null) foreach (var p in TaskPaths) l.Add(ChangeText.FromTask(p));
+            return l;
+        }
+
         // Твик только из заданий, которых нет в этой Windows, — «Не поддерживается»
         public override bool IsSupported()
         {
@@ -124,6 +139,15 @@ namespace BtwTweaker
         {
             Reg.Apply(Values[i]);
             if (After != null) After(i);
+        }
+
+        public override List<ChangeInfo> Changes()
+        {
+            var v0 = Values[0];
+            var c = new ChangeInfo { Kind = L.T("Реестр"), Title = ChangeText.HiveShort(v0.Hive) + "\\" + v0.Key, Detail = v0.Name, RegPath = ChangeText.HiveName(v0.Hive) + "\\" + v0.Key };
+            for (int i = 0; i < Values.Length; i++) c.Add(Options[i], ChangeText.Value(Values[i]));
+            try { c.Current = ReadIndex(); } catch { }
+            return new List<ChangeInfo> { c };
         }
     }
 

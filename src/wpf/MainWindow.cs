@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -53,17 +53,25 @@ namespace BtwTweaker
         int current;
         Restart pending = Restart.None;
 
+        Border resetBar;
+        TextBlock resetText;
+        List<ProfileStep> resetSteps;
+        string resetBuildNote;
+
         public MainWindow()
         {
+            Watch.Sections = Sections;
             Title = "btwTweaker";
             Width = 1180; Height = 780; MinWidth = 960; MinHeight = 580;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             FontFamily = Theme.Font;
             TextOptions.SetTextFormattingMode(this, TextFormattingMode.Display);
 
-            Entries.Add(new NavEntry { Title = "Главная", Icon = "", Key = "home" });
+            Entries.Add(new NavEntry { Title = L.T("Главная"), Icon = "", Key = "home" });
+            Entries.Add(new NavEntry { Title = L.T("Мои твики"), Icon = "", Key = "favorites" });
             foreach (var s in Sections) Entries.Add(new NavEntry { Title = s.Title, Icon = s.Icon, Key = "section", Sec = s });
-            Entries.Add(new NavEntry { Title = "Параметры", Icon = "", Key = "settings" });
+            Entries.Add(new NavEntry { Title = L.T("Журнал"), Icon = "", Key = "journal" });
+            Entries.Add(new NavEntry { Title = L.T("Параметры"), Icon = "", Key = "settings" });
 
             BuildUi();
             ShowPage(0);
@@ -110,7 +118,7 @@ namespace BtwTweaker
             var sg = new Grid { Width = 320, Height = 30, Margin = new Thickness(0, 6, 16, 0) };
             WindowChrome.SetIsHitTestVisibleInChrome(sg, true);
             search = new TextBox { Style = Theme.S("Search"), Padding = new Thickness(32, 4, 10, 4) };
-            searchHint = new TextBlock { Text = "Поиск по всем твикам", Foreground = Theme.Sub, FontSize = 13, IsHitTestVisible = false, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(34, 0, 0, 0) };
+            searchHint = new TextBlock { Text = L.T("Поиск по всем твикам"), Foreground = Theme.Sub, FontSize = 13, IsHitTestVisible = false, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(34, 0, 0, 0) };
             var sIcon = Ui.Icon("", 12, Theme.Sub);
             sIcon.HorizontalAlignment = HorizontalAlignment.Left;
             sIcon.Margin = new Thickness(12, 0, 0, 0);
@@ -158,15 +166,36 @@ namespace BtwTweaker
             updText.Margin = new Thickness(12, 0, 12, 0);
             updText.TextWrapping = TextWrapping.Wrap;
             ug.Children.Add(Ui.At(updText, 0, 1));
-            var notes = Ui.Btn("Что нового", Theme.Second, ShowUpdateNotes);
+            var notes = Ui.Btn(L.T("Что нового"), Theme.Second, ShowUpdateNotes);
             notes.Margin = new Thickness(0, 0, 8, 0);
             ug.Children.Add(Ui.At(notes, 0, 2));
-            updBtn = Ui.Btn("Обновить", Theme.Accent, () => InstallUpdate(found, false));
+            updBtn = Ui.Btn(L.Pick("Обновить", "Update"), Theme.Accent, () => InstallUpdate(found, false));
             updBtn.Margin = new Thickness(0, 0, 8, 0);
             ug.Children.Add(Ui.At(updBtn, 0, 3));
-            ug.Children.Add(Ui.At(Ui.Btn("Позже", Theme.Second, () => updBar.Visibility = Visibility.Collapsed), 0, 4));
+            ug.Children.Add(Ui.At(Ui.Btn(L.T("Позже"), Theme.Second, () => updBar.Visibility = Visibility.Collapsed), 0, 4));
             updBar = new Border { Background = Theme.Banner, BorderBrush = Theme.BannerBorder, BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(12), Padding = new Thickness(12, 10, 10, 10), Margin = new Thickness(32, 0, 32, 12), Child = ug, Visibility = Visibility.Collapsed };
-            contentHost.Children.Add(Ui.At(updBar, 2, 0));
+            // Плашка «Windows вернула настройки»
+            var rg = Ui.Cols("auto", "*", "auto", "auto", "auto");
+            rg.Children.Add(Ui.At(new Border { Width = 30, Height = 30, CornerRadius = new CornerRadius(9), Background = Theme.Yellow, Child = Ui.Icon("", 14, Brushes.Black) }, 0, 0));
+            resetText = Ui.Txt("", 13, Theme.Text);
+            resetText.Margin = new Thickness(12, 0, 12, 0);
+            resetText.TextWrapping = TextWrapping.Wrap;
+            rg.Children.Add(Ui.At(resetText, 0, 1));
+            var rBack = Ui.Btn(L.T("Вернуть…"), Theme.Accent, RestoreReset);
+            rBack.Margin = new Thickness(0, 0, 8, 0);
+            rg.Children.Add(Ui.At(rBack, 0, 2));
+            var rForget = Ui.Btn(L.T("Не следить"), Theme.Second, ForgetReset);
+            rForget.Margin = new Thickness(0, 0, 8, 0);
+            rForget.ToolTip = L.T("Больше не напоминать про эти твики — оставить как сейчас");
+            rg.Children.Add(Ui.At(rForget, 0, 3));
+            rg.Children.Add(Ui.At(Ui.Btn(L.T("Позже"), Theme.Second, () => { resetSteps = null; resetBar.Visibility = Visibility.Collapsed; }), 0, 4));
+            resetBar = new Border { Background = Theme.Banner, BorderBrush = Theme.BannerBorder, BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(12), Padding = new Thickness(12, 10, 10, 10), Margin = new Thickness(32, 0, 32, 12), Child = rg, Visibility = Visibility.Collapsed };
+
+            var bars = new StackPanel();
+            bars.Children.Add(updBar);
+            bars.Children.Add(resetBar);
+            contentHost.Children.Add(Ui.At(bars, 2, 0));
+            if (resetSteps != null && resetSteps.Count > 0) ShowResetBar(false);   // окно пересобрано (смена темы)
 
             content = new StackPanel { Margin = new Thickness(32, 0, 26, 28) };
             scroll = new ScrollViewer { VerticalScrollBarVisibility = ScrollBarVisibility.Auto, Content = content, Focusable = false, Padding = new Thickness(0, 0, 6, 0) };
@@ -216,8 +245,9 @@ namespace BtwTweaker
             var nav = new StackPanel { Margin = new Thickness(0, 10, 0, 0) };
             for (int i = 0; i < Entries.Count - 1; i++)
             {
+                if (Entries[i].Key == "journal") nav.Children.Add(new Border { Height = 1, Background = Theme.Line, Margin = new Thickness(18, 6, 18, 6) });
                 nav.Children.Add(NavItem(i));
-                if (i == 0) nav.Children.Add(new Border { Height = 1, Background = Theme.Line, Margin = new Thickness(18, 6, 18, 6) });
+                if (Entries[i].Key == "favorites") nav.Children.Add(new Border { Height = 1, Background = Theme.Line, Margin = new Thickness(18, 6, 18, 6) });
             }
             dock.Children.Add(new ScrollViewer { Content = nav, VerticalScrollBarVisibility = ScrollBarVisibility.Hidden, Focusable = false });
 
@@ -318,6 +348,20 @@ namespace BtwTweaker
             ShowPage(i);
         }
 
+        // В каком разделе твик (для журнала)
+        public string SectionOf(Tweak t)
+        {
+            foreach (var s in Sections)
+                foreach (var g in s.Groups)
+                    if (g.Tweaks.Contains(t)) return s.Title;
+            return L.T("Выпиливание");   // Teams — карточка из «Выпиливания»
+        }
+
+        public void NavigateKey(string key)
+        {
+            for (int i = 0; i < Entries.Count; i++) if (Entries[i].Key == key) { Navigate(i); return; }
+        }
+
         public void NavigateSection(Section s)
         {
             for (int i = 0; i < Entries.Count; i++) if (Entries[i].Sec == s) { Navigate(i); return; }
@@ -340,9 +384,7 @@ namespace BtwTweaker
 
         public static string Tweaks(int n)
         {
-            int m = n % 100, k = n % 10;
-            string w = (m >= 11 && m <= 14) ? "твиков" : k == 1 ? "твик" : (k >= 2 && k <= 4) ? "твика" : "твиков";
-            return n + " " + w;
+            return L.N(n, "твик", "твика", "твиков", "tweak", "tweaks");
         }
 
         // Перерисовать страницу или результаты поиска
@@ -355,7 +397,7 @@ namespace BtwTweaker
 
             if (q.Length > 0)
             {
-                pageTitle.Text = "Поиск";
+                pageTitle.Text = L.T("Поиск");
                 int found = 0;
                 foreach (var sec in Sections)
                     foreach (var g in sec.Groups)
@@ -365,22 +407,43 @@ namespace BtwTweaker
                         AddGroup(sec.Title + " · " + g.Title, hits);
                         found += hits.Count;
                     }
-                pageSub.Text = found > 0 ? "Найдено: " + Tweaks(found) : "";
-                if (found == 0) content.Children.Add(Placeholder("Ничего не найдено", "Попробуйте другое слово."));
+                pageSub.Text = found > 0 ? L.T("Найдено: ") + Tweaks(found) : "";
+                if (found == 0) content.Children.Add(Placeholder(L.T("Ничего не найдено"), L.T("Попробуйте другое слово.")));
                 return;
             }
 
             var en = Entries[current];
             if (en.Key == "home")
             {
-                pageTitle.Text = "Привет, " + Environment.UserName + "!";
+                pageTitle.Text = L.T("Привет, ") + Environment.UserName + "!";
                 pageSub.Text = "btwTweaker " + AppMain.Version + " · " + Sys.OsName;
                 content.Children.Add(new HomePage(this));
             }
+            else if (en.Key == "favorites")
+            {
+                pageTitle.Text = L.T("Мои твики");
+                int total = 0;
+                foreach (var sec in Sections)
+                    foreach (var g in sec.Groups)
+                    {
+                        var favs = g.Tweaks.FindAll(Favorites.Is);
+                        if (favs.Count == 0) continue;
+                        AddGroup(sec.Title + " · " + g.Title, favs);
+                        total += favs.Count;
+                    }
+                pageSub.Text = total > 0 ? Tweaks(total) + L.T(" в избранном") : L.T("Избранные твики из всех разделов");
+                if (total == 0) content.Children.Add(Placeholder(L.T("Пока пусто"), L.T("Нажмите на звёздочку у любого твика, чтобы добавить его сюда."), ""));
+            }
+            else if (en.Key == "journal")
+            {
+                pageTitle.Text = L.T("Журнал");
+                pageSub.Text = L.T("Что и когда менял btwTweaker — с откатом по одному действию");
+                content.Children.Add(new JournalPage(this));
+            }
             else if (en.Key == "settings")
             {
-                pageTitle.Text = "Параметры";
-                pageSub.Text = "Внешний вид, резервная копия и сведения о программе";
+                pageTitle.Text = L.T("Параметры");
+                pageSub.Text = L.T("Внешний вид, резервная копия и сведения о программе");
                 content.Children.Add(new SettingsPage(this));
             }
             else
@@ -389,17 +452,32 @@ namespace BtwTweaker
                 pageTitle.Text = sec.Title;
                 if (sec.Page == "power")
                 {
-                    pageSub.Text = "Схемы электропитания Windows";
+                    pageSub.Text = L.T("Схемы электропитания Windows");
                     content.Children.Add(new PowerPage(this));
+                }
+                else if (sec.Page == "startup")
+                {
+                    pageSub.Text = L.T("Программы, задания и службы, которые запускаются вместе с Windows");
+                    content.Children.Add(new StartupPage(this));
+                }
+                else if (sec.Page == "debloat")
+                {
+                    pageSub.Text = L.T("Встроенные программы Windows, OneDrive и Edge");
+                    content.Children.Add(new DebloatPage(this));
+                }
+                else if (sec.Page == "nvidia")
+                {
+                    pageSub.Text = L.T("Настройки драйвера видеокарты");
+                    content.Children.Add(new NvidiaPage(this));
                 }
                 else if (sec.Page == "clean")
                 {
-                    pageSub.Text = "Временные файлы, кэши и следы активности";
+                    pageSub.Text = L.T("Временные файлы, кэши и следы активности");
                     content.Children.Add(new CleanPage(this));
                 }
                 else
                 {
-                    pageSub.Text = Tweaks(Count(sec)) + " · групп: " + sec.Groups.Count;
+                    pageSub.Text = Tweaks(Count(sec)) + L.T(" · групп: ") + sec.Groups.Count;
                     foreach (var g in sec.Groups) AddGroup(g.Title, g.Tweaks);
                 }
             }
@@ -423,8 +501,13 @@ namespace BtwTweaker
 
         FrameworkElement Placeholder(string title, string text)
         {
+            return Placeholder(title, text, null);
+        }
+
+        FrameworkElement Placeholder(string title, string text, string glyph)
+        {
             var sp = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(0, 90, 0, 0) };
-            sp.Children.Add(Ui.Icon("", 38, Theme.Sub));
+            sp.Children.Add(Ui.Icon(glyph ?? "", 38, Theme.Sub));
             var t = Ui.Txt(title, 17, Theme.Text, FontWeights.SemiBold);
             t.HorizontalAlignment = HorizontalAlignment.Center;
             t.Margin = new Thickness(0, 16, 0, 6);
@@ -488,9 +571,9 @@ namespace BtwTweaker
         {
             if (r <= pending) return;
             pending = r;
-            if (r == Restart.Explorer) { bannerText.Text = "Чтобы изменения применились, нужно перезапустить Проводник."; bannerBtn.Content = "Перезапустить Проводник"; }
-            else if (r == Restart.SignOut) { bannerText.Text = "Часть изменений применится после выхода из системы или перезагрузки."; bannerBtn.Content = "Перезагрузить"; }
-            else if (r == Restart.Reboot) { bannerText.Text = "Часть изменений применится только после перезагрузки компьютера."; bannerBtn.Content = "Перезагрузить"; }
+            if (r == Restart.Explorer) { bannerText.Text = L.T("Чтобы изменения применились, нужно перезапустить Проводник."); bannerBtn.Content = L.T("Перезапустить Проводник"); }
+            else if (r == Restart.SignOut) { bannerText.Text = L.T("Часть изменений применится после выхода из системы или перезагрузки."); bannerBtn.Content = L.T("Перезагрузить"); }
+            else if (r == Restart.Reboot) { bannerText.Text = L.T("Часть изменений применится только после перезагрузки компьютера."); bannerBtn.Content = L.T("Перезагрузить"); }
             banner.Visibility = Visibility.Visible;
             Ui.FadeIn(banner);
         }
@@ -505,7 +588,7 @@ namespace BtwTweaker
                 banner.Visibility = Visibility.Collapsed;
                 return;
             }
-            if (Dialog.Ask(this, "Перезагрузить компьютер сейчас?", "Сохраните открытые файлы в других программах — компьютер перезагрузится сразу.", "Перезагрузить", "Позже", true))
+            if (Dialog.Ask(this, L.T("Перезагрузить компьютер сейчас?"), L.T("Сохраните открытые файлы в других программах — компьютер перезагрузится сразу."), L.T("Перезагрузить"), L.T("Позже"), true))
                 Sys.Reboot();
         }
 
@@ -513,7 +596,7 @@ namespace BtwTweaker
 
         public async void CreateRestorePoint(bool firstRun)
         {
-            if (!firstRun && !Dialog.Ask(this, "Создать точку восстановления?", "Windows запомнит текущее состояние системы. Если что-то пойдёт не так, к нему можно вернуться через «Восстановление системы». Это займёт до минуты.", "Создать", "Отмена"))
+            if (!firstRun && !Dialog.Ask(this, L.T("Создать точку восстановления?"), L.T("Windows запомнит текущее состояние системы. Если что-то пойдёт не так, к нему можно вернуться через «Восстановление системы». Это займёт до минуты."), L.T("Создать"), L.T("Отмена")))
                 return;
             Mouse.OverrideCursor = Cursors.Wait;
             IsEnabled = false;
@@ -523,7 +606,7 @@ namespace BtwTweaker
             catch (Exception ex) { msg = ex.Message; }
             Mouse.OverrideCursor = null;
             IsEnabled = true;
-            Dialog.Info(this, ok ? "Готово" : "Точка восстановления", msg);
+            Dialog.Info(this, ok ? L.T("Готово") : L.T("Точка восстановления"), msg);
         }
 
         public void RollbackAll()
@@ -531,19 +614,19 @@ namespace BtwTweaker
             int n = Backup.Count;
             if (n == 0)
             {
-                Dialog.Info(this, "Нечего откатывать", "btwTweaker ещё ничего не менял на этом компьютере.");
+                Dialog.Info(this, L.T("Нечего откатывать"), L.T("btwTweaker ещё ничего не менял на этом компьютере."));
                 return;
             }
-            if (!Dialog.Ask(this, "Откатить все изменения?", "Все настройки, которые менял btwTweaker (" + n + " знач.), вернутся к исходным значениям — как было до первого изменения.", "Откатить", "Отмена", true))
+            if (!Dialog.Ask(this, L.T("Откатить все изменения?"), L.T("Все настройки, которые менял btwTweaker (") + n + L.T(" знач.), вернутся к исходным значениям — как было до первого изменения."), L.T("Откатить"), L.T("Отмена"), true))
                 return;
             var errors = new List<string>();
             int done;
             Mouse.OverrideCursor = Cursors.Wait;
-            try { done = Backup.RestoreAll(errors); }
+            try { done = Backup.RestoreAll(errors); Watch.Clear(); }
             finally { Mouse.OverrideCursor = null; }
             Render(false);
             NeedRestart(Restart.Reboot);
-            Dialog.Info(this, "Откат выполнен", "Восстановлено значений: " + done + "." + (errors.Count > 0 ? "\n\nОшибки:\n" + string.Join("\n", errors) : "") + "\n\nДля полного применения перезагрузите компьютер.");
+            Dialog.Info(this, L.T("Откат выполнен"), L.T("Восстановлено значений: ") + done + "." + (errors.Count > 0 ? L.T("\n\nОшибки:\n") + string.Join("\n", errors) : "") + L.T("\n\nДля полного применения перезагрузите компьютер."));
         }
 
         public void OpenBackupFolder()
@@ -552,17 +635,206 @@ namespace BtwTweaker
             Process.Start(new ProcessStartInfo("explorer.exe", "\"" + Backup.Dir + "\"") { UseShellExecute = true });
         }
 
+        // ───────── Профили ─────────
+
+        public void SaveProfile()
+        {
+            var dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                Title = L.T("Сохранить профиль btwTweaker"),
+                Filter = L.T("Профиль btwTweaker (*") + Profiles.Ext + ")|*" + Profiles.Ext,
+                FileName = "btwTweaker-" + Environment.MachineName + "-" + DateTime.Now.ToString("yyyy-MM-dd") + Profiles.Ext,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+            if (dlg.ShowDialog(this) != true) return;
+            try
+            {
+                ProfileFile p;
+                Mouse.OverrideCursor = Cursors.Wait;
+                try { p = Profiles.Capture(Sections, Path.GetFileNameWithoutExtension(dlg.FileName)); }
+                finally { Mouse.OverrideCursor = null; }
+                Profiles.Save(dlg.FileName, p);
+                Dialog.Info(this, L.T("Профиль сохранён"), L.T("Записано ") + Tweaks(p.Tweaks.Count) + L.T(" с текущим состоянием.\n\n") + dlg.FileName +
+                    L.T("\n\nПеренесите файл на другой компьютер и откройте его в btwTweaker: Параметры → «Применить профиль»."));
+            }
+            catch (Exception ex) { Dialog.Info(this, L.T("Не получилось сохранить профиль"), ex.Message); }
+        }
+
+        public void ApplyProfile()
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = L.T("Открыть профиль btwTweaker"),
+                Filter = L.T("Профиль btwTweaker (*") + Profiles.Ext + ")|*" + Profiles.Ext + L.T("|Все файлы (*.*)|*.*"),
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+            if (dlg.ShowDialog(this) != true) return;
+            ApplyProfile(dlg.FileName);
+        }
+
+        public async void ApplyProfile(string path)
+        {
+            ProfileFile p;
+            List<ProfileStep> steps;
+            var notFound = new List<string>();
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                p = Profiles.Load(path);
+                var pf = p;
+                steps = await Task.Run(() => Profiles.Diff(Sections, pf, notFound));
+            }
+            catch (Exception ex) { Mouse.OverrideCursor = null; Dialog.Info(this, L.T("Не получилось открыть профиль"), ex.Message); return; }
+            Mouse.OverrideCursor = null;
+
+            string head = L.T("Профиль «") + p.Name + L.T("»") + (string.IsNullOrEmpty(p.Created) ? "" : L.T(" от ") + p.Created) +
+                (string.IsNullOrEmpty(p.Pc) ? "" : L.T(", компьютер ") + p.Pc) + ".";
+            string extra = notFound.Count > 0 ? L.T("\n\nВ этой версии программы нет твиков: ") + notFound.Count + L.T(" — они пропущены.") : "";
+            if (steps.Count == 0)
+            {
+                Dialog.Info(this, L.T("Всё уже как в профиле"), head + L.T("\n\nНа этом компьютере все твики из профиля уже стоят так же.") + extra);
+                return;
+            }
+
+            int skipped = steps.FindAll(s => s.Skip != null).Count;
+            string text = head + L.T(" Отличается от этого компьютера: ") + (steps.Count - skipped) + (skipped > 0 ? L.T(", недоступно здесь: ") + skipped : "") + "." +
+                L.T("\nОтметьте, что применить. Пункты, которые снижают защиту или требуют внимания, не отмечены — включите их сами, если нужно.") +
+                L.T("\nКаждое изменение попадёт в «Журнал», его можно откатить.") + extra;
+            ApplySteps(steps, p.Name, L.T("Применить профиль"), text, L.T("Применить"), null);
+        }
+
+        // Окно с галочками и применение выбранных шагов (профиль или возврат сброшенных твиков).
+        // name — имя профиля для журнала (null — возврат сброса: тогда рискованные пункты отмечены, их выбирали сами).
+        async void ApplySteps(List<ProfileStep> steps, string name, string title, string text, string yes, Action done)
+        {
+            bool reset = name == null;
+            var items = new List<PickItem>();
+            foreach (var st in steps)
+            {
+                var it = new PickItem { Group = st.Section, Text = st.Tweak.Title, Detail = st.From + " → " + st.To, Tag = st, Checked = true };
+                if (st.Skip != null) { it.Enabled = false; it.Checked = false; it.Note = L.T("Пропуск: ") + st.Skip; }
+                else if (st.Risky)
+                {
+                    it.Checked = reset;
+                    it.Note = st.Tweak.Security != null ? L.T("Снижает защиту: ") + st.Tweak.Security : L.T("Внимание: ") + st.Tweak.Caution;
+                    it.NoteColor = st.Tweak.Security != null ? Theme.Red : Theme.Yellow;
+                }
+                else if (st.Index >= 0)
+                {
+                    string ask = ((ChoiceTweak)st.Tweak).Confirm(st.Index);
+                    if (ask != null) { it.Checked = reset; it.Note = ask; it.NoteColor = Theme.Yellow; }
+                }
+                items.Add(it);
+            }
+            if (!Dialog.Pick(this, title, text, items, yes)) return;
+#if TESTHOOKS
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BTW_SNAP"))) return;   // в тестах ничего не применяем
+#endif
+
+            var chosen = new List<ProfileStep>();
+            foreach (var it in items) if (it.Checked && it.Enabled) chosen.Add((ProfileStep)it.Tag);
+            if (chosen.Count == 0) return;
+
+            var errors = new List<string>();
+            Restart need = Restart.None;
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                await Task.Run(() =>
+                {
+                    foreach (var st in chosen)
+                    {
+                        var s = st;
+                        try
+                        {
+                            Journal.Do(s.Section, (reset ? L.T("Возврат после сброса: ") : L.T("Профиль «") + name + L.T("»: ")) + s.Tweak.Title + " → " + s.To, () => Profiles.Apply(s), s.Tweak);
+                            if (s.Tweak.Restart > need) need = s.Tweak.Restart;
+                        }
+                        catch (Exception ex) { errors.Add(s.Tweak.Title + ": " + ex.Message); }
+                    }
+                });
+            }
+            finally { Mouse.OverrideCursor = null; }
+            if (done != null) done();
+            Render(false);
+            if (need != Restart.None) NeedRestart(need);
+            int ok = chosen.Count - errors.Count;
+            Dialog.Info(this, errors.Count == 0 ? L.T("Готово") : L.T("Готово, но не всё"),
+                L.T("Изменено: ") + Tweaks(ok) + "." + (errors.Count > 0 ? L.T("\n\nНе получилось:\n") + string.Join("\n", errors) : "") +
+                L.T("\n\nОткатить можно в «Журнале» — по одному или всё сразу."));
+        }
+
+        // ───────── Проверка сброса твиков ─────────
+
+        // При запуске: не вернула ли Windows (или другая программа) настройки, которые меняли в btwTweaker
+        async void CheckReset()
+        {
+            // Сборка Windows — чтобы сказать, что причина, скорее всего, обновление
+            string build = Sys.Build + "." + Sys.Ubr;
+            string last = Sys.Pref("LastBuild");
+#if TESTHOOKS
+            string fake = Environment.GetEnvironmentVariable("BTW_SNAP_LASTBUILD");
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BTW_SNAP"))) last = fake; else
+#endif
+            Sys.SetPref("LastBuild", build);
+            if (Sys.Pref("ResetCheck") == "0") return;
+            List<ProfileStep> steps;
+            try { steps = await Task.Run(() => Watch.Check(Sections)); }
+            catch (Exception ex) { AppMain.Log(L.T("Проверка сброса"), ex); return; }
+            if (steps.Count == 0) return;
+            resetSteps = steps;
+            resetBuildNote = !string.IsNullOrEmpty(last) && last != build ? last + " → " + build : null;
+            ShowResetBar(true);
+        }
+
+        void ShowResetBar(bool animate)
+        {
+            int n = resetSteps.Count;
+            string what = L.N(n, "настройку", "настройки", "настроек", "setting", "settings");
+            if (L.En)
+                resetText.Text = resetBuildNote != null
+                    ? "After a Windows update (build " + resetBuildNote + "), " + what + " changed in btwTweaker " + (n == 1 ? "was" : "were") + " reverted."
+                    : "Windows or another program reverted " + what + " you changed in btwTweaker.";
+            else
+                resetText.Text = resetBuildNote != null
+                    ? "После обновления Windows (сборка " + resetBuildNote + ") вернулось назад " + what + " btwTweaker."
+                    : "Windows или другая программа вернула назад " + what + ", которые вы меняли в btwTweaker.";
+            resetBar.Visibility = Visibility.Visible;
+            if (animate) Ui.FadeIn(resetBar);
+        }
+
+        void RestoreReset()
+        {
+            if (resetSteps == null) return;
+            var steps = resetSteps;
+            ApplySteps(steps, null, L.T("Вернуть настройки"),
+                L.T("Эти твики сейчас стоят не так, как вы выбирали в btwTweaker. Отметьте, что вернуть. Каждое изменение попадёт в «Журнал»."),
+                L.T("Вернуть"), () => { resetSteps = null; resetBar.Visibility = Visibility.Collapsed; });
+        }
+
+        void ForgetReset()
+        {
+            if (resetSteps == null) return;
+            if (!Dialog.Ask(this, L.T("Не следить за этими твиками?"), L.T("btwTweaker перестанет напоминать о них и оставит как сейчас. Если снова измените твик в программе, слежение включится заново."), L.T("Не следить"), L.T("Отмена"))) return;
+            var ids = new List<string>();
+            foreach (var s in resetSteps) ids.Add(s.Tweak.Id);
+            Watch.Forget(ids);
+            resetSteps = null;
+            resetBar.Visibility = Visibility.Collapsed;
+        }
+
         void OnFirstShow()
         {
 #if TESTHOOKS
             if (Snap()) return;
 #endif
             if (Sys.Pref("UpdateCheck") != "0") CheckForUpdates(false);
+            CheckReset();
             if (Sys.Pref("FirstRunDone") == "1") return;
             Sys.SetPref("FirstRunDone", "1");
-            if (Dialog.Ask(this, "Добро пожаловать в btwTweaker",
-                "Перед изменениями рекомендуем создать точку восстановления — так любую настройку можно будет вернуть даже без программы.\n\nКроме того, btwTweaker сам запоминает исходные значения: кнопка «Откатить всё» вернёт всё как было.",
-                "Создать точку", "Пропустить"))
+            if (Dialog.Ask(this, L.T("Добро пожаловать в btwTweaker"),
+                L.T("Перед изменениями рекомендуем создать точку восстановления — так любую настройку можно будет вернуть даже без программы.\n\nКроме того, btwTweaker сам запоминает исходные значения: кнопка «Откатить всё» вернёт всё как было."),
+                L.T("Создать точку"), L.T("Пропустить")))
                 CreateRestorePoint(true);
         }
 
@@ -581,15 +853,15 @@ namespace BtwTweaker
 
             if (err != null)
             {
-                AppMain.Log("Проверка обновлений", err);
-                if (manual) Dialog.Info(this, "Не удалось проверить обновления", "GitHub недоступен или не отвечает.\n\n" + err.Message);
+                AppMain.Log(L.T("Проверка обновлений"), err);
+                if (manual) Dialog.Info(this, L.T("Не удалось проверить обновления"), L.T("GitHub недоступен или не отвечает.\n\n") + err.Message);
                 return;
             }
             if (r.Version <= Updater.Current)
             {
                 found = null;
                 if (updBar != null) updBar.Visibility = Visibility.Collapsed;
-                if (manual) Dialog.Info(this, "Обновлений нет", "У вас последняя версия btwTweaker " + Updater.Current.ToString(3) + ".");
+                if (manual) Dialog.Info(this, L.T("Обновлений нет"), L.T("У вас последняя версия btwTweaker ") + Updater.Current.ToString(3) + ".");
                 return;
             }
             found = r;
@@ -599,7 +871,7 @@ namespace BtwTweaker
 
         void ShowUpdateBar()
         {
-            updText.Text = "Доступна новая версия btwTweaker " + found.Version.ToString(3) + " (у вас " + Updater.Current.ToString(3) + ").";
+            updText.Text = L.T("Доступна новая версия btwTweaker ") + found.Version.ToString(3) + L.T(" (у вас ") + Updater.Current.ToString(3) + ").";
             updBtn.IsEnabled = !updating;
             if (updBar.Visibility != Visibility.Visible)
             {
@@ -611,8 +883,8 @@ namespace BtwTweaker
         void ShowUpdateNotes()
         {
             if (found == null) return;
-            string notes = string.IsNullOrWhiteSpace(found.Notes) ? "Описание этой версии не указано." : PlainNotes(found.Notes);
-            Dialog.Info(this, "Что нового в btwTweaker " + found.Version.ToString(3), notes);
+            string notes = string.IsNullOrWhiteSpace(found.Notes) ? L.T("Описание этой версии не указано.") : PlainNotes(found.Notes);
+            Dialog.Info(this, L.T("Что нового в btwTweaker ") + found.Version.ToString(3), notes);
         }
 
         // Markdown из описания релиза — в простой текст
@@ -638,28 +910,28 @@ namespace BtwTweaker
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BTW_SNAP"))) return;   // снимки никогда ничего не ставят
 #endif
             string cur = Updater.Current.ToString(3), next = r.Version.ToString(3);
-            if (!silent && !Dialog.Ask(this, "Обновить btwTweaker до " + next + "?",
-                "Сейчас установлена версия " + cur + ". Программа скачает новую версию с GitHub, проверит контрольную сумму и перезапустится.\n\nРезервная копия и настройки сохранятся, прошлую версию можно будет вернуть в «Параметрах».",
-                "Обновить", "Отмена"))
+            if (!silent && !Dialog.Ask(this, L.T("Обновить btwTweaker до ") + next + "?",
+                L.T("Сейчас установлена версия ") + cur + L.T(". Программа скачает новую версию с GitHub, проверит контрольную сумму и перезапустится.\n\nРезервная копия и настройки сохранятся, прошлую версию можно будет вернуть в «Параметрах»."),
+                L.T("Обновить"), L.T("Отмена")))
                 return;
             updating = true;
             updBtn.IsEnabled = false;
-            updText.Text = "Скачиваю btwTweaker " + next + "…";
+            updText.Text = L.T("Скачиваю btwTweaker ") + next + "…";
             Exception err = null;
             try { await Task.Run(() => Updater.DownloadAndInstall(r, Updater.ExePath)); }
             catch (Exception ex) { err = ex; }
             if (err != null)
             {
                 updating = false;
-                AppMain.Log("Обновление", err);
+                AppMain.Log(L.T("Обновление"), err);
                 ShowUpdateBar();
-                Dialog.Info(this, "Не удалось обновить", err.Message);
+                Dialog.Info(this, L.T("Не удалось обновить"), err.Message);
                 return;
             }
             try { Updater.StartNew(); }
             catch (Exception ex)
             {
-                Dialog.Info(this, "Обновление установлено", "Новая версия уже на месте, но перезапустить программу не получилось — откройте её заново.\n\n" + ex.Message);
+                Dialog.Info(this, L.T("Обновление установлено"), L.T("Новая версия уже на месте, но перезапустить программу не получилось — откройте её заново.\n\n") + ex.Message);
             }
             Application.Current.Shutdown();
         }
@@ -668,10 +940,10 @@ namespace BtwTweaker
         {
             string prev = Updater.PrevVersion();
             if (prev == null) return;
-            if (!Dialog.Ask(this, "Вернуть версию " + prev + "?", "Программа заменит себя прошлой версией и перезапустится. Текущую версию потом тоже можно будет вернуть.", "Вернуть", "Отмена"))
+            if (!Dialog.Ask(this, L.T("Вернуть версию ") + prev + "?", L.T("Программа заменит себя прошлой версией и перезапустится. Текущую версию потом тоже можно будет вернуть."), L.T("Вернуть"), L.T("Отмена")))
                 return;
             try { Updater.Rollback(); Updater.StartNew(); }
-            catch (Exception ex) { Dialog.Info(this, "Не получилось", ex.Message); return; }
+            catch (Exception ex) { Dialog.Info(this, L.T("Не получилось"), ex.Message); return; }
             Application.Current.Shutdown();
         }
 
@@ -690,7 +962,13 @@ namespace BtwTweaker
             if (Environment.GetEnvironmentVariable("BTW_SNAP_EXPAND") == "1") foreach (var c in cards) c.ToggleDesc(true);
             if (Environment.GetEnvironmentVariable("BTW_SNAP_BANNER") == "1") NeedRestart(Restart.Reboot);
             if (Environment.GetEnvironmentVariable("BTW_SNAP_RAIL") == "1") { rail.Width = RailWide; rail.Effect = null; }
+            string favs = Environment.GetEnvironmentVariable("BTW_SNAP_FAVS");
+            if (!string.IsNullOrEmpty(favs)) { Favorites.TestSet(favs); ShowPage(current); }
             if (Environment.GetEnvironmentVariable("BTW_SNAP_UPDATE") == "1") CheckForUpdates(false);
+            string prof = Environment.GetEnvironmentVariable("BTW_SNAP_PROFILE");   // только показать диалог, применять нечего: снимок закроет программу
+            if (!string.IsNullOrEmpty(prof)) ApplyProfile(prof);
+            if (Environment.GetEnvironmentVariable("BTW_SNAP_RESET") == "1") CheckReset();          // нужен BTW_DATA_DIR с watch.json
+            if (Environment.GetEnvironmentVariable("BTW_SNAP_RESET") == "2") { CheckReset(); Dispatcher.BeginInvoke(new Action(async () => { await Task.Delay(1500); RestoreReset(); })); }
             int delay;
             int.TryParse(Environment.GetEnvironmentVariable("BTW_SNAP_DELAY"), out delay);
             var timer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromSeconds(Math.Max(delay, 0) + 0.6) };
@@ -717,6 +995,7 @@ namespace BtwTweaker
                 var enc = new PngBitmapEncoder();
                 enc.Frames.Add(BitmapFrame.Create(bmp));
                 using (var f = File.Create(path)) enc.Save(f);
+                if (L.En) File.WriteAllLines(path + ".miss.txt", L.Misses(), new System.Text.UTF8Encoding(false));
                 Application.Current.Shutdown();
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }

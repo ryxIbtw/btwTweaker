@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace BtwTweaker
@@ -19,13 +19,13 @@ namespace BtwTweaker
 
         public WinUpdate()
         {
-            Title = "Обновление Windows";
+            Title = L.T("Обновление Windows");
             Icon = "";
             IconColor = "#F5A524";
-            Options = new[] { "Включено", "Пауза", "Отключено" };
-            Description = "Включено — как в Windows по умолчанию.\n" +
-                          "Пауза — обновления приостановлены до отмены (в «Параметрах» будет видна дата). Windows продолжает работать как обычно, снять паузу можно здесь или кнопкой «Возобновить» в Параметрах.\n" +
-                          "Отключено — автообновление выключено политикой, служба Windows Update отключена. Магазин и обновление баз Defender тоже перестанут работать.";
+            Options = new[] { L.T("Включено"), L.T("Пауза"), L.T("Отключено") };
+            Description = L.T("Включено — как в Windows по умолчанию.\n") +
+                          L.T("Пауза — обновления приостановлены до отмены (в «Параметрах» будет видна дата). Windows продолжает работать как обычно, снять паузу можно здесь или кнопкой «Возобновить» в Параметрах.\n") +
+                          L.T("Отключено — автообновление выключено политикой, служба Windows Update отключена. Магазин и обновление баз Defender тоже перестанут работать.");
         }
 
         public override int ReadIndex()
@@ -41,10 +41,23 @@ namespace BtwTweaker
             return 0;
         }
 
+        public override System.Collections.Generic.List<ChangeInfo> Changes()
+        {
+            int cur = -1;
+            try { cur = ReadIndex(); } catch { }
+            var a = new ChangeInfo { Kind = L.T("Политика"), Title = "HKLM\\" + AU, Detail = "NoAutoUpdate", RegPath = "HKEY_LOCAL_MACHINE\\" + AU, Current = cur };
+            a.Add(L.T("Включено"), L.T("нет значения")).Add(L.T("Пауза"), L.T("нет значения")).Add(L.T("Отключено"), "1");
+            var s = new ChangeInfo { Kind = L.T("Служба"), Title = "wuauserv", Detail = L.T("Тип запуска"), RegPath = "HKEY_LOCAL_MACHINE\\" + Reg.Services + "wuauserv", Current = cur };
+            s.Add(L.T("Включено"), L.T("Вручную")).Add(L.T("Пауза"), L.T("Вручную")).Add(L.T("Отключено"), L.T("Отключена"));
+            var p = new ChangeInfo { Kind = L.T("Реестр"), Title = "HKLM\\" + UX, Detail = L.T("PauseUpdates… (6 дат) и FlightSettingsMaxPauseDays"), RegPath = "HKEY_LOCAL_MACHINE\\" + UX, Current = cur };
+            p.Add(L.T("Включено"), L.T("нет значений")).Add(L.T("Пауза"), L.T("сегодня → +") + PauseDays + L.T(" дней")).Add(L.T("Отключено"), L.T("нет значений"));
+            return new System.Collections.Generic.List<ChangeInfo> { a, s, p };
+        }
+
         public override string Confirm(int i)
         {
             if (i == 2)
-                return "Без обновлений не приходят исправления уязвимостей. Также перестанут обновляться приложения Магазина и базы Windows Defender.\n\nWindows может сама включить службу обратно через какое-то время.";
+                return L.T("Без обновлений не приходят исправления уязвимостей. Также перестанут обновляться приложения Магазина и базы Windows Defender.\n\nWindows может сама включить службу обратно через какое-то время.");
             return null;
         }
 

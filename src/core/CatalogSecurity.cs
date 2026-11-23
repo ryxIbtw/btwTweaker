@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 namespace BtwTweaker
 {
@@ -8,13 +8,13 @@ namespace BtwTweaker
         {
             return new[]
             {
-                new Group("Базовая защита Windows",
+                new Group(L.T("Базовая защита Windows"),
                     DefenderNag(), new DefenderTweak(), SecurityCenter(), SmartScreen(), Firewall(), Amsi()),
-                new Group("Усиление защиты (VBS/UAC)",
+                new Group(L.T("Усиление защиты (VBS/UAC)"),
                     Vbs(), AutoEncrypt(), Uac()),
-                new Group("Микрокод и CPU-митигации",
+                new Group(L.T("Микрокод и CPU-митигации"),
                     SpectreV2()),
-                new Group("Сеть, фильтры и DRM",
+                new Group(L.T("Сеть, фильтры и DRM"),
                     Hdcp(), Llmnr()),
             };
         }
@@ -26,8 +26,8 @@ namespace BtwTweaker
             const string ns = @"SOFTWARE\Microsoft\Windows Security Health\State";
             return new RegToggle
             {
-                Title = "Назойливые уведомления защиты",
-                Description = "Напоминания «Безопасности Windows»: включить защиту, настроить учётную запись, аккаунт Microsoft и т.п. Отключает только эти рекламные уведомления, саму защиту не трогает.",
+                Title = L.T("Назойливые уведомления защиты"),
+                Description = L.T("Напоминания «Безопасности Windows»: включить защиту, настроить учётную запись, аккаунт Microsoft и т.п. Отключает только эти рекламные уведомления, саму защиту не трогает."),
                 Icon = "", IconColor = "#F5C542",
             }
             .WhenOff(Reg.Dw(Reg.HKCU, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance", "Enabled", 0),
@@ -40,10 +40,10 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Центр безопасности",
-                Description = "Служба «Безопасность Windows» (SecurityHealthService / wscsvc), которая собирает состояние защиты и показывает значок в трее. Без неё пропадает окно «Безопасность Windows».",
+                Title = L.T("Центр безопасности"),
+                Description = L.T("Служба «Безопасность Windows» (SecurityHealthService / wscsvc), которая собирает состояние защиты и показывает значок в трее. Без неё пропадает окно «Безопасность Windows»."),
                 Icon = "", IconColor = "#E5484D",
-                Security = "перестанет работать окно «Безопасность Windows» и значок защиты.",
+                Security = L.T("перестанет работать окно «Безопасность Windows» и значок защиты."),
                 Restart = Restart.Reboot,
             }
             .WhenOff(Reg.Start("wscsvc", 4), Reg.Start("SecurityHealthService", 4))
@@ -57,9 +57,9 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "SmartScreen",
-                Description = "Проверка скачанных файлов и сайтов по базе Microsoft. Предупреждает о подозрительных программах. Отключение убирает проверку и фильтр «неизвестный издатель».",
+                Description = L.T("Проверка скачанных файлов и сайтов по базе Microsoft. Предупреждает о подозрительных программах. Отключение убирает проверку и фильтр «неизвестный издатель»."),
                 Icon = "", IconColor = "#E5484D",
-                Security = "пропадёт предупреждение о запуске подозрительных и неизвестных программ.",
+                Security = L.T("пропадёт предупреждение о запуске подозрительных и неизвестных программ."),
             }
             .WhenOff(Reg.Dw(Reg.HKLM, sys, "EnableSmartScreen", 0),
                      Reg.Sz(Reg.HKLM, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer", "SmartScreenEnabled", "Off"),
@@ -82,10 +82,10 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "VBS (Memory Integrity, DeviceGuard, HVCI, CG)",
-                Description = "Безопасность на основе виртуализации: изолирует часть памяти ядра аппаратно. Повышает защиту, но может снижать производительность в играх на 5–15%. Многие отключают ради FPS.",
+                Description = L.T("Безопасность на основе виртуализации: изолирует часть памяти ядра аппаратно. Повышает защиту, но может снижать производительность в играх на 5–15%. Многие отключают ради FPS."),
                 Icon = "", IconColor = "#E5484D",
-                Security = "ослабнет аппаратная защита памяти ядра (Memory Integrity).",
-                Caution = "ради этого прироста FPS вы снижаете защиту от продвинутых атак.",
+                Security = L.T("ослабнет аппаратная защита памяти ядра (Memory Integrity)."),
+                Caution = L.T("ради этого прироста FPS вы снижаете защиту от продвинутых атак."),
                 Restart = Restart.Reboot,
             }
             .WhenOff(Reg.Dw(Reg.HKLM, dg, "EnableVirtualizationBasedSecurity", 0),
@@ -98,10 +98,10 @@ namespace BtwTweaker
         {
             return new RegToggle
             {
-                Title = "Автошифрование",
-                Description = "Автоматическое шифрование диска устройства (Device Encryption / BitLocker) на новых Windows 11. Отключение не даёт Windows зашифровать диск без вашего ведома — так проще восстановить данные при сбое, но диск остаётся незашифрованным.",
+                Title = L.T("Автошифрование"),
+                Description = L.T("Автоматическое шифрование диска устройства (Device Encryption / BitLocker) на новых Windows 11. Отключение не даёт Windows зашифровать диск без вашего ведома — так проще восстановить данные при сбое, но диск остаётся незашифрованным."),
                 Icon = "", IconColor = "#E5484D",
-                Security = "данные на диске не будут зашифрованы при краже или потере устройства.",
+                Security = L.T("данные на диске не будут зашифрованы при краже или потере устройства."),
             }
             .WhenOff(Reg.Dw(Reg.HKLM, @"SYSTEM\CurrentControlSet\Control\BitLocker", "PreventDeviceEncryption", 1))
             .WhenOn(Reg.Del(Reg.HKLM, @"SYSTEM\CurrentControlSet\Control\BitLocker", "PreventDeviceEncryption"));
@@ -113,9 +113,9 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "UAC",
-                Description = "Контроль учётных записей — окно «Разрешить этому приложению вносить изменения?». Отключение убирает эти запросы для администратора. Сам механизм UAC остаётся (иначе перестают работать приложения Магазина).",
+                Description = L.T("Контроль учётных записей — окно «Разрешить этому приложению вносить изменения?». Отключение убирает эти запросы для администратора. Сам механизм UAC остаётся (иначе перестают работать приложения Магазина)."),
                 Icon = "", IconColor = "#E5484D",
-                Security = "программы смогут получать права администратора без вашего подтверждения.",
+                Security = L.T("программы смогут получать права администратора без вашего подтверждения."),
             }
             .WhenOff(Reg.Dw(Reg.HKLM, sys, "ConsentPromptBehaviorAdmin", 0), Reg.Dw(Reg.HKLM, sys, "PromptOnSecureDesktop", 0))
             .WhenOn(Reg.Dw(Reg.HKLM, sys, "ConsentPromptBehaviorAdmin", 5), Reg.Dw(Reg.HKLM, sys, "PromptOnSecureDesktop", 1));
@@ -129,9 +129,9 @@ namespace BtwTweaker
             return new RegToggle
             {
                 Title = "Spectre v2",
-                Description = "Защита процессора от уязвимостей Spectre/Meltdown. Небольшой ценой производительности закрывает атаки через спекулятивное выполнение. Отключать стоит только на свой риск.",
+                Description = L.T("Защита процессора от уязвимостей Spectre/Meltdown. Небольшой ценой производительности закрывает атаки через спекулятивное выполнение. Отключать стоит только на свой риск."),
                 Icon = "", IconColor = "#E5484D",
-                Security = "процессор станет уязвим к атакам Spectre/Meltdown (чтение чужой памяти).",
+                Security = L.T("процессор станет уязвим к атакам Spectre/Meltdown (чтение чужой памяти)."),
                 Restart = Restart.Reboot,
                 CheckOn = true,
                 DefaultOn = true,
@@ -150,8 +150,8 @@ namespace BtwTweaker
             const string svc = @"SYSTEM\CurrentControlSet\Services\Dnscache\Parameters";
             return new RegToggle
             {
-                Title = "Разрешение локальных имён LLMNR",
-                Description = "Протокол разрешения имён в локальной сети без DNS-сервера. Дома почти не нужен и считается небезопасным: через него возможен перехват учётных данных в сети. Отключение повышает безопасность.",
+                Title = L.T("Разрешение локальных имён LLMNR"),
+                Description = L.T("Протокол разрешения имён в локальной сети без DNS-сервера. Дома почти не нужен и считается небезопасным: через него возможен перехват учётных данных в сети. Отключение повышает безопасность."),
                 Icon = "", IconColor = "#F5C542",
             }
             .WhenOff(Reg.Dw(Reg.HKLM, svc, "EnableMulticast", 0), Reg.Dw(Reg.HKLM, pol, "EnableMulticast", 0))

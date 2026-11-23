@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -71,7 +71,7 @@ namespace BtwTweaker
                 json = wc.DownloadString(Api);
             }
             var rel = new JavaScriptSerializer().DeserializeObject(json) as Dictionary<string, object>;
-            if (rel == null) throw new Exception("GitHub вернул непонятный ответ.");
+            if (rel == null) throw new Exception(L.T("GitHub вернул непонятный ответ."));
             var r = new ReleaseInfo { Tag = Str(rel, "tag_name"), Notes = Str(rel, "body") };
             var assets = rel.ContainsKey("assets") ? rel["assets"] as object[] : null;
             if (assets != null)
@@ -83,7 +83,7 @@ namespace BtwTweaker
                     if (string.Equals(name, ExeName, StringComparison.OrdinalIgnoreCase)) r.ExeUrl = url;
                     else if (string.Equals(name, ExeName + ".sha256", StringComparison.OrdinalIgnoreCase)) r.ShaUrl = url;
                 }
-            if (r.Tag == null || r.ExeUrl == null) throw new Exception("В последнем релизе нет файла " + ExeName + ".");
+            if (r.Tag == null || r.ExeUrl == null) throw new Exception(L.T("В последнем релизе нет файла ") + ExeName + ".");
             r.Version = Parse(r.Tag);
             return r;
         }
@@ -109,13 +109,13 @@ namespace BtwTweaker
                 string text;
                 using (var wc = Client()) text = wc.DownloadString(r.ShaUrl);
                 var m = Regex.Match(text, "[0-9a-fA-F]{64}");
-                if (!m.Success) throw new Exception("Файл контрольной суммы в релизе повреждён — обновление отменено.");
+                if (!m.Success) throw new Exception(L.T("Файл контрольной суммы в релизе повреждён — обновление отменено."));
                 expected = m.Value.ToLowerInvariant();
             }
             byte[] data;
             using (var wc = Client()) data = wc.DownloadData(r.ExeUrl);
             if (expected != null && Sha256(data) != expected)
-                throw new Exception("Контрольная сумма скачанного файла не совпала — обновление отменено.");
+                throw new Exception(L.T("Контрольная сумма скачанного файла не совпала — обновление отменено."));
             Install(exePath, data);
             return expected != null;
         }
@@ -124,7 +124,7 @@ namespace BtwTweaker
         public static void Install(string exePath, byte[] data)
         {
             if (data == null || data.Length < 32 * 1024 || data[0] != (byte)'M' || data[1] != (byte)'Z')
-                throw new Exception("Скачанный файл не похож на программу — обновление отменено.");
+                throw new Exception(L.T("Скачанный файл не похож на программу — обновление отменено."));
             string fresh = exePath + ".new", old = exePath + ".old";
             File.WriteAllBytes(fresh, data);
             if (File.Exists(old)) File.Delete(old);   // остаток прошлого обновления
@@ -164,7 +164,7 @@ namespace BtwTweaker
         public static void Rollback()
         {
             string exe = ExePath, old = exe + ".old";
-            if (!File.Exists(PrevPath)) throw new Exception("Прошлая версия не сохранена.");
+            if (!File.Exists(PrevPath)) throw new Exception(L.T("Прошлая версия не сохранена."));
             if (File.Exists(old)) File.Delete(old);
             File.Move(exe, old);
             try { File.Move(PrevPath, exe); }

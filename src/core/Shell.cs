@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BtwTweaker
@@ -18,13 +18,13 @@ namespace BtwTweaker
 
         public VisualFx()
         {
-            Title = "Внешний вид";
+            Title = L.T("Внешний вид");
             Icon = "";
-            Options = new[] { "По умолчанию", "Лучший вид", "Оптимальное", "Производительность" };
-            Description = "Визуальные эффекты Windows: анимации окон, тени, сглаживание и т.д.\n" +
-                          "Оптимальное — без анимаций и теней, но со сглаживанием шрифтов, эскизами и содержимым окон при перетаскивании. Хороший баланс для слабых ПК и игр.\n" +
-                          "Производительность — все эффекты выключены (шрифты остаются сглаженными).";
-            Caution = "изменения полностью применятся после выхода из системы.";
+            Options = new[] { L.T("По умолчанию"), L.T("Лучший вид"), L.T("Оптимальное"), L.T("Производительность") };
+            Description = L.T("Визуальные эффекты Windows: анимации окон, тени, сглаживание и т.д.\n") +
+                          L.T("Оптимальное — без анимаций и теней, но со сглаживанием шрифтов, эскизами и содержимым окон при перетаскивании. Хороший баланс для слабых ПК и игр.\n") +
+                          L.T("Производительность — все эффекты выключены (шрифты остаются сглаженными).");
+            Caution = L.T("изменения полностью применятся после выхода из системы.");
             Restart = Restart.SignOut;
         }
 
@@ -61,6 +61,27 @@ namespace BtwTweaker
             };
             foreach (var v in list) Reg.Apply(v);
         }
+
+        public override List<ChangeInfo> Changes()
+        {
+            int cur = -1;
+            try { cur = ReadIndex(); } catch { }
+            Func<string, string, string, string[], ChangeInfo> row = (key, name, hiveKey, vals) =>
+            {
+                var c = new ChangeInfo { Kind = L.T("Реестр"), Title = "HKCU\\" + key, Detail = name, RegPath = "HKEY_CURRENT_USER\\" + key, Current = cur };
+                for (int i = 0; i < Options.Length; i++) c.Add(Options[i], vals[i]);
+                return c;
+            };
+            return new List<ChangeInfo>
+            {
+                row(VE, "VisualFXSetting", null, new[] { "0", "1", "3", "2" }),
+                row(Desk, "UserPreferencesMask", null, new[] { L.T("стандартная"), L.T("стандартная"), L.T("быстродействие"), L.T("быстродействие") }),
+                row(WM, "MinAnimate", null, new[] { "\"1\"", "\"1\"", "\"0\"", "\"0\"" }),
+                row(Adv, "TaskbarAnimations", null, new[] { "1", "1", "0", "0" }),
+                row(Desk, "DragFullWindows", null, new[] { "\"1\"", "\"1\"", "\"1\"", "\"0\"" }),
+                row(Adv, L.T("IconsOnly (эскизы)"), null, new[] { "0", "0", "0", "1" }),
+            };
+        }
     }
 
     // Классическое контекстное меню (Windows 11): пустой InprocServer32 у CLSID нового меню
@@ -71,8 +92,8 @@ namespace BtwTweaker
 
         public ClassicMenu()
         {
-            Title = "Контекстное меню как в Windows 10";
-            Description = "Сразу открывать полное контекстное меню, без пункта «Показать дополнительные параметры».";
+            Title = L.T("Контекстное меню как в Windows 10");
+            Description = L.T("Сразу открывать полное контекстное меню, без пункта «Показать дополнительные параметры».");
             Icon = "";
             IconColor = "#F5A524";
             Win11Only = true;
@@ -94,6 +115,14 @@ namespace BtwTweaker
                 Reg.DeleteKey(Reg.HKCU, Clsid);
             }
         }
+
+        public override List<ChangeInfo> Changes()
+        {
+            var c = new ChangeInfo { Kind = L.T("Реестр"), Title = "HKCU\\" + Inproc, Detail = L.T("(по умолчанию)"), RegPath = "HKEY_CURRENT_USER\\Software\\Classes\\CLSID" };
+            c.Add(L.T("Вкл"), L.T("пустое значение")).Add(L.T("Откл"), L.T("ключа нет"));
+            try { c.Current = ReadEnabled() ? 0 : 1; } catch { }
+            return new List<ChangeInfo> { c };
+        }
     }
 
     // Всегда показывать все значки в трее.
@@ -105,8 +134,8 @@ namespace BtwTweaker
 
         public TrayIcons()
         {
-            Title = "Всегда отображать все иконки на панели задач";
-            Description = "Значки программ в трее (возле часов) не прячутся под стрелку «^». В Windows 11 настройка ставится для уже известных значков — если появится новая программа, переключите ещё раз.";
+            Title = L.T("Всегда отображать все иконки на панели задач");
+            Description = L.T("Значки программ в трее (возле часов) не прячутся под стрелку «^». В Windows 11 настройка ставится для уже известных значков — если появится новая программа, переключите ещё раз.");
             Icon = "";
             IconColor = "#F5A524";
             Restart = Restart.Explorer;
@@ -132,6 +161,18 @@ namespace BtwTweaker
             if (Sys.IsWin11)
                 foreach (var id in Icons())
                     Reg.Apply(Reg.Dw(Reg.HKCU, Nis + "\\" + id, "IsPromoted", on ? 1 : 0));
+        }
+
+        public override List<ChangeInfo> Changes()
+        {
+            var l = new List<ChangeInfo> { ChangeText.FromReg(Reg.Dw(Reg.HKCU, Exp, "EnableAutoTray", 0), Reg.Del(Reg.HKCU, Exp, "EnableAutoTray")) };
+            if (Sys.IsWin11)
+            {
+                var c = new ChangeInfo { Kind = L.T("Реестр"), Title = "HKCU\\" + Nis + "\\*", Detail = L.T("IsPromoted — для каждого значка (") + Icons().Length + ")", RegPath = "HKEY_CURRENT_USER\\" + Nis };
+                c.Add(L.T("Вкл"), "1").Add(L.T("Откл"), "0");
+                l.Add(c);
+            }
+            return l;
         }
     }
 }

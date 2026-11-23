@@ -45,10 +45,11 @@ foreach ($p in $pngs) { $w.Write($p) }
 $w.Close()
 
 $cscArgs = @('/nologo', '/target:winexe', '/optimize+', '/codepage:65001', '/platform:anycpu', "/out:$Out", "/win32icon:$ico",
-    '/r:System.dll', '/r:System.Core.dll', '/r:Microsoft.CSharp.dll', '/r:System.Management.dll', '/r:System.Web.Extensions.dll', '/r:System.ServiceProcess.dll', '/r:System.Xml.dll')
+    '/r:System.dll', '/r:System.Core.dll', '/r:Microsoft.CSharp.dll', '/r:System.Management.dll', '/r:System.Web.Extensions.dll', '/r:System.Drawing.dll', '/r:Microsoft.VisualBasic.dll', '/r:System.ServiceProcess.dll', '/r:System.Xml.dll')
 if ($NoAdmin) { $cscArgs += '/define:TESTHOOKS' } else { $cscArgs += "/win32manifest:$src\app.manifest" }
 $fw = Split-Path $csc
 $cscArgs += "/r:$fw\WPF\PresentationFramework.dll", "/r:$fw\WPF\PresentationCore.dll", "/r:$fw\WPF\WindowsBase.dll", "/r:$fw\System.Xaml.dll"
+$cscArgs += "/resource:$src\lang\en.tsv,en.tsv"
 $cscArgs += (Get-ChildItem "$src\core\*.cs").FullName
 $cscArgs += (Get-ChildItem "$src\wpf\*.cs").FullName
 
