@@ -136,7 +136,7 @@ class C
                 x += g.MeasureString("by", ff, PointF.Empty, tf).Width + 8;
                 using (var ab = new SolidBrush(Hex("#A78BFA"))) g.DrawString("ryxIbtw", bold, ab, x, 500, tf);
                 x += g.MeasureString("ryxIbtw", bold, PointF.Empty, tf).Width + 14;
-                using (var gb = new SolidBrush(Hex("#8A84A0"))) g.DrawString("·   MIT   ·   " + (en ? "free, no PRO" : "бесплатно, без PRO"), ff, gb, x, 500, tf);
+                using (var gb = new SolidBrush(Hex("#8A84A0"))) g.DrawString("·   MIT", ff, gb, x, 500, tf);
             }
             bmp.Save(outp, ImageFormat.Png);
         }
